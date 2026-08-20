@@ -28,10 +28,12 @@ src/
 │       ├── WeatherCard.vue
 │       ├── WeatherCardList.vue
 │       └── WeatherHeader.vue
-├── views/
-│   └── WeatherHomeView.vue
-└── data/
-    └── weatherData.js
+├── data/
+│   └── weatherData.js
+├── stores/
+│   └── configStore.js
+└── views/
+    └── WeatherHomeView.vue
 ```
 
 ## 주요 기능
@@ -171,21 +173,21 @@ src/
 
 #### 과제 5 - Hands on: Weather Store Pinia
 
-- 진행 상태: 구현 예정
+- 진행 상태: 구현 중
 
 **과제 요구사항**
 
-- [ ] `[과제 5-1]` `stores/configStore.js`에 날씨 단위 설정 Store를 작성합니다.
+- [x] `[과제 5-0]` `stores/configStore.js`에 날씨 단위 설정 Store를 작성했습니다.
   - `state`의 `unit`에 현재 단위를 저장하고 초기값은 `celsius`로 설정합니다.
   - `getters`의 `unitSymbol`에서 현재 단위에 맞는 기호인 `℃` 또는 `℉`를 반환합니다.
   - `actions`의 `toggleUnit`에서 `celsius`와 `fahrenheit`를 전환합니다.
-- [ ] `[과제 5-2]` 날씨 단위를 변경하는 버튼과 영역을 `UnitToggler.vue`로 작성합니다.
-- [ ] `[과제 5-3]` `UnitToggler.vue`를 Navigation Bar 옆에 배치합니다.
-- [ ] `[과제 5-4]` 메인 날씨와 상세 날씨에 단위 설정 변경을 적용합니다.
+- [ ] `[과제 5-1]` 날씨 단위를 변경하는 버튼과 영역을 `UnitToggler.vue`로 작성합니다.
+- [ ] `[과제 5-2]` `UnitToggler.vue`를 Navigation Bar 옆에 배치합니다.
+- [ ] `[과제 5-3]` 메인 날씨와 상세 날씨에 단위 설정 변경을 적용합니다.
   - 원본 기온 데이터는 섭씨 숫자로 유지합니다.
   - 현재 단위가 `fahrenheit`이면 `(섭씨 × 9) / 5 + 32`를 계산하고 반올림해 표시합니다.
   - 현재 단위에 맞는 `unitSymbol`을 기온 값과 함께 표시합니다.
-- [ ] `[과제 5-5]` 별도의 Store를 추가해 활용하거나 `configStore`에 본인만의 `state`, `getter`, `action`을 추가합니다.
+- [ ] `[과제 5-4]` 별도의 Store를 추가해 활용하거나 `configStore`에 본인만의 `state`, `getter`, `action`을 추가합니다.
 
 **참고 사항**
 
