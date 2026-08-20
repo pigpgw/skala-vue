@@ -148,6 +148,7 @@ src/
     ├── WeatherHomeView.vue         # 상태, 화면 조립과 라우터 이동을 담당하는 메인 화면
     ├── WeatherAboutView.vue        # 서비스 소개용 정적 페이지
     ├── WeatherDetailView.vue       # :cityId를 사용하는 동적 상세 페이지
+    ├── WeatherTipsView.vue         # 날씨 생활 수칙을 안내하는 추가 페이지
     └── NotFoundView.vue            # 정의되지 않은 경로의 Catch-all 페이지
 ```
 
@@ -166,7 +167,7 @@ src/
   - 과제 3부터 사용한 공용 `weatherData`를 Mock Data로 활용합니다.
   - 동적 경로의 `cityId`를 기준으로 Mount 시점에 Mock Data에서 도시 객체를 선택합니다.
 - [x] `[과제 4-5]` `WeatherAboutView.vue`에 날씨 서비스의 주요 기능을 소개하고 `RouterLink`로 메인 대시보드에 돌아가는 기능을 작성했습니다.
-- [ ] `[과제 4-6]` 정의된 View 외에 추가 View를 작성하고 라우팅합니다.
+- [x] `[과제 4-6]` `WeatherTipsView.vue`를 추가하고 `/tips` 경로와 Navigation Bar를 연결해 날씨별 생활 수칙을 안내하도록 구성했습니다.
 
 ## 커밋 컨벤션
 

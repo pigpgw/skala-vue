@@ -14,6 +14,11 @@ const routes = [
     component: () => import('@/views/WeatherAboutView.vue'),
   },
   {
+    path: '/tips',
+    name: 'WeatherTips',
+    component: () => import('@/views/WeatherTipsView.vue'),
+  },
+  {
     path: '/weather/:cityId',
     name: 'WeatherDetail',
     component: () => import('@/views/WeatherDetailView.vue'),
