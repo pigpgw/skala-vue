@@ -26,11 +26,7 @@ const searchStatusMessage = computed(() =>
   searchQuery.value.trim() ? `"${searchQuery.value.trim()}" 검색 결과 ${searchResultCount.value}개를 표시하고 있습니다.` : `전체 도시 ${searchResultCount.value}개를 표시하고 있습니다.`,
 )
 
-/**
- *
- * @param {string} cityName
- * @param {string} status
- */
+/** @param {string} cityName @param {string} status */
 const showWeatherDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 
 watch(selectionMessage, (newValue, oldValue) => console.log(`[watch 자동 호출] 상태 바 문구가 업데이트 되었습니다. ${oldValue} -> ${newValue}`))

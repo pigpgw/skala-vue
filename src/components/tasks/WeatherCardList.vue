@@ -14,10 +14,7 @@ import WeatherCard from './WeatherCard.vue'
 
 const emit = defineEmits(['select-card', 'click-detail'])
 
-/**
- * @param {string} name
- * @param {string} status
- */
+/** @param {string} name @param {string} status */
 const handleDetailClick = (name, status) => emit('click-detail', name, status)
 
 defineProps({
