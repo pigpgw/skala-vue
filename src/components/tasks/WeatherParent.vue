@@ -1,7 +1,6 @@
 <script setup>
 import { computed, ref, watch, watchEffect } from 'vue'
 import { weatherData } from '@/data/weatherData'
-import BaseDashboardCard from './BaseDashboardCard.vue'
 import SearchPanel from './SearchPanel.vue'
 import NationalWeatherSummary from './NationalWeatherSummary.vue'
 import WeatherCardList from './WeatherCardList.vue'
@@ -52,14 +51,12 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
   <main class="weather-parent">
     <div>Weather App</div>
 
-    <BaseDashboardCard>
-      <SearchPanel
-        :search-query="searchQuery"
-        :search-result-count="searchResultCount"
-        :search-status-message="searchStatusMessage"
-        @update-query="searchQuery = $event"
-      />
-    </BaseDashboardCard>
+    <SearchPanel
+      :search-query="searchQuery"
+      :search-result-count="searchResultCount"
+      :search-status-message="searchStatusMessage"
+      @update-query="searchQuery = $event"
+    />
 
     <NationalWeatherSummary
       :show-national-summary="showNationalSummary"
@@ -79,13 +76,12 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       <div>{{ selectedCityInfo }}</div>
     </div>
 
-    <BaseDashboardCard v-if="filteredWeatherList.length > 0">
-      <WeatherCardList
-        :filtered-weather-list="filteredWeatherList"
-        @select-card="selectedCityInfo = $event"
-        @click-detail="showDetail"
-      />
-    </BaseDashboardCard>
+    <WeatherCardList
+      v-if="filteredWeatherList.length > 0"
+      :filtered-weather-list="filteredWeatherList"
+      @select-card="selectedCityInfo = $event"
+      @click-detail="showDetail"
+    />
     <div v-else>검색 결과와 일치하는 도시가 없습니다.</div>
   </main>
 </template>
