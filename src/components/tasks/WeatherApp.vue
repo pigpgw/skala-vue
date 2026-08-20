@@ -5,6 +5,7 @@ import { weatherData } from '@/data/weatherData'
 const searchQuery = ref('')
 const selectedCityInfo = ref('카드를 클릭하거나 검색해 보세요.')
 const weatherList = ref(weatherData)
+const showNationalSummary = ref(true)
 
 const filteredWeatherList = computed(() => weatherList.value.filter((item) => item.name.includes(searchQuery.value.trim())))
 const searchResultCount = computed(() => filteredWeatherList.value.length)
@@ -19,6 +20,7 @@ const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날
 watch(selectedCityInfo, (newValue, oldValue) =>
   console.log(`[watch 자동 호출] 상태 바 문구가 업데이트 되었습니다. ${oldValue} -> ${newValue}`),
 )
+watch(showNationalSummary, (newValue) => console.log(`[watch 자동 호출] 전국 통계 표시 여부가 변경되었습니다. ${newValue}`))
 watch(searchResultCount, (newValue, oldValue) =>
   console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`),
 )
@@ -50,9 +52,10 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       <input type="text" :value="searchQuery" @input="(e) => (searchQuery = e.target.value)" placeholder="도시명을 입력하세요" />
       <div>입력한 도시: {{ searchQuery }}</div>
       <div>검색 결과: {{ searchResultCount }}개</div>
+      <label><input type="checkbox" v-model="showNationalSummary" /> 전국 통계 보기</label>
     </div>
 
-    <div>
+    <div v-show="showNationalSummary">
       <div>전국 날씨 통계</div>
       <div>평균 기온: {{ averageTemperature }}°C</div>
       <div>평균 습도: {{ averageHumidity }}%</div>
