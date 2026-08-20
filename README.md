@@ -169,6 +169,28 @@ src/
 - [x] `[과제 4-5]` `WeatherAboutView.vue`에 날씨 서비스의 주요 기능을 소개하고 `RouterLink`로 메인 대시보드에 돌아가는 기능을 작성했습니다.
 - [x] `[과제 4-6]` `WeatherTipsView.vue`를 추가하고 `/tips` 경로와 Navigation Bar를 연결해 날씨별 생활 수칙을 안내하도록 구성했습니다.
 
+#### 과제 5 - Hands on: Weather Store Pinia
+
+- 진행 상태: 구현 예정
+
+**과제 요구사항**
+
+- [ ] `[과제 5-1]` `stores/configStore.js`에 날씨 단위 설정 Store를 작성합니다.
+  - `state`의 `unit`에 현재 단위를 저장하고 초기값은 `celsius`로 설정합니다.
+  - `getters`의 `unitSymbol`에서 현재 단위에 맞는 기호인 `℃` 또는 `℉`를 반환합니다.
+  - `actions`의 `toggleUnit`에서 `celsius`와 `fahrenheit`를 전환합니다.
+- [ ] `[과제 5-2]` 날씨 단위를 변경하는 버튼과 영역을 `UnitToggler.vue`로 작성합니다.
+- [ ] `[과제 5-3]` `UnitToggler.vue`를 Navigation Bar 옆에 배치합니다.
+- [ ] `[과제 5-4]` 메인 날씨와 상세 날씨에 단위 설정 변경을 적용합니다.
+  - 원본 기온 데이터는 섭씨 숫자로 유지합니다.
+  - 현재 단위가 `fahrenheit`이면 `(섭씨 × 9) / 5 + 32`를 계산하고 반올림해 표시합니다.
+  - 현재 단위에 맞는 `unitSymbol`을 기온 값과 함께 표시합니다.
+- [ ] `[과제 5-5]` 별도의 Store를 추가해 활용하거나 `configStore`에 본인만의 `state`, `getter`, `action`을 추가합니다.
+
+**참고 사항**
+
+- 메인 화면과 상세 화면의 온도 변환 코드가 중복될 수 있으며 Composable로 분리할 수 있지만, 이번 과제 범위에서는 제외합니다.
+
 ## 커밋 컨벤션
 
 커밋 메시지는 [Conventional Commits](https://www.conventionalcommits.org/ko/v1.0.0/) 규칙을 따릅니다.
