@@ -10,14 +10,14 @@
  * @property {string} dust
  */
 
-const emit = defineEmits(['select-card', 'click-detail'])
-
 defineProps({
   weatherItem: {
     type: /** @type {import('vue').PropType<WeatherItem>} */ (Object),
     required: true,
   },
 })
+
+const emit = defineEmits(['select-card', 'click-detail'])
 </script>
 
 <template>

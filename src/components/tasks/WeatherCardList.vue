@@ -12,17 +12,17 @@ import WeatherCard from '@/components/tasks/WeatherCard.vue'
  * @property {string} dust
  */
 
-const emit = defineEmits(['select-card', 'click-detail'])
-
-/** @param {string} name @param {string} status */
-const handleDetailClick = (name, status) => emit('click-detail', name, status)
-
 defineProps({
   weatherList: {
     type: /** @type {import('vue').PropType<WeatherItem[]>} */ (Array),
     required: true,
   },
 })
+
+const emit = defineEmits(['select-card', 'click-detail'])
+
+/** @param {string} name @param {string} status */
+const handleDetailClick = (name, status) => emit('click-detail', name, status)
 </script>
 
 <template>
