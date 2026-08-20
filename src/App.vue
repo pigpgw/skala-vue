@@ -1,7 +1,7 @@
 <script setup>
-import WeatherApp from '@/components/tasks/WeatherApp.vue'
+import WeatherParent from '@/components/tasks/WeatherParent.vue'
 </script>
 
 <template>
-  <WeatherApp />
+  <WeatherParent />
 </template>

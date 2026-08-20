@@ -12,8 +12,8 @@ Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적�
 ## 과제 파일
 
 - 과제 컴포넌트는 `src/components/tasks/`에서 관리합니다.
-- 과제 1과 과제 2의 메인 파일은 `src/components/tasks/WeatherApp.vue`입니다.
-- `src/App.vue`에서 `WeatherApp.vue`를 불러와 화면에 렌더링합니다.
+- 날씨 과제의 부모 컴포넌트는 `src/components/tasks/WeatherParent.vue`입니다.
+- `src/App.vue`에서 `WeatherParent.vue`를 불러와 화면에 렌더링합니다.
 - 날씨 더미 데이터는 `src/data/weatherData.js`에서 별도로 관리합니다.
 
 ```text
@@ -21,7 +21,7 @@ src/
 ├── App.vue
 ├── components/
 │   └── tasks/
-│       └── WeatherApp.vue
+│       └── WeatherParent.vue
 └── data/
     └── weatherData.js
 ```
@@ -56,7 +56,7 @@ src/
 
 ### 2026-08-19
 
-과제 1과 과제 2는 `WeatherApp.vue` 하나에서 단계적으로 개발했습니다.
+과제 1과 과제 2는 현재 부모 컴포넌트인 `WeatherParent.vue`에서 단계적으로 개발했습니다.
 
 #### 과제 1 - Weather Mockup
 
@@ -78,6 +78,13 @@ src/
 8. `[과제 2-5]` 가장 덥고 춥고 습하며 풍속이 강한 도시를 `computed`와 `reduce()`로 찾았습니다.
 9. `[과제 2-5]` `ref`, `v-model`, `v-show`로 전국 통계 표시 여부를 제어하고 `watch`로 변화를 감시했습니다.
 10. `[과제 2-5]` 검색어와 검색 결과 개수를 `computed`로 조합해 검색 상태 문구를 만들고 `watch`로 변화를 감시했습니다.
+
+### 2026-08-20
+
+#### 과제 3 - Hands on: Weather Component Vue Components
+
+- 과제 요구사항: Weather 화면의 기능을 역할별 Vue Component로 분리합니다.
+- `[과제 3-1]` `WeatherParent.vue`를 부모 컴포넌트로 분리하고 모든 반응형 데이터와 계산 및 감시 로직을 유지했습니다.
 
 ## 커밋 컨벤션
 
