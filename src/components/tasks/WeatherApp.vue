@@ -8,6 +8,7 @@ const weatherList = ref(weatherData)
 
 const filteredWeatherList = computed(() => weatherList.value.filter((item) => item.name.includes(searchQuery.value.trim())))
 const searchResultCount = computed(() => filteredWeatherList.value.length)
+const averageTemperature = computed(() => (weatherList.value.reduce((sum, item) => sum + item.temp, 0) / weatherList.value.length).toFixed(1))
 
 const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 
@@ -16,6 +17,9 @@ watch(selectedCityInfo, (newValue, oldValue) =>
 )
 watch(searchResultCount, (newValue, oldValue) =>
   console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`),
+)
+watch(averageTemperature, (newValue, oldValue) =>
+  console.log(`[watch 자동 호출] 전국 평균 기온이 변경되었습니다. ${oldValue}°C -> ${newValue}°C`),
 )
 
 watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${searchQuery.value}`))
@@ -30,6 +34,11 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       <input type="text" :value="searchQuery" @input="(e) => (searchQuery = e.target.value)" placeholder="도시명을 입력하세요" />
       <div>입력한 도시: {{ searchQuery }}</div>
       <div>검색 결과: {{ searchResultCount }}개</div>
+    </div>
+
+    <div>
+      <div>전국 날씨 통계</div>
+      <div>평균 기온: {{ averageTemperature }}°C</div>
     </div>
 
     <div>
