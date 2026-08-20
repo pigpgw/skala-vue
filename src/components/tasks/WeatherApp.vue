@@ -14,6 +14,8 @@ const weatherList = ref(weatherData)
         <div>{{ item.name }}</div>
         <div>현재 날씨: {{ item.status }}</div>
         <div>기온: {{ item.temp }}°C</div>
+        <div v-if="item.temp >= 25">25도 이상으로 덥습니다.</div>
+        <div v-else>25도 미만으로 선선합니다.</div>
       </div>
     </div>
   </main>
