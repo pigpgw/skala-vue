@@ -25,6 +25,7 @@ src/
 │       ├── CitySelectionStatusPanel.vue
 │       ├── DashboardCard.vue
 │       ├── NationalWeatherPanel.vue
+│       ├── UnitToggler.vue
 │       ├── WeatherCard.vue
 │       ├── WeatherCardList.vue
 │       └── WeatherHeader.vue
@@ -181,7 +182,7 @@ src/
   - `state`의 `unit`에 현재 단위를 저장하고 초기값은 `celsius`로 설정합니다.
   - `getters`의 `unitSymbol`에서 현재 단위에 맞는 기호인 `℃` 또는 `℉`를 반환합니다.
   - `actions`의 `toggleUnit`에서 `celsius`와 `fahrenheit`를 전환합니다.
-- [ ] `[과제 5-1]` 날씨 단위를 변경하는 버튼과 영역을 `UnitToggler.vue`로 작성합니다.
+- [x] `[과제 5-1]` 현재 단위와 단위 기호를 표시하고 `toggleUnit`을 실행하는 버튼 영역을 `UnitToggler.vue`로 작성했습니다.
 - [ ] `[과제 5-2]` `UnitToggler.vue`를 Navigation Bar 옆에 배치합니다.
 - [ ] `[과제 5-3]` 메인 날씨와 상세 날씨에 단위 설정 변경을 적용합니다.
   - 원본 기온 데이터는 섭씨 숫자로 유지합니다.
