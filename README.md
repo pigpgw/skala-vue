@@ -32,7 +32,8 @@ src/
 ├── data/
 │   └── weatherData.js
 ├── stores/
-│   └── configStore.js
+│   ├── configStore.js
+│   └── weatherStore.js
 └── views/
     └── WeatherHomeView.vue
 ```
@@ -174,7 +175,7 @@ src/
 
 #### 과제 5 - Hands on: Weather Store Pinia
 
-- 진행 상태: 구현 중
+- 진행 상태: 구현 완료
 
 **과제 요구사항**
 
@@ -188,7 +189,12 @@ src/
   - 원본 기온 데이터는 섭씨 숫자로 유지합니다.
   - 현재 단위가 `fahrenheit`이면 `(섭씨 × 9) / 5 + 32`를 계산하고 반올림해 표시합니다.
   - 현재 단위에 맞는 `unitSymbol`을 기온 값과 함께 표시합니다.
-- [ ] `[과제 5-4]` 별도의 Store를 추가해 활용하거나 `configStore`에 본인만의 `state`, `getter`, `action`을 추가합니다.
+- [x] `[과제 5-4 추가 Store 작성 및 활용]` 과제의 추가 Store 요구사항을 충족하기 위해 `weatherStore.js`를 직접 작성하고 메인·상세 화면에서 실제로 활용했습니다.
+  - `state` 역할의 `weatherList`에 메인과 상세 화면이 공유하는 날씨 데이터를 저장했습니다.
+  - `action` 역할의 `addWeatherItem`으로 새 날씨 데이터를 추가하고 `findWeatherById`로 도시 ID에 해당하는 날씨를 조회하도록 구성했습니다.
+  - `WeatherHomeView.vue`에서는 `storeToRefs`로 `weatherList`의 반응성을 유지하면서 카드 목록과 전국 통계에 사용했습니다.
+  - `WeatherDetailView.vue`에서는 `findWeatherById`를 호출해 동적 경로의 도시 ID에 해당하는 상세 날씨를 조회했습니다.
+  - 검색어와 필터링은 메인 화면에서만 사용하므로 전역 Store로 이동하지 않고 `WeatherHomeView.vue`의 지역 상태와 계산된 값으로 유지했습니다.
 
 **참고 사항**
 

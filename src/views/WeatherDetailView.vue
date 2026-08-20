@@ -2,11 +2,12 @@
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
-import { weatherData } from '@/data/weatherData'
 import { useConfigStore } from '@/stores/configStore'
+import { useWeatherStore } from '@/stores/weatherStore'
 
 const route = useRoute()
 const configStore = useConfigStore()
+const weatherStore = useWeatherStore()
 const cityData = ref()
 
 const displayTemperature = computed(() => {
@@ -19,7 +20,7 @@ const displayTemperature = computed(() => {
 onMounted(() => {
   const cityId = route.params.cityId
   if (typeof cityId !== 'string') return
-  cityData.value = weatherData.find((weatherItem) => weatherItem.id === cityId) ?? null
+  cityData.value = weatherStore.findWeatherById(cityId)
 })
 </script>
 

@@ -1,8 +1,7 @@
 <script setup>
 import { computed, ref, watch, watchEffect } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-
-import { weatherData } from '@/data/weatherData'
 
 import DashboardCard from '@/components/tasks/DashboardCard.vue'
 
@@ -10,10 +9,12 @@ import CitySearchPanel from '@/components/tasks/CitySearchPanel.vue'
 import CitySelectionStatusPanel from '@/components/tasks/CitySelectionStatusPanel.vue'
 import NationalWeatherPanel from '@/components/tasks/NationalWeatherPanel.vue'
 import WeatherCardList from '@/components/tasks/WeatherCardList.vue'
+import { useWeatherStore } from '@/stores/weatherStore'
 
 const router = useRouter()
+const weatherStore = useWeatherStore()
+const { weatherList } = storeToRefs(weatherStore)
 
-const weatherList = ref(weatherData)
 const searchQuery = ref('')
 const isNationalSummaryVisible = ref(true)
 const selectionMessage = ref('카드를 클릭하거나 검색해 보세요.')
