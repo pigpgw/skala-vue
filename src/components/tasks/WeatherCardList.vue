@@ -1,5 +1,5 @@
 <script setup>
-import WeatherCard from './WeatherCard.vue'
+import WeatherCard from '@/components/tasks/WeatherCard.vue'
 
 /**
  * @typedef {Object} WeatherItem

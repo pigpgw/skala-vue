@@ -1,6 +1,6 @@
 <script setup>
-import WeatherHeader from '@/components/tasks/WeatherHeader.vue'
 import WeatherDashboard from '@/components/tasks/WeatherDashboard.vue'
+import WeatherHeader from '@/components/tasks/WeatherHeader.vue'
 </script>
 
 <template>
