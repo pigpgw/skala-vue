@@ -37,9 +37,23 @@ defineProps({
     required: true,
   },
 })
+
+const emit = defineEmits(['update-show-national-summary'])
+
+/** @param {Event} event */
+const updateShowNationalSummary = (event) => {
+  const checkbox = event.currentTarget
+  if (!(checkbox instanceof HTMLInputElement)) return
+  emit('update-show-national-summary', checkbox.checked)
+}
 </script>
 
 <template>
+  <label>
+    <input type="checkbox" :checked="showNationalSummary" @change="updateShowNationalSummary" />
+    전국 통계 보기
+  </label>
+
   <div v-show="showNationalSummary">
     <div>전국 날씨 통계</div>
     <div>평균 기온: {{ averageTemperature.toFixed(1) }}°C</div>

@@ -59,7 +59,6 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
         :search-status-message="searchStatusMessage"
         @update-query="searchQuery = $event"
       />
-      <label><input type="checkbox" v-model="showNationalSummary" /> 전국 통계 보기</label>
     </BaseDashboardCard>
 
     <NationalWeatherSummary
@@ -72,6 +71,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       :coldest-city="coldestCity"
       :most-humid-city="mostHumidCity"
       :strongest-wind-city="strongestWindCity"
+      @update-show-national-summary="showNationalSummary = $event"
     />
 
     <div>
