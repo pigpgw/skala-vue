@@ -109,7 +109,7 @@ src/
 - `[과제 3-7 임포트 경로 정리]` Vite와 `jsconfig.json`에 설정된 `@` 별칭을 사용해 `App.vue`와 `src/components/tasks`의 과제 코드 임포트를 절대 경로로 통일했습니다. 임포트는 외부 패키지와 내부 모듈 사이를 한 줄 띄우고, 같은 그룹 안에서는 이름순으로 정리했습니다.
 - `[과제 3-7 코드 구조 정리]` 과제 컴포넌트의 선언 순서를 임포트, props/emits, 원본 반응형 상태, 파생 상태, 이벤트 함수, watch/watchEffect 순으로 통일했습니다. 같은 종류의 선언은 글자 길이가 아니라 데이터 의존 관계와 화면의 검색, 전국 통계, 선택 결과 흐름에 맞춰 배치했습니다.
 
-##### 과제 요구사항과 최종 구조의 차이
+#### 과제 3 요구사항과 최종 구조의 차이
 
 | 과제 요구사항 | 최종 구조 | 변경 이유와 적용 방법 |
 | --- | --- | --- |
@@ -119,6 +119,45 @@ src/
 | `WeatherCard`를 Slot에 직접 배치 | `DashboardCard` 안에 `WeatherCardList`를 배치 | 반복 렌더링과 빈 검색 결과 처리는 개별 카드가 아닌 목록의 책임이므로 `WeatherCardList.vue`로 분리했습니다. 목록이 각 도시 객체를 `WeatherCard`에 props로 전달하고, 카드의 `select-card`와 `click-detail` 이벤트를 `WeatherDashboard`까지 다시 전달해 기존 동작을 유지했습니다. |
 | 필수 4개 컴포넌트 | 총 8개 과제 컴포넌트 | 과제 3-7의 추가 분리 항목에 따라 `WeatherCardList`, `NationalWeatherPanel`, `CitySelectionStatusPanel`, `WeatherHeader`를 추가했습니다. 부모는 반응형 상태를 유지하고 각 자식은 표시와 이벤트 전달만 담당하도록 책임을 나눴습니다. |
 | 각 컴포넌트의 `<style scoped>` 분리 | 디자인이 있는 컴포넌트에만 `<style scoped>` 적용 | `WeatherDashboard`, `DashboardCard`, `CitySearchPanel`, `WeatherCard`, `WeatherHeader`의 전용 스타일은 각각 분리했습니다. 별도 스타일이 없는 추가 컴포넌트는 빈 `<style>`을 만들지 않고 공통 박스 디자인을 `DashboardCard`에서 적용했습니다. |
+
+### 2026-08-21
+
+#### 과제 4 - Hands on: Weather Router Vue Router
+
+- 진행 상태: 구현 예정
+
+**프로젝트 폴더 트리**
+
+```text
+src/
+├── main.js                         # 라우터 인스턴스 전역 주입(.use(router))
+├── App.vue                         # 내비게이션 바와 RouterView 배치
+├── router/
+│   └── index.js                    # routes 배열, Lazy Loading과 Catch-all Route 설정
+├── components/
+│   └── exercise/                   # 실습용 부품 컴포넌트 격리 폴더
+│       ├── BaseDashboardCard.vue
+│       ├── SearchBar.vue
+│       └── WeatherCard.vue
+└── views/                          # 페이지 단위 컴포넌트 보관 폴더
+    ├── WeatherHomeView.vue         # 메인 날씨 대시보드 화면
+    ├── WeatherAboutView.vue        # 서비스 소개용 정적 페이지
+    ├── WeatherDetailView.vue       # :cityId를 사용하는 동적 상세 페이지
+    └── NotFoundView.vue            # 정의되지 않은 경로의 Catch-all 페이지
+```
+
+**과제 요구사항**
+
+- [ ] `[과제 4-1]` Vue Router에 라우트 지연 로딩과 Catch-all Route를 적용합니다.
+- [ ] `[과제 4-2]` `App.vue`에 `RouterLink`를 사용하는 Navigation Bar와 메인 콘텐츠 영역인 `RouterView`를 배치합니다.
+- [ ] `[과제 4-3]` `WeatherParent`를 참고해 `/` 경로의 `WeatherHomeView.vue`를 작성합니다.
+  - 상세보기 버튼의 `window.alert()`를 제거합니다.
+  - `router.push('/weather/' + id)`를 사용해 상세 페이지로 이동합니다.
+- [ ] `[과제 4-4]` `WeatherDetailView.vue`에서 지역별 상세 기상관측 정보를 표시합니다.
+  - 도시 코드에 해당하는 Mock Data를 임시로 사용합니다.
+  - 동적 경로의 `cityId`를 기준으로 Mount 시점에 Mock Data에서 도시 객체를 선택합니다.
+- [ ] `[과제 4-5]` `WeatherAboutView.vue`에 서비스 소개 내용과 메인 대시보드로 돌아가는 기능을 작성합니다.
+- [ ] `[과제 4-6]` 정의된 View 외에 추가 View를 작성하고 라우팅합니다.
 
 ## 커밋 컨벤션
 
