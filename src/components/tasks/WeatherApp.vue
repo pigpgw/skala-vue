@@ -27,6 +27,7 @@ const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날
     <div class="weather-list">
       <div
         v-for="item in weatherList"
+        v-show="item.name.includes(searchQuery.trim())"
         :key="item.id"
         class="weather-card"
         @click="selectedCityInfo = `${item.name}이 선택되었습니다.`"
@@ -34,6 +35,14 @@ const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날
         <div>{{ item.name }}</div>
         <div>현재 날씨: {{ item.status }}</div>
         <div>기온: {{ item.temp }}°C</div>
+        <div>습도: {{ item.humidity }}%</div>
+        <div>풍속: {{ item.windSpeed }}m/s</div>
+        <div>미세먼지: {{ item.dust }}</div>
+
+        <div v-if="item.dust === '나쁨'">외출할 때 마스크를 착용하세요.</div>
+        <div v-else-if="item.dust === '보통'">미세먼지 농도가 보통입니다.</div>
+        <div v-else>공기가 깨끗합니다.</div>
+
         <div v-if="item.temp >= 25">25도 이상으로 덥습니다.</div>
         <div v-else>25도 미만으로 선선합니다.</div>
 
@@ -42,3 +51,13 @@ const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날
     </div>
   </main>
 </template>
+
+<style scoped>
+.weather-list {
+  border: 1px solid #dcdfe6;
+}
+
+.weather-card {
+  border: 1px solid #e5e7eb;
+}
+</style>
