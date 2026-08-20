@@ -3,11 +3,18 @@ import { ref } from 'vue'
 import { weatherData } from '@/data/weatherData'
 
 const weatherList = ref(weatherData)
+const searchQuery = ref('')
 </script>
 
 <template>
   <main>
     <div>Weather App</div>
+
+    <div>
+      <div>검색할 도시</div>
+      <input type="text" :value="searchQuery" @input="(e) => (searchQuery = e.target.value)" placeholder="도시명을 입력하세요" />
+      <div>입력한 도시: {{ searchQuery }}</div>
+    </div>
 
     <div class="weather-list">
       <div v-for="item in weatherList" :key="item.id" class="weather-card">
