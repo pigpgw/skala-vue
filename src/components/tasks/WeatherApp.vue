@@ -10,6 +10,7 @@ const filteredWeatherList = computed(() => weatherList.value.filter((item) => it
 const searchResultCount = computed(() => filteredWeatherList.value.length)
 const averageTemperature = computed(() => (weatherList.value.reduce((sum, item) => sum + item.temp, 0) / weatherList.value.length).toFixed(1))
 const averageHumidity = computed(() => (weatherList.value.reduce((sum, item) => sum + item.humidity, 0) / weatherList.value.length).toFixed(1))
+const averageWindSpeed = computed(() => (weatherList.value.reduce((sum, item) => sum + item.windSpeed, 0) / weatherList.value.length).toFixed(1))
 
 const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 
@@ -24,6 +25,9 @@ watch(averageTemperature, (newValue, oldValue) =>
 )
 watch(averageHumidity, (newValue, oldValue) =>
   console.log(`[watch 자동 호출] 전국 평균 습도가 변경되었습니다. ${oldValue}% -> ${newValue}%`),
+)
+watch(averageWindSpeed, (newValue, oldValue) =>
+  console.log(`[watch 자동 호출] 전국 평균 풍속이 변경되었습니다. ${oldValue}m/s -> ${newValue}m/s`),
 )
 
 watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${searchQuery.value}`))
@@ -44,6 +48,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       <div>전국 날씨 통계</div>
       <div>평균 기온: {{ averageTemperature }}°C</div>
       <div>평균 습도: {{ averageHumidity }}%</div>
+      <div>평균 풍속: {{ averageWindSpeed }}m/s</div>
     </div>
 
     <div>
