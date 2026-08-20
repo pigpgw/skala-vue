@@ -7,11 +7,15 @@ const selectedCityInfo = ref('카드를 클릭하거나 검색해 보세요.')
 const weatherList = ref(weatherData)
 
 const filteredWeatherList = computed(() => weatherList.value.filter((item) => item.name.includes(searchQuery.value.trim())))
+const searchResultCount = computed(() => filteredWeatherList.value.length)
 
 const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 
 watch(selectedCityInfo, (newValue, oldValue) =>
   console.log(`[watch 자동 호출] 상태 바 문구가 업데이트 되었습니다. ${oldValue} -> ${newValue}`),
+)
+watch(searchResultCount, (newValue, oldValue) =>
+  console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`),
 )
 
 watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${searchQuery.value}`))
@@ -25,6 +29,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       <div>검색할 도시</div>
       <input type="text" :value="searchQuery" @input="(e) => (searchQuery = e.target.value)" placeholder="도시명을 입력하세요" />
       <div>입력한 도시: {{ searchQuery }}</div>
+      <div>검색 결과: {{ searchResultCount }}개</div>
     </div>
 
     <div>
