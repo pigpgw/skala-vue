@@ -10,7 +10,7 @@
  * @property {string} dust
  */
 
-defineProps({
+const props = defineProps({
   weatherItem: {
     type: /** @type {import('vue').PropType<WeatherItem>} */ (Object),
     required: true,
@@ -18,10 +18,18 @@ defineProps({
 })
 
 const emit = defineEmits(['select-card', 'click-detail'])
+
+const handleCardSelect = () => {
+  emit('select-card', `${props.weatherItem.name}이 선택되었습니다.`)
+}
+
+const handleDetailClick = () => {
+  emit('click-detail', props.weatherItem.id)
+}
 </script>
 
 <template>
-  <div class="weather-card" @click="emit('select-card', `${weatherItem.name}이 선택되었습니다.`)">
+  <div class="weather-card" @click="handleCardSelect">
     <div>{{ weatherItem.name }}</div>
     <div>현재 날씨: {{ weatherItem.status }}</div>
     <div>기온: {{ weatherItem.temp }}°C</div>
@@ -36,7 +44,7 @@ const emit = defineEmits(['select-card', 'click-detail'])
     <div v-if="weatherItem.temp >= 25">25도 이상으로 덥습니다.</div>
     <div v-else>25도 미만으로 선선합니다.</div>
 
-    <button @click.stop="emit('click-detail', weatherItem.name, weatherItem.status)">날씨 자세히 보기</button>
+    <button @click.stop="handleDetailClick">날씨 자세히 보기</button>
   </div>
 </template>
 

@@ -21,8 +21,11 @@ defineProps({
 
 const emit = defineEmits(['select-card', 'click-detail'])
 
-/** @param {string} name @param {string} status */
-const handleDetailClick = (name, status) => emit('click-detail', name, status)
+/** @param {string} message */
+const handleCardSelect = (message) => emit('select-card', message)
+/** @param {string} cityId */
+const handleDetailClick = (cityId) => emit('click-detail', cityId)
+
 </script>
 
 <template>
@@ -31,7 +34,7 @@ const handleDetailClick = (name, status) => emit('click-detail', name, status)
       v-for="weatherItem in weatherList"
       :key="weatherItem.id"
       :weather-item="weatherItem"
-      @select-card="emit('select-card', $event)"
+      @select-card="handleCardSelect"
       @click-detail="handleDetailClick"
     />
   </div>

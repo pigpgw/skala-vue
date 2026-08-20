@@ -12,8 +12,8 @@ Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적�
 ## 과제 파일
 
 - 과제 컴포넌트는 `src/components/tasks/`에서 관리합니다.
-- 날씨 과제의 상태 관리와 화면 조립은 `src/components/tasks/WeatherDashboard.vue`가 담당합니다.
-- `src/App.vue`에서 `WeatherDashboard.vue`를 불러와 화면에 렌더링합니다.
+- 날씨 과제의 상태 관리, 화면 조립과 상세 페이지 이동은 `/` 경로의 `src/views/WeatherHomeView.vue`가 담당합니다.
+- `src/App.vue`의 `RouterView`에서 현재 경로에 해당하는 View를 렌더링합니다.
 - 날씨 더미 데이터는 `src/data/weatherData.js`에서 별도로 관리합니다.
 
 ```text
@@ -27,8 +27,9 @@ src/
 │       ├── NationalWeatherPanel.vue
 │       ├── WeatherCard.vue
 │       ├── WeatherCardList.vue
-│       ├── WeatherDashboard.vue
 │       └── WeatherHeader.vue
+├── views/
+│   └── WeatherHomeView.vue
 └── data/
     └── weatherData.js
 ```
@@ -63,7 +64,7 @@ src/
 
 ### 2026-08-19
 
-과제 1과 과제 2는 현재 대시보드 컴포넌트인 `WeatherDashboard.vue`에서 단계적으로 개발했습니다.
+과제 1과 과제 2의 반응형 날씨 기능은 현재 `/` 경로의 `WeatherHomeView.vue`에서 이어서 사용합니다.
 
 #### 과제 1 - Weather Mockup
 
@@ -113,12 +114,12 @@ src/
 
 | 과제 요구사항 | 최종 구조 | 변경 이유와 적용 방법 |
 | --- | --- | --- |
-| `WeatherParent.vue` | `WeatherDashboard.vue` | 부모·자식 관계보다 날씨 화면 전체를 구성하는 역할을 드러내기 위해 이름을 변경했습니다. 기존 `ref`, `computed`, `watch`, `watchEffect`는 모두 이 컴포넌트에 유지했습니다. |
+| `WeatherParent.vue` | 과제 3에서는 `WeatherDashboard.vue`, 과제 4에서는 `WeatherHomeView.vue` | 과제 3에서는 날씨 화면 역할을 드러내도록 이름을 변경했습니다. 과제 4에서 `/` 경로의 View가 같은 역할을 중복해 재사용되지 않는 중간 컴포넌트를 제거하고, 기존 `ref`, `computed`, `watch`, `watchEffect`를 `WeatherHomeView`로 이동했습니다. |
 | `BaseDashboardCard.vue` | `DashboardCard.vue` | 특정 상속 구조로 오해할 수 있는 `Base`를 제거하고 공통 대시보드 박스라는 역할을 표현했습니다. `<slot>`과 공통 박스 스타일을 유지하고 검색, 전국 통계, 선택 결과와 날씨 목록 영역을 감싸도록 적용했습니다. |
 | `SearchBar.vue` | `CitySearchPanel.vue` | 검색 입력뿐 아니라 검색 결과 개수와 상태 문구도 함께 표시하므로 `Bar`보다 `Panel`이 실제 책임에 적합하다고 판단했습니다. 검색 관련 값은 props로 받고 입력값은 기존 `update-query` 이벤트로 부모에 전달합니다. |
-| `WeatherCard`를 Slot에 직접 배치 | `DashboardCard` 안에 `WeatherCardList`를 배치 | 반복 렌더링과 빈 검색 결과 처리는 개별 카드가 아닌 목록의 책임이므로 `WeatherCardList.vue`로 분리했습니다. 목록이 각 도시 객체를 `WeatherCard`에 props로 전달하고, 카드의 `select-card`와 `click-detail` 이벤트를 `WeatherDashboard`까지 다시 전달해 기존 동작을 유지했습니다. |
-| 필수 4개 컴포넌트 | 총 8개 과제 컴포넌트 | 과제 3-7의 추가 분리 항목에 따라 `WeatherCardList`, `NationalWeatherPanel`, `CitySelectionStatusPanel`, `WeatherHeader`를 추가했습니다. 부모는 반응형 상태를 유지하고 각 자식은 표시와 이벤트 전달만 담당하도록 책임을 나눴습니다. |
-| 각 컴포넌트의 `<style scoped>` 분리 | 디자인이 있는 컴포넌트에만 `<style scoped>` 적용 | `WeatherDashboard`, `DashboardCard`, `CitySearchPanel`, `WeatherCard`, `WeatherHeader`의 전용 스타일은 각각 분리했습니다. 별도 스타일이 없는 추가 컴포넌트는 빈 `<style>`을 만들지 않고 공통 박스 디자인을 `DashboardCard`에서 적용했습니다. |
+| `WeatherCard`를 Slot에 직접 배치 | `DashboardCard` 안에 `WeatherCardList`를 배치 | 반복 렌더링과 빈 검색 결과 처리는 개별 카드가 아닌 목록의 책임이므로 `WeatherCardList.vue`로 분리했습니다. 목록이 각 도시 객체를 `WeatherCard`에 props로 전달하고, 카드의 `select-card` 이벤트와 `click-detail` 이벤트의 도시 ID는 `WeatherHomeView`까지 전달하도록 구성했습니다. |
+| 필수 4개 컴포넌트 | 과제 3에서 8개, 과제 4에서 7개 과제 컴포넌트와 Route View | 과제 3-7에 따라 `WeatherCardList`, `NationalWeatherPanel`, `CitySelectionStatusPanel`, `WeatherHeader`를 추가했습니다. 과제 4에서는 역할이 겹치는 `WeatherDashboard`를 `WeatherHomeView`에 합쳐 중복 계층을 제거했습니다. |
+| 각 컴포넌트의 `<style scoped>` 분리 | 디자인이 있는 컴포넌트와 View에만 `<style scoped>` 적용 | `WeatherHomeView`, `DashboardCard`, `CitySearchPanel`, `WeatherCard`, `WeatherHeader`의 전용 스타일은 각각 분리했습니다. 별도 스타일이 없는 추가 컴포넌트는 빈 `<style>`을 만들지 않고 공통 박스 디자인을 `DashboardCard`에서 적용했습니다. |
 
 ### 2026-08-21
 
@@ -142,10 +143,9 @@ src/
 │       ├── NationalWeatherPanel.vue
 │       ├── WeatherCard.vue
 │       ├── WeatherCardList.vue
-│       ├── WeatherDashboard.vue
 │       └── WeatherHeader.vue
 └── views/                          # 페이지 단위 컴포넌트 보관 폴더
-    ├── WeatherHomeView.vue         # WeatherDashboard를 사용하는 메인 화면
+    ├── WeatherHomeView.vue         # 상태, 화면 조립과 라우터 이동을 담당하는 메인 화면
     ├── WeatherAboutView.vue        # 서비스 소개용 정적 페이지
     ├── WeatherDetailView.vue       # :cityId를 사용하는 동적 상세 페이지
     └── NotFoundView.vue            # 정의되지 않은 경로의 Catch-all 페이지
@@ -156,12 +156,14 @@ src/
 - [x] `[과제 4-1]` `router/index.js`에 과제 3의 날씨 화면으로 이어지는 라우트를 정의하고, 메인 화면을 제외한 View에 지연 로딩과 Catch-all Route를 적용했습니다.
   - `src/vite-env.d.ts`에서 Vite Client 타입을 불러와 `import.meta.env.BASE_URL`의 타입을 인식하도록 설정했습니다.
 - [x] `[과제 4-2]` `App.vue`에 홈과 서비스 소개로 이동하는 `RouterLink` Navigation Bar를 추가하고, 메인 콘텐츠 영역에 현재 경로의 View를 표시하는 `RouterView`를 배치했습니다.
-- [ ] `[과제 4-3]` `WeatherParent`를 참고해 `/` 경로의 `WeatherHomeView.vue`를 작성합니다.
-  - [x] 과제 3의 `WeatherDashboard`를 `WeatherHomeView`에서 렌더링하도록 연결했습니다.
-  - 상세보기 버튼의 `window.alert()`를 제거합니다.
-  - `router.push('/weather/' + id)`를 사용해 상세 페이지로 이동합니다.
-- [ ] `[과제 4-4]` `WeatherDetailView.vue`에서 지역별 상세 기상관측 정보를 표시합니다.
-  - 도시 코드에 해당하는 Mock Data를 임시로 사용합니다.
+- [x] `[과제 4-3]` 과제 3의 반응형 상태와 화면 조립을 `/` 경로의 `WeatherHomeView.vue`로 이동했습니다.
+  - 재사용되지 않으면서 `WeatherHomeView`와 역할이 겹치던 `WeatherDashboard`를 제거해 중간 이벤트 전달 단계를 줄였습니다.
+  - 상세보기 버튼의 `window.alert()`를 제거하고 도시 ID를 컴포넌트 이벤트로 전달합니다.
+  - `WeatherHomeView`에서 `useRouter()`와 `router.push('/weather/' + id)`를 사용해 상세 페이지로 이동합니다.
+  - `WeatherCard`, `WeatherCardList`, `WeatherHomeView`의 템플릿에서 직접 처리하던 이벤트 전달, 상태 변경과 라우터 이동을 역할이 드러나는 함수로 분리해 각 `script` 영역에서 관리합니다.
+  - 도시가 추가되더라도 ID가 겹치지 않도록 Mock Data의 도시 ID를 UUID로 구성하고 카드 `key`, 상세 경로와 데이터 조회에 동일하게 사용합니다.
+- [x] `[과제 4-4]` `WeatherDetailView.vue`에서 지역별 상세 기상관측 정보를 표시합니다.
+  - 과제 3부터 사용한 공용 `weatherData`를 Mock Data로 활용합니다.
   - 동적 경로의 `cityId`를 기준으로 Mount 시점에 Mock Data에서 도시 객체를 선택합니다.
 - [ ] `[과제 4-5]` `WeatherAboutView.vue`에 서비스 소개 내용과 메인 대시보드로 돌아가는 기능을 작성합니다.
 - [ ] `[과제 4-6]` 정의된 View 외에 추가 View를 작성하고 라우팅합니다.
