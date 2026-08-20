@@ -3,6 +3,7 @@ import { computed, ref, watch, watchEffect } from 'vue'
 import { weatherData } from '@/data/weatherData'
 import BaseDashboardCard from './BaseDashboardCard.vue'
 import SearchBar from './SearchBar.vue'
+import NationalWeatherSummary from './NationalWeatherSummary.vue'
 import WeatherCardList from './WeatherCardList.vue'
 
 const searchQuery = ref('')
@@ -58,17 +59,17 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       <label><input type="checkbox" v-model="showNationalSummary" /> 전국 통계 보기</label>
     </BaseDashboardCard>
 
-    <div v-show="showNationalSummary">
-      <div>전국 날씨 통계</div>
-      <div>평균 기온: {{ averageTemperature.toFixed(1) }}°C</div>
-      <div>평균 습도: {{ averageHumidity.toFixed(1) }}%</div>
-      <div>평균 풍속: {{ averageWindSpeed.toFixed(1) }}m/s</div>
-      <div>미세먼지 나쁨 도시: {{ badDustCityCount }}개</div>
-      <div>가장 더운 도시: {{ hottestCity.name }} {{ hottestCity.temp }}°C</div>
-      <div>가장 추운 도시: {{ coldestCity.name }} {{ coldestCity.temp }}°C</div>
-      <div>가장 습한 도시: {{ mostHumidCity.name }} {{ mostHumidCity.humidity }}%</div>
-      <div>풍속이 가장 강한 도시: {{ strongestWindCity.name }} {{ strongestWindCity.windSpeed }}m/s</div>
-    </div>
+    <NationalWeatherSummary
+      :show-national-summary="showNationalSummary"
+      :average-temperature="averageTemperature"
+      :average-humidity="averageHumidity"
+      :average-wind-speed="averageWindSpeed"
+      :bad-dust-city-count="badDustCityCount"
+      :hottest-city="hottestCity"
+      :coldest-city="coldestCity"
+      :most-humid-city="mostHumidCity"
+      :strongest-wind-city="strongestWindCity"
+    />
 
     <div>
       <div>선택 결과</div>
