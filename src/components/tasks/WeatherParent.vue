@@ -10,9 +10,9 @@ const showNationalSummary = ref(true)
 
 const filteredWeatherList = computed(() => weatherList.value.filter((item) => item.name.includes(searchQuery.value.trim())))
 const searchResultCount = computed(() => filteredWeatherList.value.length)
-const averageTemperature = computed(() => (weatherList.value.reduce((sum, item) => sum + item.temp, 0) / weatherList.value.length).toFixed(1))
-const averageHumidity = computed(() => (weatherList.value.reduce((sum, item) => sum + item.humidity, 0) / weatherList.value.length).toFixed(1))
-const averageWindSpeed = computed(() => (weatherList.value.reduce((sum, item) => sum + item.windSpeed, 0) / weatherList.value.length).toFixed(1))
+const averageTemperature = computed(() => weatherList.value.reduce((sum, item) => sum + item.temp, 0) / weatherList.value.length)
+const averageHumidity = computed(() => weatherList.value.reduce((sum, item) => sum + item.humidity, 0) / weatherList.value.length)
+const averageWindSpeed = computed(() => weatherList.value.reduce((sum, item) => sum + item.windSpeed, 0) / weatherList.value.length)
 const badDustCityCount = computed(() => weatherList.value.filter((item) => item.dust === '나쁨').length)
 const hottestCity = computed(() => weatherList.value.reduce((hottest, item) => (item.temp > hottest.temp ? item : hottest)))
 const coldestCity = computed(() => weatherList.value.reduce((coldest, item) => (item.temp < coldest.temp ? item : coldest)))
@@ -67,9 +67,9 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
 
     <div v-show="showNationalSummary">
       <div>전국 날씨 통계</div>
-      <div>평균 기온: {{ averageTemperature }}°C</div>
-      <div>평균 습도: {{ averageHumidity }}%</div>
-      <div>평균 풍속: {{ averageWindSpeed }}m/s</div>
+      <div>평균 기온: {{ averageTemperature.toFixed(1) }}°C</div>
+      <div>평균 습도: {{ averageHumidity.toFixed(1) }}%</div>
+      <div>평균 풍속: {{ averageWindSpeed.toFixed(1) }}m/s</div>
       <div>미세먼지 나쁨 도시: {{ badDustCityCount }}개</div>
       <div>가장 더운 도시: {{ hottestCity.name }} {{ hottestCity.temp }}°C</div>
       <div>가장 추운 도시: {{ coldestCity.name }} {{ coldestCity.temp }}°C</div>
