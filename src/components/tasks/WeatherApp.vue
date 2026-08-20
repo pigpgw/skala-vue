@@ -32,7 +32,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       <div>{{ selectedCityInfo }}</div>
     </div>
 
-    <div class="weather-list">
+    <div v-if="filteredWeatherList.length > 0" class="weather-list">
       <div
         v-for="item in filteredWeatherList"
         :key="item.id"
@@ -56,6 +56,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
         <button @click.stop="showDetail(item.name, item.status)">날씨 자세히 보기</button>
       </div>
     </div>
+    <div v-else>검색 결과와 일치하는 도시가 없습니다.</div>
   </main>
 </template>
 
