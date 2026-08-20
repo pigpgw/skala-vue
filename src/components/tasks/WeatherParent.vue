@@ -2,7 +2,7 @@
 import { computed, ref, watch, watchEffect } from 'vue'
 import { weatherData } from '@/data/weatherData'
 import BaseDashboardCard from './BaseDashboardCard.vue'
-import SearchBar from './SearchBar.vue'
+import SearchPanel from './SearchPanel.vue'
 import NationalWeatherSummary from './NationalWeatherSummary.vue'
 import WeatherCardList from './WeatherCardList.vue'
 
@@ -53,9 +53,12 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
     <div>Weather App</div>
 
     <BaseDashboardCard>
-      <SearchBar :search-query="searchQuery" @update-query="searchQuery = $event" />
-      <div>검색 결과 개수: {{ searchResultCount }}개</div>
-      <div>검색 상태: {{ searchStatusMessage }}</div>
+      <SearchPanel
+        :search-query="searchQuery"
+        :search-result-count="searchResultCount"
+        :search-status-message="searchStatusMessage"
+        @update-query="searchQuery = $event"
+      />
       <label><input type="checkbox" v-model="showNationalSummary" /> 전국 통계 보기</label>
     </BaseDashboardCard>
 
