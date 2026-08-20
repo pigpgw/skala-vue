@@ -1,10 +1,12 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { weatherData } from '@/data/weatherData'
 
 const searchQuery = ref('')
 const selectedCityInfo = ref('카드를 클릭하거나 검색해 보세요.')
 const weatherList = ref(weatherData)
+
+const filteredWeatherList = computed(() => weatherList.value.filter((item) => item.name.includes(searchQuery.value.trim())))
 
 const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 </script>
@@ -26,8 +28,7 @@ const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날
 
     <div class="weather-list">
       <div
-        v-for="item in weatherList"
-        v-show="item.name.includes(searchQuery.trim())"
+        v-for="item in filteredWeatherList"
         :key="item.id"
         class="weather-card"
         @click="selectedCityInfo = `${item.name}이 선택되었습니다.`"
