@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, watch, watchEffect } from 'vue'
 import { weatherData } from '@/data/weatherData'
+import BaseDashboardCard from './BaseDashboardCard.vue'
 
 const searchQuery = ref('')
 const selectedCityInfo = ref('카드를 클릭하거나 검색해 보세요.')
@@ -43,14 +44,14 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
   <main>
     <div>Weather App</div>
 
-    <div>
+    <BaseDashboardCard>
       <div>검색할 도시</div>
       <input type="text" :value="searchQuery" @input="(e) => (searchQuery = e.target.value)" placeholder="도시명을 입력하세요" />
       <div>입력한 도시: {{ searchQuery }}</div>
       <div>검색 결과 개수: {{ searchResultCount }}개</div>
       <div>검색 상태: {{ searchStatusMessage }}</div>
       <label><input type="checkbox" v-model="showNationalSummary" /> 전국 통계 보기</label>
-    </div>
+    </BaseDashboardCard>
 
     <div v-show="showNationalSummary">
       <div>전국 날씨 통계</div>
@@ -69,34 +70,32 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       <div>{{ selectedCityInfo }}</div>
     </div>
 
-    <div v-if="filteredWeatherList.length > 0" class="weather-list">
-      <div v-for="item in filteredWeatherList" :key="item.id" class="weather-card" @click="selectedCityInfo = `${item.name}이 선택되었습니다.`">
-        <div>{{ item.name }}</div>
-        <div>현재 날씨: {{ item.status }}</div>
-        <div>기온: {{ item.temp }}°C</div>
-        <div>습도: {{ item.humidity }}%</div>
-        <div>풍속: {{ item.windSpeed }}m/s</div>
-        <div>미세먼지: {{ item.dust }}</div>
+    <BaseDashboardCard v-if="filteredWeatherList.length > 0">
+      <div class="weather-list">
+        <div v-for="item in filteredWeatherList" :key="item.id" class="weather-card" @click="selectedCityInfo = `${item.name}이 선택되었습니다.`">
+          <div>{{ item.name }}</div>
+          <div>현재 날씨: {{ item.status }}</div>
+          <div>기온: {{ item.temp }}°C</div>
+          <div>습도: {{ item.humidity }}%</div>
+          <div>풍속: {{ item.windSpeed }}m/s</div>
+          <div>미세먼지: {{ item.dust }}</div>
 
-        <div v-if="item.dust === '나쁨'">외출할 때 마스크를 착용하세요.</div>
-        <div v-else-if="item.dust === '보통'">미세먼지 농도가 보통입니다.</div>
-        <div v-else>공기가 깨끗합니다.</div>
+          <div v-if="item.dust === '나쁨'">외출할 때 마스크를 착용하세요.</div>
+          <div v-else-if="item.dust === '보통'">미세먼지 농도가 보통입니다.</div>
+          <div v-else>공기가 깨끗합니다.</div>
 
-        <div v-if="item.temp >= 25">25도 이상으로 덥습니다.</div>
-        <div v-else>25도 미만으로 선선합니다.</div>
+          <div v-if="item.temp >= 25">25도 이상으로 덥습니다.</div>
+          <div v-else>25도 미만으로 선선합니다.</div>
 
-        <button @click.stop="showDetail(item.name, item.status)">날씨 자세히 보기</button>
+          <button @click.stop="showDetail(item.name, item.status)">날씨 자세히 보기</button>
+        </div>
       </div>
-    </div>
+    </BaseDashboardCard>
     <div v-else>검색 결과와 일치하는 도시가 없습니다.</div>
   </main>
 </template>
 
 <style scoped>
-.weather-list {
-  border: 1px solid #dcdfe6;
-}
-
 .weather-card {
   border: 1px solid #e5e7eb;
 }
