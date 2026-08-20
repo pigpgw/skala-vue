@@ -49,7 +49,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
 </script>
 
 <template>
-  <main>
+  <main class="weather-parent">
     <div>Weather App</div>
 
     <BaseDashboardCard>
@@ -86,3 +86,9 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
     <div v-else>검색 결과와 일치하는 도시가 없습니다.</div>
   </main>
 </template>
+
+<style scoped>
+.weather-parent {
+  padding: 16px;
+}
+</style>
