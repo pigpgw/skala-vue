@@ -1,11 +1,20 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 import { weatherData } from '@/data/weatherData'
+import { useConfigStore } from '@/stores/configStore'
 
 const route = useRoute()
+const configStore = useConfigStore()
 const cityData = ref()
+
+const displayTemperature = computed(() => {
+  const rawTemperature = cityData.value?.temp
+  if (typeof rawTemperature !== 'number') return null
+  if (configStore.unit === 'fahrenheit') return Math.round((rawTemperature * 9) / 5 + 32)
+  return rawTemperature
+})
 
 onMounted(() => {
   const cityId = route.params.cityId
@@ -20,7 +29,7 @@ onMounted(() => {
 
     <div v-if="cityData">
       <h3>{{ cityData.name }}</h3>
-      <p>기온: {{ cityData.temp }}°C</p>
+      <p>기온: {{ displayTemperature }}{{ configStore.unitSymbol }}</p>
       <p>현재 날씨: {{ cityData.status }}</p>
       <p>습도: {{ cityData.humidity }}%</p>
       <p>풍속: {{ cityData.windSpeed }}m/s</p>
