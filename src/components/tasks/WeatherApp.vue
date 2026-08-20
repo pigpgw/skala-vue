@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch, watchEffect } from 'vue'
 import { weatherData } from '@/data/weatherData'
 
 const searchQuery = ref('')
@@ -9,6 +9,12 @@ const weatherList = ref(weatherData)
 const filteredWeatherList = computed(() => weatherList.value.filter((item) => item.name.includes(searchQuery.value.trim())))
 
 const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
+
+watch(selectedCityInfo, (newValue, oldValue) =>
+  console.log(`[watch 자동 호출] 상태 바 문구가 업데이트 되었습니다. ${oldValue} -> ${newValue}`),
+)
+
+watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${searchQuery.value}`))
 </script>
 
 <template>
