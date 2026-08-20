@@ -2,9 +2,9 @@
 import { ref } from 'vue'
 import { weatherData } from '@/data/weatherData'
 
-const weatherList = ref(weatherData)
 const searchQuery = ref('')
 const selectedCityInfo = ref('카드를 클릭하거나 검색해 보세요.')
+const weatherList = ref(weatherData)
 
 const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 </script>
