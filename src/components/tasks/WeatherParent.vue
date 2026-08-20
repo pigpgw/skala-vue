@@ -22,7 +22,19 @@ const searchStatusMessage = computed(() =>
   searchQuery.value.trim() ? `"${searchQuery.value.trim()}" 검색 결과 ${searchResultCount.value}개를 표시하고 있습니다.` : `전체 도시 ${searchResultCount.value}개를 표시하고 있습니다.`,
 )
 
+/**
+ *
+ * @param {string} cityName
+ * @param {string} status
+ */
 const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
+
+/** @param {Event} event */
+const handleSearchInput = (event) => {
+  const input = event.currentTarget
+  if (!(input instanceof HTMLInputElement)) return
+  searchQuery.value = input.value
+}
 
 watch(selectedCityInfo, (newValue, oldValue) => console.log(`[watch 자동 호출] 상태 바 문구가 업데이트 되었습니다. ${oldValue} -> ${newValue}`))
 watch(showNationalSummary, (newValue) => console.log(`[watch 자동 호출] 전국 통계 표시 여부가 변경되었습니다. ${newValue}`))
@@ -46,7 +58,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
 
     <BaseDashboardCard>
       <div>검색할 도시</div>
-      <input type="text" :value="searchQuery" @input="(e) => (searchQuery = e.target.value)" placeholder="도시명을 입력하세요" />
+      <input type="text" :value="searchQuery" @input="handleSearchInput" placeholder="도시명을 입력하세요" />
       <div>입력한 도시: {{ searchQuery }}</div>
       <div>검색 결과 개수: {{ searchResultCount }}개</div>
       <div>검색 상태: {{ searchStatusMessage }}</div>
