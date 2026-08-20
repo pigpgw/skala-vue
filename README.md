@@ -109,17 +109,29 @@ src/
 - `[과제 3-7 임포트 경로 정리]` Vite와 `jsconfig.json`에 설정된 `@` 별칭을 사용해 `App.vue`와 `src/components/tasks`의 과제 코드 임포트를 절대 경로로 통일했습니다. 임포트는 외부 패키지와 내부 모듈 사이를 한 줄 띄우고, 같은 그룹 안에서는 이름순으로 정리했습니다.
 - `[과제 3-7 코드 구조 정리]` 과제 컴포넌트의 선언 순서를 임포트, props/emits, 원본 반응형 상태, 파생 상태, 이벤트 함수, watch/watchEffect 순으로 통일했습니다. 같은 종류의 선언은 글자 길이가 아니라 데이터 의존 관계와 화면의 검색, 전국 통계, 선택 결과 흐름에 맞춰 배치했습니다.
 
+##### 과제 요구사항과 최종 구조의 차이
+
+| 과제 요구사항 | 최종 구조 | 변경 이유와 적용 방법 |
+| --- | --- | --- |
+| `WeatherParent.vue` | `WeatherDashboard.vue` | 부모·자식 관계보다 날씨 화면 전체를 구성하는 역할을 드러내기 위해 이름을 변경했습니다. 기존 `ref`, `computed`, `watch`, `watchEffect`는 모두 이 컴포넌트에 유지했습니다. |
+| `BaseDashboardCard.vue` | `DashboardCard.vue` | 특정 상속 구조로 오해할 수 있는 `Base`를 제거하고 공통 대시보드 박스라는 역할을 표현했습니다. `<slot>`과 공통 박스 스타일을 유지하고 검색, 전국 통계, 선택 결과와 날씨 목록 영역을 감싸도록 적용했습니다. |
+| `SearchBar.vue` | `CitySearchPanel.vue` | 검색 입력뿐 아니라 검색 결과 개수와 상태 문구도 함께 표시하므로 `Bar`보다 `Panel`이 실제 책임에 적합하다고 판단했습니다. 검색 관련 값은 props로 받고 입력값은 기존 `update-query` 이벤트로 부모에 전달합니다. |
+| `WeatherCard`를 Slot에 직접 배치 | `DashboardCard` 안에 `WeatherCardList`를 배치 | 반복 렌더링과 빈 검색 결과 처리는 개별 카드가 아닌 목록의 책임이므로 `WeatherCardList.vue`로 분리했습니다. 목록이 각 도시 객체를 `WeatherCard`에 props로 전달하고, 카드의 `select-card`와 `click-detail` 이벤트를 `WeatherDashboard`까지 다시 전달해 기존 동작을 유지했습니다. |
+| 필수 4개 컴포넌트 | 총 8개 과제 컴포넌트 | 과제 3-7의 추가 분리 항목에 따라 `WeatherCardList`, `NationalWeatherPanel`, `CitySelectionStatusPanel`, `WeatherHeader`를 추가했습니다. 부모는 반응형 상태를 유지하고 각 자식은 표시와 이벤트 전달만 담당하도록 책임을 나눴습니다. |
+| 각 컴포넌트의 `<style scoped>` 분리 | 디자인이 있는 컴포넌트에만 `<style scoped>` 적용 | `WeatherDashboard`, `DashboardCard`, `CitySearchPanel`, `WeatherCard`, `WeatherHeader`의 전용 스타일은 각각 분리했습니다. 별도 스타일이 없는 추가 컴포넌트는 빈 `<style>`을 만들지 않고 공통 박스 디자인을 `DashboardCard`에서 적용했습니다. |
+
 ## 커밋 컨벤션
 
 커밋 메시지는 [Conventional Commits](https://www.conventionalcommits.org/ko/v1.0.0/) 규칙을 따릅니다.
 
 ```text
-type: 한글 제목
+type: [과제 n-n] 한글 제목
 
 한글 본문
 ```
 
 - `type`은 영어 소문자로 작성합니다.
+- 과제 커밋 제목에는 작업 단계에 맞는 `[과제 n-n]`을 표시합니다.
 - 제목과 본문은 한글로 작성합니다.
 - 본문은 제목 다음에 한 줄을 비우고 작성합니다.
 
@@ -138,9 +150,9 @@ type: 한글 제목
 ### 예시
 
 ```text
-feat: 회원가입 폼 유효성 검사를 추가
+feat: [과제 3-3] 도시 검색 컴포넌트를 분리
 
-이메일과 비밀번호 입력값을 확인하고 오류 메시지를 표시하도록 수정했습니다.
+검색어를 props로 전달받고 update-query 이벤트로 부모에 전달하도록 구성했습니다.
 ```
 
 ## 실행 방법
