@@ -155,8 +155,9 @@ src/
 
 - [x] `[과제 4-1]` `router/index.js`에 과제 3의 날씨 화면으로 이어지는 라우트를 정의하고, 메인 화면을 제외한 View에 지연 로딩과 Catch-all Route를 적용했습니다.
   - `src/vite-env.d.ts`에서 Vite Client 타입을 불러와 `import.meta.env.BASE_URL`의 타입을 인식하도록 설정했습니다.
-- [ ] `[과제 4-2]` `App.vue`에 `RouterLink`를 사용하는 Navigation Bar와 메인 콘텐츠 영역인 `RouterView`를 배치합니다.
+- [x] `[과제 4-2]` `App.vue`에 홈과 서비스 소개로 이동하는 `RouterLink` Navigation Bar를 추가하고, 메인 콘텐츠 영역에 현재 경로의 View를 표시하는 `RouterView`를 배치했습니다.
 - [ ] `[과제 4-3]` `WeatherParent`를 참고해 `/` 경로의 `WeatherHomeView.vue`를 작성합니다.
+  - [x] 과제 3의 `WeatherDashboard`를 `WeatherHomeView`에서 렌더링하도록 연결했습니다.
   - 상세보기 버튼의 `window.alert()`를 제거합니다.
   - `router.push('/weather/' + id)`를 사용해 상세 페이지로 이동합니다.
 - [ ] `[과제 4-4]` `WeatherDetailView.vue`에서 지역별 상세 기상관측 정보를 표시합니다.
