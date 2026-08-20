@@ -135,12 +135,17 @@ src/
 ├── router/
 │   └── index.js                    # routes 배열, Lazy Loading과 Catch-all Route 설정
 ├── components/
-│   └── exercise/                   # 실습용 부품 컴포넌트 격리 폴더
-│       ├── BaseDashboardCard.vue
-│       ├── SearchBar.vue
-│       └── WeatherCard.vue
+│   └── tasks/                      # 과제 3에서 이어서 사용하는 날씨 컴포넌트
+│       ├── CitySearchPanel.vue
+│       ├── CitySelectionStatusPanel.vue
+│       ├── DashboardCard.vue
+│       ├── NationalWeatherPanel.vue
+│       ├── WeatherCard.vue
+│       ├── WeatherCardList.vue
+│       ├── WeatherDashboard.vue
+│       └── WeatherHeader.vue
 └── views/                          # 페이지 단위 컴포넌트 보관 폴더
-    ├── WeatherHomeView.vue         # 메인 날씨 대시보드 화면
+    ├── WeatherHomeView.vue         # WeatherDashboard를 사용하는 메인 화면
     ├── WeatherAboutView.vue        # 서비스 소개용 정적 페이지
     ├── WeatherDetailView.vue       # :cityId를 사용하는 동적 상세 페이지
     └── NotFoundView.vue            # 정의되지 않은 경로의 Catch-all 페이지
@@ -148,7 +153,7 @@ src/
 
 **과제 요구사항**
 
-- [ ] `[과제 4-1]` Vue Router에 라우트 지연 로딩과 Catch-all Route를 적용합니다.
+- [x] `[과제 4-1]` `router/index.js`에 과제 3의 날씨 화면으로 이어지는 라우트를 정의하고, 메인 화면을 제외한 View에 지연 로딩과 Catch-all Route를 적용했습니다.
 - [ ] `[과제 4-2]` `App.vue`에 `RouterLink`를 사용하는 Navigation Bar와 메인 콘텐츠 영역인 `RouterView`를 배치합니다.
 - [ ] `[과제 4-3]` `WeatherParent`를 참고해 `/` 경로의 `WeatherHomeView.vue`를 작성합니다.
   - 상세보기 버튼의 `window.alert()`를 제거합니다.
