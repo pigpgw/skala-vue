@@ -16,6 +16,9 @@ const badDustCityCount = computed(() => weatherList.value.filter((item) => item.
 const hottestCity = computed(() => weatherList.value.reduce((hottest, item) => (item.temp > hottest.temp ? item : hottest)))
 const coldestCity = computed(() => weatherList.value.reduce((coldest, item) => (item.temp < coldest.temp ? item : coldest)))
 const mostHumidCity = computed(() => weatherList.value.reduce((mostHumid, item) => (item.humidity > mostHumid.humidity ? item : mostHumid)))
+const strongestWindCity = computed(() =>
+  weatherList.value.reduce((strongestWind, item) => (item.windSpeed > strongestWind.windSpeed ? item : strongestWind)),
+)
 
 const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 
@@ -47,6 +50,9 @@ watch(coldestCity, (newValue, oldValue) =>
 watch(mostHumidCity, (newValue, oldValue) =>
   console.log(`[watch 자동 호출] 가장 습한 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`),
 )
+watch(strongestWindCity, (newValue, oldValue) =>
+  console.log(`[watch 자동 호출] 풍속이 가장 강한 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`),
+)
 
 watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${searchQuery.value}`))
 </script>
@@ -72,6 +78,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       <div>가장 더운 도시: {{ hottestCity.name }} {{ hottestCity.temp }}°C</div>
       <div>가장 추운 도시: {{ coldestCity.name }} {{ coldestCity.temp }}°C</div>
       <div>가장 습한 도시: {{ mostHumidCity.name }} {{ mostHumidCity.humidity }}%</div>
+      <div>풍속이 가장 강한 도시: {{ strongestWindCity.name }} {{ strongestWindCity.windSpeed }}m/s</div>
     </div>
 
     <div>
