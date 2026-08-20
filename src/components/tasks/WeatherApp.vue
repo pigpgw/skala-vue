@@ -19,6 +19,11 @@ const mostHumidCity = computed(() => weatherList.value.reduce((mostHumid, item) 
 const strongestWindCity = computed(() =>
   weatherList.value.reduce((strongestWind, item) => (item.windSpeed > strongestWind.windSpeed ? item : strongestWind)),
 )
+const searchStatusMessage = computed(() =>
+  searchQuery.value.trim()
+    ? `"${searchQuery.value.trim()}" 검색 결과 ${searchResultCount.value}개를 표시하고 있습니다.`
+    : `전체 도시 ${searchResultCount.value}개를 표시하고 있습니다.`,
+)
 
 const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 
@@ -53,6 +58,9 @@ watch(mostHumidCity, (newValue, oldValue) =>
 watch(strongestWindCity, (newValue, oldValue) =>
   console.log(`[watch 자동 호출] 풍속이 가장 강한 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`),
 )
+watch(searchStatusMessage, (newValue, oldValue) =>
+  console.log(`[watch 자동 호출] 검색 상태가 변경되었습니다. ${oldValue} -> ${newValue}`),
+)
 
 watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${searchQuery.value}`))
 </script>
@@ -65,7 +73,8 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
       <div>검색할 도시</div>
       <input type="text" :value="searchQuery" @input="(e) => (searchQuery = e.target.value)" placeholder="도시명을 입력하세요" />
       <div>입력한 도시: {{ searchQuery }}</div>
-      <div>검색 결과: {{ searchResultCount }}개</div>
+      <div>검색 결과 개수: {{ searchResultCount }}개</div>
+      <div>검색 상태: {{ searchStatusMessage }}</div>
       <label><input type="checkbox" v-model="showNationalSummary" /> 전국 통계 보기</label>
     </div>
 
