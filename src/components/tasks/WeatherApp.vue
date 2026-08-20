@@ -16,51 +16,25 @@ const badDustCityCount = computed(() => weatherList.value.filter((item) => item.
 const hottestCity = computed(() => weatherList.value.reduce((hottest, item) => (item.temp > hottest.temp ? item : hottest)))
 const coldestCity = computed(() => weatherList.value.reduce((coldest, item) => (item.temp < coldest.temp ? item : coldest)))
 const mostHumidCity = computed(() => weatherList.value.reduce((mostHumid, item) => (item.humidity > mostHumid.humidity ? item : mostHumid)))
-const strongestWindCity = computed(() =>
-  weatherList.value.reduce((strongestWind, item) => (item.windSpeed > strongestWind.windSpeed ? item : strongestWind)),
-)
+const strongestWindCity = computed(() => weatherList.value.reduce((strongestWind, item) => (item.windSpeed > strongestWind.windSpeed ? item : strongestWind)))
 const searchStatusMessage = computed(() =>
-  searchQuery.value.trim()
-    ? `"${searchQuery.value.trim()}" 검색 결과 ${searchResultCount.value}개를 표시하고 있습니다.`
-    : `전체 도시 ${searchResultCount.value}개를 표시하고 있습니다.`,
+  searchQuery.value.trim() ? `"${searchQuery.value.trim()}" 검색 결과 ${searchResultCount.value}개를 표시하고 있습니다.` : `전체 도시 ${searchResultCount.value}개를 표시하고 있습니다.`,
 )
 
 const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 
-watch(selectedCityInfo, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 상태 바 문구가 업데이트 되었습니다. ${oldValue} -> ${newValue}`),
-)
+watch(selectedCityInfo, (newValue, oldValue) => console.log(`[watch 자동 호출] 상태 바 문구가 업데이트 되었습니다. ${oldValue} -> ${newValue}`))
 watch(showNationalSummary, (newValue) => console.log(`[watch 자동 호출] 전국 통계 표시 여부가 변경되었습니다. ${newValue}`))
-watch(searchResultCount, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`),
-)
-watch(averageTemperature, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 전국 평균 기온이 변경되었습니다. ${oldValue}°C -> ${newValue}°C`),
-)
-watch(averageHumidity, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 전국 평균 습도가 변경되었습니다. ${oldValue}% -> ${newValue}%`),
-)
-watch(averageWindSpeed, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 전국 평균 풍속이 변경되었습니다. ${oldValue}m/s -> ${newValue}m/s`),
-)
-watch(badDustCityCount, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 미세먼지 나쁨 도시가 변경되었습니다. ${oldValue}개 -> ${newValue}개`),
-)
-watch(hottestCity, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 가장 더운 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`),
-)
-watch(coldestCity, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 가장 추운 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`),
-)
-watch(mostHumidCity, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 가장 습한 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`),
-)
-watch(strongestWindCity, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 풍속이 가장 강한 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`),
-)
-watch(searchStatusMessage, (newValue, oldValue) =>
-  console.log(`[watch 자동 호출] 검색 상태가 변경되었습니다. ${oldValue} -> ${newValue}`),
-)
+watch(searchResultCount, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`))
+watch(averageTemperature, (newValue, oldValue) => console.log(`[watch 자동 호출] 전국 평균 기온이 변경되었습니다. ${oldValue}°C -> ${newValue}°C`))
+watch(averageHumidity, (newValue, oldValue) => console.log(`[watch 자동 호출] 전국 평균 습도가 변경되었습니다. ${oldValue}% -> ${newValue}%`))
+watch(averageWindSpeed, (newValue, oldValue) => console.log(`[watch 자동 호출] 전국 평균 풍속이 변경되었습니다. ${oldValue}m/s -> ${newValue}m/s`))
+watch(badDustCityCount, (newValue, oldValue) => console.log(`[watch 자동 호출] 미세먼지 나쁨 도시가 변경되었습니다. ${oldValue}개 -> ${newValue}개`))
+watch(hottestCity, (newValue, oldValue) => console.log(`[watch 자동 호출] 가장 더운 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`))
+watch(coldestCity, (newValue, oldValue) => console.log(`[watch 자동 호출] 가장 추운 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`))
+watch(mostHumidCity, (newValue, oldValue) => console.log(`[watch 자동 호출] 가장 습한 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`))
+watch(strongestWindCity, (newValue, oldValue) => console.log(`[watch 자동 호출] 풍속이 가장 강한 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`))
+watch(searchStatusMessage, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 상태가 변경되었습니다. ${oldValue} -> ${newValue}`))
 
 watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${searchQuery.value}`))
 </script>
@@ -96,12 +70,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
     </div>
 
     <div v-if="filteredWeatherList.length > 0" class="weather-list">
-      <div
-        v-for="item in filteredWeatherList"
-        :key="item.id"
-        class="weather-card"
-        @click="selectedCityInfo = `${item.name}이 선택되었습니다.`"
-      >
+      <div v-for="item in filteredWeatherList" :key="item.id" class="weather-card" @click="selectedCityInfo = `${item.name}이 선택되었습니다.`">
         <div>{{ item.name }}</div>
         <div>현재 날씨: {{ item.status }}</div>
         <div>기온: {{ item.temp }}°C</div>
