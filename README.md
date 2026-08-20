@@ -165,7 +165,7 @@ src/
 - [x] `[과제 4-4]` `WeatherDetailView.vue`에서 지역별 상세 기상관측 정보를 표시합니다.
   - 과제 3부터 사용한 공용 `weatherData`를 Mock Data로 활용합니다.
   - 동적 경로의 `cityId`를 기준으로 Mount 시점에 Mock Data에서 도시 객체를 선택합니다.
-- [ ] `[과제 4-5]` `WeatherAboutView.vue`에 서비스 소개 내용과 메인 대시보드로 돌아가는 기능을 작성합니다.
+- [x] `[과제 4-5]` `WeatherAboutView.vue`에 날씨 서비스의 주요 기능을 소개하고 `RouterLink`로 메인 대시보드에 돌아가는 기능을 작성했습니다.
 - [ ] `[과제 4-6]` 정의된 View 외에 추가 View를 작성하고 라우팅합니다.
 
 ## 커밋 컨벤션
