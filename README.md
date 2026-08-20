@@ -1,6 +1,39 @@
 # skala-vue
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적으로 적용하는 과제 프로젝트입니다.
+
+## 프로젝트 소개
+
+- Vue 3의 Composition API와 `<script setup>`을 사용합니다.
+- 배열 렌더링, 조건부 렌더링, 입력 바인딩과 이벤트 수식어를 날씨 목업에 적용합니다.
+- `computed`, `watch`, `watchEffect`를 사용해 검색 결과와 전국 날씨 통계를 관리합니다.
+- 과제 1의 Weather Mockup을 과제 2의 Weather Composition으로 계속 발전시키는 구조입니다.
+
+## 과제 파일
+
+- 과제 컴포넌트는 `src/components/tasks/`에서 관리합니다.
+- 과제 1과 과제 2의 메인 파일은 `src/components/tasks/WeatherApp.vue`입니다.
+- `src/App.vue`에서 `WeatherApp.vue`를 불러와 화면에 렌더링합니다.
+- 날씨 더미 데이터는 `src/data/weatherData.js`에서 별도로 관리합니다.
+
+```text
+src/
+├── App.vue
+├── components/
+│   └── tasks/
+│       └── WeatherApp.vue
+└── data/
+    └── weatherData.js
+```
+
+## 주요 기능
+
+- 도시별 날씨 카드 반복 출력
+- 한글 도시명 검색과 검색 결과 안내
+- 기온과 미세먼지 상태별 조건부 문구
+- 카드 선택과 상세보기 이벤트 분리
+- 전국 평균 기온, 습도와 풍속 계산
+- 주요 날씨 통계와 반응형 상태 변화 감시
 
 ## 배포
 
@@ -80,42 +113,27 @@ feat: 회원가입 폼 유효성 검사를 추가
 이메일과 비밀번호 입력값을 확인하고 오류 메시지를 표시하도록 수정했습니다.
 ```
 
-## Recommended IDE Setup
+## 실행 방법
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+### 의존성 설치
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 개발 서버 실행
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### 빌드
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### 코드 검사
 
 ```sh
 npm run lint
