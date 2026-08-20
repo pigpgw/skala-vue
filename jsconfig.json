@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
+    "checkJs": true,
+    "strict": true,
     "paths": {
       "@/*": ["./src/*"]
     }
+  },
+  "vueCompilerOptions": {
+    "strictTemplates": true
   },
   "exclude": ["node_modules", "dist"]
 }
