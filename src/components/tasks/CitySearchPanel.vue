@@ -17,7 +17,7 @@ defineProps({
 const emit = defineEmits(['update-query'])
 
 /** @param {Event} event */
-const updateSearchQuery = (event) => {
+const handleSearchInput = (event) => {
   const input = event.currentTarget
   if (!(input instanceof HTMLInputElement)) return
   emit('update-query', input.value)
@@ -25,9 +25,9 @@ const updateSearchQuery = (event) => {
 </script>
 
 <template>
-  <div class="search-panel">
+  <div class="city-search-panel">
     <div>검색할 도시</div>
-    <input class="search-input" type="text" :value="searchQuery" @input="updateSearchQuery" placeholder="도시명을 입력하세요" />
+    <input class="search-input" type="text" :value="searchQuery" @input="handleSearchInput" placeholder="도시명을 입력하세요" />
     <div>입력한 도시: {{ searchQuery }}</div>
     <div>검색 결과 개수: {{ searchResultCount }}개</div>
     <div>검색 상태: {{ searchStatusMessage }}</div>

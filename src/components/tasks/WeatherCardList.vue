@@ -18,10 +18,10 @@ const emit = defineEmits(['select-card', 'click-detail'])
  * @param {string} name
  * @param {string} status
  */
-const handleClickDetail = (name, status) => emit('click-detail', name, status)
+const handleDetailClick = (name, status) => emit('click-detail', name, status)
 
 defineProps({
-  filteredWeatherList: {
+  weatherList: {
     type: /** @type {import('vue').PropType<WeatherItem[]>} */ (Array),
     required: true,
   },
@@ -29,13 +29,14 @@ defineProps({
 </script>
 
 <template>
-  <div class="weather-list">
+  <div v-if="weatherList.length > 0" class="weather-list">
     <WeatherCard
-      v-for="item in filteredWeatherList"
-      :key="item.id"
-      :item="item"
+      v-for="weatherItem in weatherList"
+      :key="weatherItem.id"
+      :weather-item="weatherItem"
       @select-card="emit('select-card', $event)"
-      @click-detail="handleClickDetail"
+      @click-detail="handleDetailClick"
     />
   </div>
+  <div v-else>검색 결과와 일치하는 도시가 없습니다.</div>
 </template>

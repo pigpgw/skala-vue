@@ -1,26 +1,27 @@
 <script setup>
 import { computed, ref, watch, watchEffect } from 'vue'
 import { weatherData } from '@/data/weatherData'
-import BaseDashboardCard from './BaseDashboardCard.vue'
-import SearchPanel from './SearchPanel.vue'
-import NationalWeatherSummary from './NationalWeatherSummary.vue'
+import DashboardCard from './DashboardCard.vue'
+import CitySearchPanel from './CitySearchPanel.vue'
+import NationalWeatherPanel from './NationalWeatherPanel.vue'
+import CitySelectionStatusPanel from './CitySelectionStatusPanel.vue'
 import WeatherCardList from './WeatherCardList.vue'
 
 const searchQuery = ref('')
-const selectedCityInfo = ref('카드를 클릭하거나 검색해 보세요.')
+const selectionMessage = ref('카드를 클릭하거나 검색해 보세요.')
 const weatherList = ref(weatherData)
-const showNationalSummary = ref(true)
+const isNationalSummaryVisible = ref(true)
 
-const filteredWeatherList = computed(() => weatherList.value.filter((item) => item.name.includes(searchQuery.value.trim())))
+const filteredWeatherList = computed(() => weatherList.value.filter((weatherItem) => weatherItem.name.includes(searchQuery.value.trim())))
 const searchResultCount = computed(() => filteredWeatherList.value.length)
-const averageTemperature = computed(() => weatherList.value.reduce((sum, item) => sum + item.temp, 0) / weatherList.value.length)
-const averageHumidity = computed(() => weatherList.value.reduce((sum, item) => sum + item.humidity, 0) / weatherList.value.length)
-const averageWindSpeed = computed(() => weatherList.value.reduce((sum, item) => sum + item.windSpeed, 0) / weatherList.value.length)
-const badDustCityCount = computed(() => weatherList.value.filter((item) => item.dust === '나쁨').length)
-const hottestCity = computed(() => weatherList.value.reduce((hottest, item) => (item.temp > hottest.temp ? item : hottest)))
-const coldestCity = computed(() => weatherList.value.reduce((coldest, item) => (item.temp < coldest.temp ? item : coldest)))
-const mostHumidCity = computed(() => weatherList.value.reduce((mostHumid, item) => (item.humidity > mostHumid.humidity ? item : mostHumid)))
-const strongestWindCity = computed(() => weatherList.value.reduce((strongestWind, item) => (item.windSpeed > strongestWind.windSpeed ? item : strongestWind)))
+const averageTemperature = computed(() => weatherList.value.reduce((sum, weatherItem) => sum + weatherItem.temp, 0) / weatherList.value.length)
+const averageHumidity = computed(() => weatherList.value.reduce((sum, weatherItem) => sum + weatherItem.humidity, 0) / weatherList.value.length)
+const averageWindSpeed = computed(() => weatherList.value.reduce((sum, weatherItem) => sum + weatherItem.windSpeed, 0) / weatherList.value.length)
+const badDustCityCount = computed(() => weatherList.value.filter((weatherItem) => weatherItem.dust === '나쁨').length)
+const hottestCity = computed(() => weatherList.value.reduce((hottest, weatherItem) => (weatherItem.temp > hottest.temp ? weatherItem : hottest)))
+const coldestCity = computed(() => weatherList.value.reduce((coldest, weatherItem) => (weatherItem.temp < coldest.temp ? weatherItem : coldest)))
+const mostHumidCity = computed(() => weatherList.value.reduce((mostHumid, weatherItem) => (weatherItem.humidity > mostHumid.humidity ? weatherItem : mostHumid)))
+const strongestWindCity = computed(() => weatherList.value.reduce((strongestWind, weatherItem) => (weatherItem.windSpeed > strongestWind.windSpeed ? weatherItem : strongestWind)))
 const searchStatusMessage = computed(() =>
   searchQuery.value.trim() ? `"${searchQuery.value.trim()}" 검색 결과 ${searchResultCount.value}개를 표시하고 있습니다.` : `전체 도시 ${searchResultCount.value}개를 표시하고 있습니다.`,
 )
@@ -30,10 +31,10 @@ const searchStatusMessage = computed(() =>
  * @param {string} cityName
  * @param {string} status
  */
-const showDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
+const showWeatherDetail = (cityName, status) => window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 
-watch(selectedCityInfo, (newValue, oldValue) => console.log(`[watch 자동 호출] 상태 바 문구가 업데이트 되었습니다. ${oldValue} -> ${newValue}`))
-watch(showNationalSummary, (newValue) => console.log(`[watch 자동 호출] 전국 통계 표시 여부가 변경되었습니다. ${newValue}`))
+watch(selectionMessage, (newValue, oldValue) => console.log(`[watch 자동 호출] 상태 바 문구가 업데이트 되었습니다. ${oldValue} -> ${newValue}`))
+watch(isNationalSummaryVisible, (newValue) => console.log(`[watch 자동 호출] 전국 통계 표시 여부가 변경되었습니다. ${newValue}`))
 watch(searchResultCount, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`))
 watch(averageTemperature, (newValue, oldValue) => console.log(`[watch 자동 호출] 전국 평균 기온이 변경되었습니다. ${oldValue}°C -> ${newValue}°C`))
 watch(averageHumidity, (newValue, oldValue) => console.log(`[watch 자동 호출] 전국 평균 습도가 변경되었습니다. ${oldValue}% -> ${newValue}%`))
@@ -49,19 +50,19 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
 </script>
 
 <template>
-  <div class="weather-parent">
-    <BaseDashboardCard>
-      <SearchPanel
+  <div class="weather-dashboard">
+    <DashboardCard>
+      <CitySearchPanel
         :search-query="searchQuery"
         :search-result-count="searchResultCount"
         :search-status-message="searchStatusMessage"
         @update-query="searchQuery = $event"
       />
-    </BaseDashboardCard>
+    </DashboardCard>
 
-    <BaseDashboardCard>
-      <NationalWeatherSummary
-        :show-national-summary="showNationalSummary"
+    <DashboardCard>
+      <NationalWeatherPanel
+        :is-visible="isNationalSummaryVisible"
         :average-temperature="averageTemperature"
         :average-humidity="averageHumidity"
         :average-wind-speed="averageWindSpeed"
@@ -70,28 +71,26 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
         :coldest-city="coldestCity"
         :most-humid-city="mostHumidCity"
         :strongest-wind-city="strongestWindCity"
-        @update-show-national-summary="showNationalSummary = $event"
+        @visibility-change="isNationalSummaryVisible = $event"
       />
-    </BaseDashboardCard>
+    </DashboardCard>
 
-    <div>
-      <div>선택 결과</div>
-      <div>{{ selectedCityInfo }}</div>
-    </div>
+    <DashboardCard>
+      <CitySelectionStatusPanel :message="selectionMessage" />
+    </DashboardCard>
 
-    <BaseDashboardCard v-if="filteredWeatherList.length > 0">
+    <DashboardCard>
       <WeatherCardList
-        :filtered-weather-list="filteredWeatherList"
-        @select-card="selectedCityInfo = $event"
-        @click-detail="showDetail"
+        :weather-list="filteredWeatherList"
+        @select-card="selectionMessage = $event"
+        @click-detail="showWeatherDetail"
       />
-    </BaseDashboardCard>
-    <div v-else>검색 결과와 일치하는 도시가 없습니다.</div>
+    </DashboardCard>
   </div>
 </template>
 
 <style scoped>
-.weather-parent {
+.weather-dashboard {
   padding: 16px;
 }
 </style>

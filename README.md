@@ -12,8 +12,8 @@ Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적�
 ## 과제 파일
 
 - 과제 컴포넌트는 `src/components/tasks/`에서 관리합니다.
-- 날씨 과제의 부모 컴포넌트는 `src/components/tasks/WeatherParent.vue`입니다.
-- `src/App.vue`에서 `WeatherParent.vue`를 불러와 화면에 렌더링합니다.
+- 날씨 과제의 상태 관리와 화면 조립은 `src/components/tasks/WeatherDashboard.vue`가 담당합니다.
+- `src/App.vue`에서 `WeatherDashboard.vue`를 불러와 화면에 렌더링합니다.
 - 날씨 더미 데이터는 `src/data/weatherData.js`에서 별도로 관리합니다.
 
 ```text
@@ -21,7 +21,14 @@ src/
 ├── App.vue
 ├── components/
 │   └── tasks/
-│       └── WeatherParent.vue
+│       ├── CitySearchPanel.vue
+│       ├── CitySelectionStatusPanel.vue
+│       ├── DashboardCard.vue
+│       ├── NationalWeatherPanel.vue
+│       ├── WeatherCard.vue
+│       ├── WeatherCardList.vue
+│       ├── WeatherDashboard.vue
+│       └── WeatherHeader.vue
 └── data/
     └── weatherData.js
 ```
@@ -56,7 +63,7 @@ src/
 
 ### 2026-08-19
 
-과제 1과 과제 2는 현재 부모 컴포넌트인 `WeatherParent.vue`에서 단계적으로 개발했습니다.
+과제 1과 과제 2는 현재 대시보드 컴포넌트인 `WeatherDashboard.vue`에서 단계적으로 개발했습니다.
 
 #### 과제 1 - Weather Mockup
 
@@ -97,6 +104,7 @@ src/
 - `[과제 3-7 추가 리팩터링]` 검색 영역과 날씨 목록을 각각 `SearchPanel.vue`와 `WeatherCardList.vue`가 직접 담당하도록 변경했습니다. 각 영역의 독립적인 책임과 단순한 컴포넌트 구조가 더 적합하다고 판단해 공통 Slot 래퍼였던 `BaseDashboardCard.vue`를 제거했습니다.
 - `[과제 3-7 추가 리팩터링]` 검색, 전국 통계와 날씨 목록 세 영역에 동일한 박스 디자인이 필요해 `BaseDashboardCard.vue`를 공용 Slot 컴포넌트로 다시 적용했습니다. 공통 디자인은 래퍼가 담당하고 내부 컴포넌트는 각 기능에 집중하도록 구성했습니다.
 - `[과제 3-7 추가 컴포넌트]` 애플리케이션 제목을 `WeatherHeader.vue`로 분리하고, 전체 화면 골격을 담당하는 `App.vue`에 Header와 `<main>`을 배치했습니다. `WeatherParent.vue`는 검색, 통계와 목록 기능에 집중하도록 변경했으며 표시할 내용이 없는 Footer는 만들지 않았습니다.
+- `[과제 3-7 구조 및 네이밍 리팩터링]` 선택 결과 영역을 `CitySelectionStatusPanel.vue`로 분리해 `DashboardCard`를 적용하고, 검색 결과 없음 문구는 목록 상태를 담당하는 `WeatherCardList.vue`로 이동했습니다. 화면과 도메인 역할이 드러나도록 `WeatherParent`를 `WeatherDashboard`, `BaseDashboardCard`를 `DashboardCard`, `SearchPanel`을 `CitySearchPanel`, `NationalWeatherSummary`를 `NationalWeatherPanel`로 변경했으며 상태, props, 함수와 CSS 클래스 이름도 함께 정리했습니다. 과제에서 지정한 이벤트 이름은 유지하고 README 파일 트리를 최종 컴포넌트 구조에 맞게 갱신했습니다.
 
 ## 커밋 컨벤션
 
