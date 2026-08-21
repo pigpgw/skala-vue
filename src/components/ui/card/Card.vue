@@ -9,6 +9,11 @@ const props = defineProps({
   },
   size: { type: String, required: false, default: "default" },
 });
+
+const emits = defineEmits(["click"]);
+
+/** @param {MouseEvent} event */
+const handleClick = (event) => emits("click", event);
 </script>
 
 <template>
@@ -21,6 +26,7 @@ const props = defineProps({
         props.class,
       )
     "
+    @click="handleClick"
   >
     <slot />
   </div>

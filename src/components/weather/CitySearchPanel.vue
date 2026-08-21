@@ -1,7 +1,8 @@
 <script setup>
-/** @typedef {import('@/types/region').Region} Region */
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+
+/** @typedef {import('@/types/region').Region} Region */
 
 defineProps({
   searchQuery: {
@@ -38,7 +39,7 @@ const selectRegion = (region) => {
 </script>
 
 <template>
-  <div class="flex w-full flex-col items-start gap-1">
+  <div class="grid w-full gap-2">
     <label for="city-search" class="w-full max-w-md text-left text-sm font-medium">검색할 도시</label>
     <div class="mb-1 w-full max-w-md">
       <Input
@@ -50,11 +51,12 @@ const selectRegion = (region) => {
         @update:model-value="handleSearchInput"
       />
     </div>
-    <div v-if="regions.length > 0" class="mt-3 flex w-full max-w-md flex-col gap-2">
+    <div v-if="regions.length > 0" class="mt-2 flex w-full max-w-md flex-col gap-1">
       <Button
         v-for="region in regions"
         :key="region.id"
-        class="w-full justify-start text-left"
+        variant="outline"
+        class="w-full justify-start text-left font-normal"
         type="button"
         :disabled="disabled"
         @click="selectRegion(region)"

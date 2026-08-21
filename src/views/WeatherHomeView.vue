@@ -1,29 +1,24 @@
 <script setup>
-/** @typedef {import('@/types/region').Region} Region */
-import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
+import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
-
-import DashboardCard from '@/components/weather/DashboardCard.vue'
 
 import ApiRequestStatus from '@/components/weather/ApiRequestStatus.vue'
 import CitySearchPanel from '@/components/weather/CitySearchPanel.vue'
 import CitySelectionStatusPanel from '@/components/weather/CitySelectionStatusPanel.vue'
+import DashboardCard from '@/components/weather/DashboardCard.vue'
 import NationalWeatherPanel from '@/components/weather/NationalWeatherPanel.vue'
 import WeatherCardList from '@/components/weather/WeatherCardList.vue'
-import { useWeatherStore } from '@/stores/weatherStore'
 import { useRegionStore } from '@/stores/regionStore'
+import { useWeatherStore } from '@/stores/weatherStore'
+
+/** @typedef {import('@/types/region').Region} Region */
 
 const router = useRouter()
 const regionStore = useRegionStore()
 const weatherStore = useWeatherStore()
-const { weatherList, isLoading: isWeatherLoading, errorMessage: weatherErrorMessage } = storeToRefs(weatherStore)
 const { regions, isLoading: isRegionLoading, errorMessage: regionErrorMessage } = storeToRefs(regionStore)
-
-onMounted(() => {
-  regionStore.fetchRegions()
-  weatherStore.fetchMainCityDatasById()
-})
+const { weatherList, isLoading: isWeatherLoading, errorMessage: weatherErrorMessage } = storeToRefs(weatherStore)
 
 const searchQuery = ref('')
 const isNationalSummaryVisible = ref(true)
@@ -72,6 +67,11 @@ const selectRegion = async (region) => {
   selectionMessage.value = `${region.name} 날씨를 추가했습니다.`
 }
 
+onMounted(() => {
+  regionStore.fetchRegions()
+  weatherStore.fetchMainCityDatasById()
+})
+
 watch(searchResultCount, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`))
 watch(searchStatusMessage, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 상태가 변경되었습니다. ${oldValue} -> ${newValue}`))
 watch(isNationalSummaryVisible, (newValue) => console.log(`[watch 자동 호출] 전국 통계 표시 여부가 변경되었습니다. ${newValue}`))
@@ -89,21 +89,9 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
 </script>
 
 <template>
-  <div class="p-4">
-    <ApiRequestStatus
-      :is-loading="isRegionLoading"
-      loading-message="지역 검색 목록을 불러오는 중입니다."
-      :error-message="regionErrorMessage"
-      @retry="regionStore.fetchRegions"
-    />
-
-    <ApiRequestStatus
-      :is-loading="isWeatherLoading"
-      loading-message="날씨 정보를 불러오는 중입니다."
-      :error-message="weatherErrorMessage"
-      @retry="weatherStore.retryFailedRequest"
-    />
-
+  <div class="grid gap-4">
+    <ApiRequestStatus :is-loading="isRegionLoading" loading-message="지역 검색 목록을 불러오는 중입니다." :error-message="regionErrorMessage" @retry="regionStore.fetchRegions" />
+    <ApiRequestStatus :is-loading="isWeatherLoading" loading-message="날씨 정보를 불러오는 중입니다." :error-message="weatherErrorMessage" @retry="weatherStore.retryFailedRequest" />
     <DashboardCard>
       <CitySearchPanel
         :search-query="searchQuery"
@@ -115,7 +103,6 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
         @select-region="selectRegion"
       />
     </DashboardCard>
-
     <DashboardCard>
       <NationalWeatherPanel
         :is-visible="isNationalSummaryVisible"
@@ -130,13 +117,9 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
         @visibility-change="updateNationalSummaryVisibility"
       />
     </DashboardCard>
-
     <DashboardCard>
       <CitySelectionStatusPanel :message="selectionMessage" />
     </DashboardCard>
-
-    <DashboardCard>
-      <WeatherCardList :weather-list="filteredWeatherList" @select-card="updateSelectionMessage" @click-detail="navigateToWeatherDetail" />
-    </DashboardCard>
+    <WeatherCardList :weather-list="filteredWeatherList" @select-card="updateSelectionMessage" @click-detail="navigateToWeatherDetail" />
   </div>
 </template>

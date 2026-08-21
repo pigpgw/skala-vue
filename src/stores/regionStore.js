@@ -1,9 +1,10 @@
-/** @typedef {import('@/dto/regionalCodeDto').RegionalCodeItemResponse} RegionalCodeItemResponse */
-/** @typedef {import('@/types/region').Region} Region */
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 import { getRegionalCodes } from '@/apis/regionalCode'
+
+/** @typedef {import('@/dto/regionalCodeDto').RegionalCodeItemResponse} RegionalCodeItemResponse */
+/** @typedef {import('@/types/region').Region} Region */
 
 export const useRegionStore = defineStore('region', () => {
   /** @type {import('vue').Ref<Region[]>} */

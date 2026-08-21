@@ -1,9 +1,10 @@
+import openWeatherClient from '@/utils/openWeatherClient'
+
 /** @typedef {import('@/dto/openWeatherDto').WeatherByCoordinatesRequest} WeatherByCoordinatesRequest */
 /** @typedef {import('@/dto/openWeatherDto').WeatherByCityNameRequest} WeatherByCityNameRequest */
-/** @typedef {import('@/dto/openWeatherDto').AirPollutionRequest} AirPollutionRequest */
 /** @typedef {import('@/dto/openWeatherDto').WeatherResponse} WeatherResponse */
+/** @typedef {import('@/dto/openWeatherDto').AirPollutionRequest} AirPollutionRequest */
 /** @typedef {import('@/dto/openWeatherDto').AirPollutionResponse} AirPollutionResponse */
-import openWeatherClient from '@/utils/openWeatherClient'
 
 /**
  * @param {WeatherByCoordinatesRequest} request

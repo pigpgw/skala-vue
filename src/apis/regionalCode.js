@@ -1,6 +1,7 @@
+import regionalCodeClient from '@/utils/regionalCodeClient'
+
 /** @typedef {import('@/dto/regionalCodeDto').RegionalCodeRequest} RegionalCodeRequest */
 /** @typedef {import('@/dto/regionalCodeDto').RegionalCodeResponse} RegionalCodeResponse */
-import regionalCodeClient from '@/utils/regionalCodeClient'
 
 /**
  * @param {RegionalCodeRequest} [request]

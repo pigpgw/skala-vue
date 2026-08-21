@@ -1,14 +1,14 @@
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
-import { weatherData } from '@/data/weatherData'
-import { cityData } from '@/data/cityData'
 import { getAirPollutionByCoordinates, getWeatherByCityName, getWeatherByCoordinates } from '@/apis/weather'
+import { cityData } from '@/data/cityData'
+import { weatherData } from '@/data/weatherData'
 import { getFineDustStatus } from '@/utils/airQuality'
 import { getActiveInsects } from '@/utils/insect'
 
-/** @typedef {import('@/types/weather').WeatherItem} WeatherItem */
 /** @typedef {import('@/types/region').Region} Region */
+/** @typedef {import('@/types/weather').WeatherItem} WeatherItem */
 
 /**
  * @typedef {Object} MainCityRequestResult
@@ -214,9 +214,9 @@ export const useWeatherStore = defineStore('weather', () => {
     errorMessage,
     failedMainCityIds,
     addWeatherItem,
+    findWeatherById,
     fetchMainCityDatasById,
     fetchWeatherByRegion,
     retryFailedRequest,
-    findWeatherById,
   }
 })

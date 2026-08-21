@@ -1,130 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-@layer theme, base, components, utilities;
-
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/utilities.css' layer(utilities);
-@import './base.css';
+@import 'tailwindcss';
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Base color palette */
-  --color-white: #ffffff;
-  --color-blue-50: #eff6ff;
-  --color-blue-600: #2563eb;
-  --color-blue-700: #1d4ed8;
-  --color-sky-50: #f4f8fc;
-  --color-slate-50: #f8fafc;
-  --color-slate-100: #f1f5f9;
-  --color-slate-200: #e2e8f0;
-  --color-slate-600: #475569;
-  --color-slate-900: #0f172a;
-  --color-green-700: #15803d;
-  --color-green-800: #166534;
-  --color-amber-700: #b45309;
-  --color-amber-800: #92400e;
-  --color-red-700: #b91c1c;
-  --color-red-800: #991b1b;
-
-  /* Semantic colors */
-  --color-primary: var(--color-blue-600);
-  --color-primary-hover: var(--color-blue-700);
-  --color-primary-soft: var(--color-blue-50);
-  --color-background: var(--color-sky-50);
-  --color-surface: var(--color-white);
-  --color-text-primary: var(--color-slate-900);
-  --color-text-secondary: var(--color-slate-600);
-  --color-border: var(--color-slate-200);
-  --color-success: var(--color-green-700);
-  --color-success-hover: var(--color-green-800);
-  --color-warning: var(--color-amber-700);
-  --color-warning-hover: var(--color-amber-800);
-  --color-danger: var(--color-red-700);
-  --color-danger-hover: var(--color-red-800);
-  --color-button-border: rgb(255 255 255 / 18%);
-  --color-focus-ring: rgb(37 99 235 / 24%);
-
-  /* shadcn semantic colors */
-  --background: var(--color-sky-50);
-  --foreground: var(--color-slate-900);
-  --card: var(--color-white);
-  --card-foreground: var(--color-slate-900);
-  --popover: var(--color-white);
-  --popover-foreground: var(--color-slate-900);
-  --primary: var(--color-blue-600);
-  --primary-foreground: var(--color-white);
-  --secondary: var(--color-blue-50);
-  --secondary-foreground: var(--color-blue-700);
-  --muted: var(--color-slate-100);
-  --muted-foreground: var(--color-slate-600);
-  --accent: var(--color-blue-50);
-  --accent-foreground: var(--color-blue-700);
-  --destructive: var(--color-red-700);
-  --destructive-foreground: var(--color-white);
-  --success: var(--color-green-700);
-  --success-foreground: var(--color-white);
-  --warning: var(--color-amber-700);
-  --warning-foreground: var(--color-white);
-  --border: var(--color-slate-200);
-  --input: var(--color-slate-200);
-  --ring: var(--color-blue-600);
-  --radius: 12px;
-
-  /* Typography */
-  --font-size-xs: 0.8125rem;
-  --font-size-sm: 0.875rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.25rem;
-  --font-size-xl: 1.75rem;
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
-  /* Spacing */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-
-  /* Border radius */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-full: 9999px;
-
-  /* Control sizes */
-  --control-height-sm: 36px;
-  --control-height-md: 44px;
-  --control-height-lg: 52px;
-
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgb(15 23 42 / 6%);
-  --shadow-md: 0 8px 24px rgb(15 23 42 / 10%);
-  --shadow-lg: 0 16px 40px rgb(15 23 42 / 14%);
-  --shadow-button-primary: 0 6px 14px rgb(37 99 235 / 22%);
-  --shadow-button-success: 0 6px 14px rgb(21 128 61 / 20%);
-  --shadow-button-warning: 0 6px 14px rgb(180 83 9 / 20%);
-  --shadow-button-danger: 0 6px 14px rgb(185 28 28 / 20%);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --success: oklch(0.527 0.154 150.069);
+  --warning: oklch(0.666 0.179 58.318);
+  --radius: 0.625rem;
 }
 
-#app {
-  @apply mx-auto max-w-3xl px-8 font-normal;
-}
-
-body {
-  color: var(--color-text-primary);
-  background-color: var(--color-background);
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --success: oklch(0.723 0.219 149.579);
+  --warning: oklch(0.769 0.188 70.08);
 }
 
 @theme inline {
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-sans);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -140,14 +68,15 @@ body {
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-success: var(--success);
-  --color-success-foreground: var(--success-foreground);
-  --color-warning: var(--warning);
-  --color-warning-foreground: var(--warning-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 @layer base {
@@ -156,6 +85,6 @@ body {
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply min-h-screen bg-background font-sans text-foreground antialiased;
   }
 }

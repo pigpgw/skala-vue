@@ -16,11 +16,10 @@ const emit = defineEmits(['select-card', 'click-detail'])
 const handleCardSelect = (message) => emit('select-card', message)
 /** @param {string} cityId */
 const handleDetailClick = (cityId) => emit('click-detail', cityId)
-
 </script>
 
 <template>
-  <div v-if="weatherList.length > 0" class="grid gap-3">
+  <div v-if="weatherList.length > 0" class="grid gap-4 md:grid-cols-2">
     <WeatherCard
       v-for="weatherItem in weatherList"
       :key="weatherItem.id"
@@ -29,5 +28,5 @@ const handleDetailClick = (cityId) => emit('click-detail', cityId)
       @click-detail="handleDetailClick"
     />
   </div>
-  <div v-else>검색 결과와 일치하는 도시가 없습니다.</div>
+  <div v-else class="rounded-lg border border-dashed p-8 text-center text-sm text-muted-foreground">검색 결과와 일치하는 도시가 없습니다.</div>
 </template>

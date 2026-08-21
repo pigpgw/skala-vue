@@ -9,17 +9,21 @@ import WeatherHeader from '@/components/weather/WeatherHeader.vue'
 
 <template>
   <TooltipProvider>
-    <WeatherHeader />
-    <div class="flex w-full items-center gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      <nav class="flex shrink-0 items-center gap-1">
-        <Button as-child variant="link" size="sm"><RouterLink to="/">날씨 홈</RouterLink></Button>
-        <Button as-child variant="link" size="sm"><RouterLink to="/about">서비스 소개</RouterLink></Button>
-        <Button as-child variant="link" size="sm"><RouterLink to="/tips">날씨 생활 팁</RouterLink></Button>
-      </nav>
-      <UnitToggler />
+    <div class="min-h-screen bg-muted/30">
+      <header class="border-b bg-background">
+        <div class="mx-auto flex max-w-5xl items-center justify-between gap-6 px-6 py-4">
+          <WeatherHeader />
+          <UnitToggler />
+        </div>
+        <nav class="mx-auto flex max-w-5xl items-center gap-1 px-6 pb-3">
+          <Button as-child variant="ghost" size="sm"><RouterLink to="/">날씨 홈</RouterLink></Button>
+          <Button as-child variant="ghost" size="sm"><RouterLink to="/about">서비스 소개</RouterLink></Button>
+          <Button as-child variant="ghost" size="sm"><RouterLink to="/tips">날씨 생활 팁</RouterLink></Button>
+        </nav>
+      </header>
+      <main class="mx-auto max-w-5xl px-6 py-8">
+        <RouterView />
+      </main>
     </div>
-    <main>
-      <RouterView />
-    </main>
   </TooltipProvider>
 </template>
