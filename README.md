@@ -106,6 +106,7 @@ src/
 
 - `--color-white`, `--color-blue-600`과 같은 기본 팔레트에 실제 색상값을 정의합니다.
 - `--color-primary`, `--color-success`와 같은 역할별 색상은 기본 팔레트를 참조합니다.
+- shadcn-vue의 `--background`, `--card`, `--primary`, `--border`, `--ring`은 기존 팔레트를 참조하고 `@theme inline`을 통해 Tailwind 유틸리티에 연결합니다.
 - 컴포넌트에서는 색상 코드를 직접 작성하지 않고 역할별 CSS 변수를 사용합니다.
 - 버튼 그림자는 `--shadow-button-primary`처럼 상태별 공용 변수로 관리합니다.
 
@@ -374,6 +375,7 @@ npm run lint
 - [x] shadcn-vue를 JavaScript·Vite·Reka Nova·Neutral·CSS 변수 구성으로 초기화하고 `components.json`을 생성했습니다.
 - [x] Button, Input, Badge, Card, Tooltip, Alert, Checkbox, Skeleton 컴포넌트 소스와 `cn()` 클래스 조합 유틸을 프로젝트에 추가했습니다.
 - [x] JavaScript strict template 검사에서 shadcn의 `data-slot` 속성을 인식하도록 Vue 공용 속성 타입을 확장했습니다.
+- [x] 기존 파란색 디자인 토큰을 shadcn-vue semantic color와 Tailwind 테마 변수에 연결했습니다.
 - shadcn-vue는 완성된 컴포넌트 소스를 프로젝트에 받아 직접 수정할 수 있어 일반 패키지형 UI 라이브러리보다 내부 구현에 대한 의존이 낮고 프로젝트 디자인에 맞게 확장하기 쉬워 선정했습니다.
 - 과제 3에서 직접 만든 `BaseButton`, `BaseInput`, `BaseBadge`는 학습 기록으로 유지하고 실제 화면의 사용처만 `components/ui`로 교체합니다.
 - [ ] 추가한 shadcn-vue 컴포넌트를 과제 3 화면에 적용합니다.
@@ -464,7 +466,7 @@ npm run lint
 
 | 과제 7 요구사항                     | 현재 구현                                        | 적용 방식                                                                                       |
 | ----------------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| UI Library와 Tailwind CSS 활용 준비 | Tailwind CSS 연결 및 shadcn-vue UI 소스 추가 완료 | 기존 디자인을 유지한 상태에서 필요한 컴포넌트 코드를 프로젝트 내부에 생성했습니다.                   |
+| UI Library와 Tailwind CSS 활용 준비 | shadcn-vue UI 소스와 Tailwind 테마 통합 완료       | 기존 파란색 팔레트를 shadcn semantic color에 연결해 생성된 컴포넌트도 같은 디자인 토큰을 사용합니다. |
 | 기존 공용 컴포넌트 교체 준비        | 기존 Base 컴포넌트 보존 및 `components/ui` 설정 | 직접 구현한 코드는 학습 기록으로 남기고 실제 화면의 import만 shadcn-vue 컴포넌트로 교체합니다.     |
 
 ## 커밋 컨벤션
