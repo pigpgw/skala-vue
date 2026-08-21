@@ -23,7 +23,7 @@ export const useRegionStore = defineStore('region', () => {
       if (region.use_yn !== 'Y' || !region.sgg_cd || !region.sgg_nm) return
       regionMap.set(region.sgg_cd, {
         id: region.sgg_cd,
-        name: `${region.ctpv_nm} ${region.sgg_nm}`,
+        name: region.ctpv_nm === region.sgg_nm ? region.ctpv_nm : `${region.ctpv_nm} ${region.sgg_nm}`,
         weatherName: region.sgg_nm,
       })
     })
