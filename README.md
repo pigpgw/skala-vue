@@ -61,6 +61,7 @@ src/
 │   └── weatherStore.js
 ├── types/
 │   ├── insect.js
+│   ├── region.js
 │   └── weather.js
 ├── utils/
 │   ├── insect.js
@@ -313,6 +314,7 @@ npm run lint
 - [x] 위도·경도 및 도시명 기반 현재 날씨 조회 함수를 준비했습니다.
 - [x] `[과제 6-3 준비]` 국토교통부 지역코드 API 전용 Axios 인스턴스와 요청·응답 인터셉터를 구성했습니다.
 - [x] `[과제 6-3 준비]` 페이지와 시도 코드를 전달할 수 있는 지역코드 조회 함수를 API 모듈로 분리했습니다.
+- [x] `[과제 6-3 준비]` 지역코드 원본 응답과 검색용 지역 객체의 JSDoc 타입을 분리했습니다.
 
 - [x] `[추가 구현]` Postman으로 OpenWeatherMap API를 테스트해 `200 OK` 응답을 확인했습니다.
 
