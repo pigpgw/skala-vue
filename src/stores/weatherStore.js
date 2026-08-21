@@ -10,6 +10,7 @@ import { getFineDustStatus } from '@/utils/airQuality'
 /** @typedef {import('@/types/region').Region} Region */
 
 export const useWeatherStore = defineStore('weather', () => {
+  /** @type {import('vue').Ref<WeatherItem[]>} */
   const weatherList = ref([...weatherData])
   const isLoading = ref(false)
 

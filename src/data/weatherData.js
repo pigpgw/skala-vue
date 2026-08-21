@@ -1,5 +1,6 @@
 import { insectData } from '@/data/insectData'
 
+/** @type {import('@/types/weather').WeatherItem[]} */
 export const weatherData = [
   {
     id: '5f317145-21e8-433e-a78d-24c2eb08d614',
