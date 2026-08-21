@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 
 import DashboardCard from '@/components/weather/DashboardCard.vue'
 
+import ApiRequestStatus from '@/components/weather/ApiRequestStatus.vue'
 import CitySearchPanel from '@/components/weather/CitySearchPanel.vue'
 import CitySelectionStatusPanel from '@/components/weather/CitySelectionStatusPanel.vue'
 import NationalWeatherPanel from '@/components/weather/NationalWeatherPanel.vue'
@@ -16,8 +17,8 @@ import { useRegionStore } from '@/stores/regionStore'
 const router = useRouter()
 const regionStore = useRegionStore()
 const weatherStore = useWeatherStore()
-const { weatherList } = storeToRefs(weatherStore)
-const { regions } = storeToRefs(regionStore)
+const { weatherList, isLoading: isWeatherLoading, errorMessage: weatherErrorMessage } = storeToRefs(weatherStore)
+const { regions, isLoading: isRegionLoading, errorMessage: regionErrorMessage } = storeToRefs(regionStore)
 
 onMounted(() => {
   regionStore.fetchRegions()
@@ -27,6 +28,8 @@ onMounted(() => {
 const searchQuery = ref('')
 const isNationalSummaryVisible = ref(true)
 const selectionMessage = ref('카드를 클릭하거나 검색해 보세요.')
+/** @type {import('vue').Ref<Region | null>} */
+const failedRegion = ref(null)
 
 const filteredWeatherList = computed(() => weatherList.value.filter((weatherItem) => weatherItem.name.includes(searchQuery.value.trim())))
 const filteredRegions = computed(() => {
@@ -58,16 +61,28 @@ const updateSelectionMessage = (message) => (selectionMessage.value = message)
 const navigateToWeatherDetail = (cityId) => router.push('/weather/' + cityId)
 /** @param {Region} region */
 const selectRegion = async (region) => {
+  if (isWeatherLoading.value) return
+  failedRegion.value = null
   selectionMessage.value = `${region.name} 날씨를 불러오는 중입니다.`
   const weatherItem = await weatherStore.fetchWeatherByRegion(region)
 
   if (!weatherItem) {
+    failedRegion.value = region
     selectionMessage.value = `${region.name} 날씨를 불러오지 못했습니다.`
     return
   }
 
   searchQuery.value = ''
   selectionMessage.value = `${region.name} 날씨를 추가했습니다.`
+}
+
+const retryWeatherRequest = () => {
+  if (failedRegion.value) {
+    selectRegion(failedRegion.value)
+    return
+  }
+
+  weatherStore.fetchMainCityDatasById()
 }
 
 watch(searchResultCount, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`))
@@ -88,12 +103,27 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
 
 <template>
   <div class="weather-home">
+    <ApiRequestStatus
+      :is-loading="isRegionLoading"
+      loading-message="지역 검색 목록을 불러오는 중입니다."
+      :error-message="regionErrorMessage"
+      @retry="regionStore.fetchRegions"
+    />
+
+    <ApiRequestStatus
+      :is-loading="isWeatherLoading"
+      loading-message="날씨 정보를 불러오는 중입니다."
+      :error-message="weatherErrorMessage"
+      @retry="retryWeatherRequest"
+    />
+
     <DashboardCard>
       <CitySearchPanel
         :search-query="searchQuery"
         :search-result-count="searchResultCount"
         :search-status-message="searchStatusMessage"
         :regions="filteredRegions"
+        :disabled="isWeatherLoading || isRegionLoading"
         @update-query="updateSearchQuery"
         @select-region="selectRegion"
       />

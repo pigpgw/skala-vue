@@ -45,6 +45,7 @@ src/
 │   └── weather/
 │       ├── CitySearchPanel.vue
 │       ├── CitySelectionStatusPanel.vue
+│       ├── ApiRequestStatus.vue
 │       ├── DashboardCard.vue
 │       ├── InsectConditionBadge.vue
 │       ├── NationalWeatherPanel.vue
@@ -335,6 +336,7 @@ npm run lint
 - [x] `[과제 6-2]` OpenWeatherMap Air Pollution API를 추가로 연동하고, 기본 도시와 검색 지역의 PM2.5 농도를 `좋음`, `보통`, `나쁨` 상태로 변환해 카드에 적용했습니다.
 - [x] `[과제 6 DTO 정리]` OpenWeatherMap과 지역코드 API에서 실제로 사용하는 요청·응답 필드만 `src/dto/`에 JSDoc 타입으로 분리하고 모든 타입 이름을 `Request` 또는 `Response`로 통일했습니다.
 - [x] `[과제 6 추가 구현]` 벌레별 기온·습도·풍속·활동 월 기준을 데이터로 관리하고, 실제 날씨 응답을 공용 판별 함수에 전달해 기본 도시와 검색 지역의 출몰 예상 벌레를 계산하도록 개선했습니다.
+- [x] `[추가 구현]` 날씨와 지역코드 API의 로딩·오류 상태를 Store에서 관리하고, 화면에 진행 상태와 오류 메시지 및 재시도 버튼을 표시하며 요청 중 중복 선택을 방지했습니다.
 
 - [x] `[추가 구현]` Postman으로 OpenWeatherMap API를 테스트해 `200 OK` 응답을 확인했습니다.
 

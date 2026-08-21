@@ -27,6 +27,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['input'])
@@ -80,6 +84,7 @@ const sizeStyles = {
     :type="props.type"
     :value="props.value"
     :placeholder="props.placeholder"
+    :disabled="props.disabled"
     :style="[variantStyles[props.variant], sizeStyles[props.size]]"
     @input="handleInput"
   />
@@ -93,5 +98,10 @@ const sizeStyles = {
   color: var(--color-text-primary);
   background-color: var(--color-surface);
   font-family: inherit;
+}
+
+.base-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 </style>

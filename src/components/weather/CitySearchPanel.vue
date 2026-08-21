@@ -20,6 +20,10 @@ defineProps({
     type: /** @type {import('vue').PropType<Region[]>}*/ (Array),
     default: () => [],
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update-query', 'select-region'])
@@ -41,7 +45,15 @@ const selectRegion = (region) => {
   <div class="city-search-panel">
     <div>검색할 도시</div>
     <div class="search-input-wrapper">
-      <BaseInput variant="primary" size="medium" type="text" :value="searchQuery" placeholder="도시명을 입력하세요" @input="handleSearchInput" />
+      <BaseInput
+        variant="primary"
+        size="medium"
+        type="text"
+        :value="searchQuery"
+        placeholder="도시명을 입력하세요"
+        :disabled="disabled"
+        @input="handleSearchInput"
+      />
     </div>
     <div v-if="regions.length > 0" class="region-search-results">
       <BaseButton
@@ -51,6 +63,7 @@ const selectRegion = (region) => {
         type="button"
         variant="primary"
         size="medium"
+        :disabled="disabled"
         @click="selectRegion(region)"
       >
         {{ region.name }}

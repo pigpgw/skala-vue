@@ -11,6 +11,14 @@ const props = defineProps({
     type: /** @type {import('vue').PropType<ButtonSize>} */ (String),
     default: 'medium',
   },
+  type: {
+    type: /** @type {import('vue').PropType<'button' | 'submit' | 'reset'>} */ (String),
+    default: 'button',
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['click'])
@@ -68,6 +76,8 @@ const sizeStyles = {
 <template>
   <button
     class="base-button"
+    :type="props.type"
+    :disabled="props.disabled"
     :style="[variantStyles[props.variant], sizeStyles[props.size]]"
     @click="handleClick"
   >

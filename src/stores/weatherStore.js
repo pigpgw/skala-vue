@@ -14,6 +14,7 @@ export const useWeatherStore = defineStore('weather', () => {
   /** @type {import('vue').Ref<WeatherItem[]>} */
   const weatherList = ref([...weatherData])
   const isLoading = ref(false)
+  const errorMessage = ref('')
 
   /** @param {WeatherItem} weatherItem */
   const addWeatherItem = (weatherItem) => {
@@ -27,6 +28,7 @@ export const useWeatherStore = defineStore('weather', () => {
 
   const fetchMainCityDatasById = async () => {
     isLoading.value = true
+    errorMessage.value = ''
 
     try {
       const results = await Promise.all(
@@ -55,6 +57,7 @@ export const useWeatherStore = defineStore('weather', () => {
       weatherList.value = results
     } catch (e) {
       console.error(e instanceof Error ? e.message : '날씨 요청 실패')
+      errorMessage.value = '기본 도시의 날씨 정보를 불러오지 못했습니다.'
     } finally {
       isLoading.value = false
     }
@@ -66,6 +69,7 @@ export const useWeatherStore = defineStore('weather', () => {
    */
   const fetchWeatherByRegion = async (region) => {
     isLoading.value = true
+    errorMessage.value = ''
 
     try {
       const weather = await getWeatherByCityName({ city: region.weatherName })
@@ -100,6 +104,7 @@ export const useWeatherStore = defineStore('weather', () => {
       return weatherItem
     } catch (e) {
       console.error(e instanceof Error ? e.message : '지역 날씨 요청 실패')
+      errorMessage.value = `${region.name} 날씨 정보를 불러오지 못했습니다.`
       return null
     } finally {
       isLoading.value = false
@@ -109,6 +114,7 @@ export const useWeatherStore = defineStore('weather', () => {
   return {
     weatherList,
     isLoading,
+    errorMessage,
     addWeatherItem,
     fetchMainCityDatasById,
     fetchWeatherByRegion,
