@@ -62,6 +62,7 @@ const handleDetailClick = () => {
 
 <style scoped>
 .weather-card {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
 }
 </style>

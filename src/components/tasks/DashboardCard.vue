@@ -6,9 +6,11 @@
 
 <style scoped>
 .dashboard-card {
-  border: 1px solid #dcdfe6;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
 </style>

@@ -16,6 +16,6 @@ const configStore = useConfigStore()
 .unit-toggler {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 </style>

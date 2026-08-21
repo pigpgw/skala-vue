@@ -35,7 +35,41 @@
   --color-button-border: rgb(255 255 255 / 18%);
   --color-focus-ring: rgb(37 99 235 / 24%);
 
+  /* Typography */
+  --font-size-xs: 0.8125rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.75rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Control sizes */
+  --control-height-sm: 36px;
+  --control-height-md: 44px;
+  --control-height-lg: 52px;
+
   /* Shadows */
+  --shadow-sm: 0 2px 8px rgb(15 23 42 / 6%);
+  --shadow-md: 0 8px 24px rgb(15 23 42 / 10%);
+  --shadow-lg: 0 16px 40px rgb(15 23 42 / 14%);
   --shadow-button-primary: 0 6px 14px rgb(37 99 235 / 22%);
   --shadow-button-success: 0 6px 14px rgb(21 128 61 / 20%);
   --shadow-button-warning: 0 6px 14px rgb(180 83 9 / 20%);
@@ -45,8 +79,8 @@
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  padding: var(--space-8);
+  font-weight: var(--font-weight-regular);
 }
 
 a,
@@ -54,7 +88,7 @@ a,
   text-decoration: none;
   color: var(--color-primary);
   transition: 0.4s;
-  padding: 3px;
+  padding: var(--space-1);
 }
 
 body {
@@ -71,6 +105,6 @@ body {
 
 @media (min-width: 1024px) {
   #app {
-    padding: 0 2rem;
+    padding: 0 var(--space-8);
   }
 }

@@ -45,22 +45,22 @@ const variantStyles = {
 /** @type {Record<ButtonSize, import('vue').CSSProperties>} */
 const sizeStyles = {
   small: {
-    minHeight: '34px',
-    padding: '0 12px',
-    borderRadius: '9px',
-    fontSize: '13px',
+    minHeight: 'var(--control-height-sm)',
+    padding: '0 var(--space-3)',
+    borderRadius: 'var(--radius-sm)',
+    fontSize: 'var(--font-size-xs)',
   },
   medium: {
-    minHeight: '42px',
-    padding: '0 18px',
-    borderRadius: '11px',
-    fontSize: '14px',
+    minHeight: 'var(--control-height-md)',
+    padding: '0 var(--space-4)',
+    borderRadius: 'var(--radius-md)',
+    fontSize: 'var(--font-size-sm)',
   },
   large: {
-    minHeight: '50px',
-    padding: '0 24px',
-    borderRadius: '13px',
-    fontSize: '15px',
+    minHeight: 'var(--control-height-lg)',
+    padding: '0 var(--space-6)',
+    borderRadius: 'var(--radius-lg)',
+    fontSize: 'var(--font-size-md)',
   },
 }
 </script>
@@ -80,10 +80,10 @@ const sizeStyles = {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: var(--space-2);
   border: 1px solid var(--color-button-border);
   font: inherit;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   line-height: 1;
   letter-spacing: -0.01em;
   white-space: nowrap;

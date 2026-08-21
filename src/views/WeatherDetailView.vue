@@ -44,6 +44,6 @@ onMounted(() => {
 
 <style scoped>
 .weather-detail {
-  padding: 16px;
+  padding: var(--space-4);
 }
 </style>

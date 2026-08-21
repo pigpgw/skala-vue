@@ -25,6 +25,6 @@ import WeatherHeader from '@/components/tasks/WeatherHeader.vue'
 nav {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
 }
 </style>

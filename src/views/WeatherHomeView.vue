@@ -101,6 +101,6 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
 
 <style scoped>
 .weather-home {
-  padding: 16px;
+  padding: var(--space-4);
 }
 </style>

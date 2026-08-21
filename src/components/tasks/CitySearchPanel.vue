@@ -36,6 +36,8 @@ const handleSearchInput = (event) => {
 
 <style scoped>
 .search-input {
-  padding: 8px;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
 }
 </style>

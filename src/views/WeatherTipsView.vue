@@ -18,6 +18,6 @@ import { RouterLink } from 'vue-router'
 
 <style scoped>
 .weather-tips {
-  padding: 16px;
+  padding: var(--space-4);
 }
 </style>
