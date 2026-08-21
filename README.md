@@ -84,6 +84,13 @@ src/
 - 반응형 화면에서는 색상의 의미를 유지하고 크기, 간격과 배치만 변경합니다.
 - `body`에는 공용 배경색과 기본 글자색을 적용하고 링크에는 메인 색상과 호버 색상을 적용합니다.
 
+### 공용 입력 컴포넌트
+
+- `BaseInput.vue`는 `primary`, `success`, `warning`, `danger` variant를 지원합니다.
+- 입력창 크기는 `small`, `medium`, `large`로 구분하며 기본값은 `primary`, `medium`입니다.
+- 자주 사용하는 `type`, `value`, `placeholder`는 타입이 확인되는 props로 받고, 나머지 네이티브 속성은 `v-bind="$attrs"`로 전달합니다.
+- 검색 입력창은 부모 래퍼가 너비를 담당하고 `BaseInput`은 래퍼 안에서 전체 너비를 사용하며, `input` 이벤트를 부모에 다시 전달합니다.
+
 ## 배포
 
 - 배포 주소: [https://homework.christmas](https://homework.christmas)
@@ -247,6 +254,10 @@ src/
   - 네이티브 `click` 이벤트를 명시적으로 선언해 부모 컴포넌트에 전달합니다.
   - 호버, 클릭, 키보드 포커스와 비활성 상태 스타일을 제공합니다.
 - `[과제 3-5 디자인 토큰 확장]` 폰트 크기, 글자 굵기, 간격, 모서리와 일반 그림자를 전역 CSS 변수로 추가하고 현재 날씨 컴포넌트에 적용했습니다.
+- `[과제 3-7 추가 공용 입력 컴포넌트]` `BaseInput.vue`를 별도 공용 컴포넌트로 추가하고 `CitySearchPanel.vue`의 검색 입력창에 적용했습니다.
+  - `variant`와 `size`에 따라 공용 색상 및 크기 토큰을 사용합니다.
+  - `type`, `value`, `placeholder`를 props로 받고 나머지 네이티브 속성은 `$attrs`로 전달합니다.
+  - 검색 입력창의 너비는 부모 래퍼에서 조절하고 `input` 이벤트를 명시적으로 부모에 전달합니다.
 
 ## 커밋 컨벤션
 

@@ -1,4 +1,6 @@
 <script setup>
+import BaseInput from '@/components/tasks/common/BaseInput.vue'
+
 defineProps({
   searchQuery: {
     type: String,
@@ -27,7 +29,16 @@ const handleSearchInput = (event) => {
 <template>
   <div class="city-search-panel">
     <div>검색할 도시</div>
-    <input class="search-input" type="text" :value="searchQuery" @input="handleSearchInput" placeholder="도시명을 입력하세요" />
+    <div class="search-input-wrapper">
+      <BaseInput
+        variant="primary"
+        size="medium"
+        type="text"
+        :value="searchQuery"
+        placeholder="도시명을 입력하세요"
+        @input="handleSearchInput"
+      />
+    </div>
     <div>입력한 도시: {{ searchQuery }}</div>
     <div>검색 결과 개수: {{ searchResultCount }}개</div>
     <div>검색 상태: {{ searchStatusMessage }}</div>
@@ -35,9 +46,7 @@ const handleSearchInput = (event) => {
 </template>
 
 <style scoped>
-.search-input {
-  padding: var(--space-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+.search-input-wrapper {
+  width: 100%;
 }
 </style>
