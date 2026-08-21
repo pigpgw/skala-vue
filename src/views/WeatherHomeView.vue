@@ -71,6 +71,7 @@ const retryRegionSearch = () => regionStore.searchRegions(regionSearchQuery.valu
 /** @param {Region} region */
 const selectRegion = async (region) => {
   if (isWeatherLoading.value) return
+  const isExistingRegion = weatherList.value.some((weatherItem) => weatherItem.id === region.id || weatherItem.name === region.name)
   selectionMessage.value = `${region.name} 날씨를 불러오는 중입니다.`
   const weatherItem = await weatherStore.fetchWeatherByRegion(region)
 
@@ -83,7 +84,7 @@ const selectRegion = async (region) => {
   regionStore.clearSearchResults()
   weatherFilterQuery.value = ''
   selectedWeatherId.value = weatherItem.id
-  selectionMessage.value = `${region.name} 날씨를 추가했습니다.`
+  selectionMessage.value = `${region.name} 날씨를 ${isExistingRegion ? '업데이트했습니다.' : '추가했습니다.'}`
 
   await nextTick()
   document.getElementById(`weather-card-${weatherItem.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
