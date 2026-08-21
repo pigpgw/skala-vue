@@ -64,6 +64,7 @@ src/
 │   └── weatherStore.js
 ├── types/
 │   ├── insect.js
+│   ├── openWeather.js
 │   ├── region.js
 │   └── weather.js
 ├── utils/
@@ -323,6 +324,7 @@ npm run lint
 - [x] `[과제 6-3]` `WeatherHomeView`에서 지역 데이터를 조회하고 입력한 지역명과 일치하는 검색 후보를 최대 10개까지 표시했습니다.
 - [x] `[과제 6-3 UI 보완]` 지역 검색 결과를 공용 `BaseButton` 세로 목록으로 표시하고, 전체 화면은 좁은 단일 칼럼으로 구성해 입력창과 결과 목록을 카드 왼쪽 기준선에 정렬했습니다.
 - [x] `[과제 6-1 준비]` 메인에 표시할 서울·수원·부산·제주의 이름과 위도·경도를 `cityData.js`에 분리했습니다.
+- [x] `[과제 6-1 준비]` OpenWeatherMap 현재 날씨 응답 구조를 공용 JSDoc 타입으로 분리하고 날씨 조회 함수의 반환 타입에 적용했습니다.
 
 - [x] `[추가 구현]` Postman으로 OpenWeatherMap API를 테스트해 `200 OK` 응답을 확인했습니다.
 
