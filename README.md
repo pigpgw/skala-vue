@@ -30,7 +30,8 @@ src/
 ├── App.vue
 ├── assets/
 │   ├── base.css
-│   └── main.css
+│   ├── main.css
+│   └── openweathermap-postman-api-test.png
 ├── components/
 │   ├── common/
 │   │   ├── BaseBadge.vue
@@ -88,19 +89,19 @@ src/
 - 모서리는 `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-full`로 구분합니다.
 - 일반 표면 그림자는 `--shadow-sm`, `--shadow-md`, `--shadow-lg`로 깊이를 구분합니다.
 
-| 역할 | CSS 변수 | 색상 |
-| --- | --- | --- |
-| 메인 | `--color-primary` | `#2563eb` |
-| 메인 호버 | `--color-primary-hover` | `#1d4ed8` |
-| 연한 메인 배경 | `--color-primary-soft` | `#eff6ff` |
-| 전체 배경 | `--color-background` | `#f4f8fc` |
-| 카드 등 표면 | `--color-surface` | `#ffffff` |
-| 기본 글자 | `--color-text-primary` | `#0f172a` |
-| 보조 글자 | `--color-text-secondary` | `#475569` |
-| 테두리 | `--color-border` | `#e2e8f0` |
-| 성공·좋음 | `--color-success` | `#15803d` |
-| 주의·보통 | `--color-warning` | `#b45309` |
-| 위험·나쁨 | `--color-danger` | `#b91c1c` |
+| 역할           | CSS 변수                 | 색상      |
+| -------------- | ------------------------ | --------- |
+| 메인           | `--color-primary`        | `#2563eb` |
+| 메인 호버      | `--color-primary-hover`  | `#1d4ed8` |
+| 연한 메인 배경 | `--color-primary-soft`   | `#eff6ff` |
+| 전체 배경      | `--color-background`     | `#f4f8fc` |
+| 카드 등 표면   | `--color-surface`        | `#ffffff` |
+| 기본 글자      | `--color-text-primary`   | `#0f172a` |
+| 보조 글자      | `--color-text-secondary` | `#475569` |
+| 테두리         | `--color-border`         | `#e2e8f0` |
+| 성공·좋음      | `--color-success`        | `#15803d` |
+| 주의·보통      | `--color-warning`        | `#b45309` |
+| 위험·나쁨      | `--color-danger`         | `#b91c1c` |
 
 - 버튼과 배지 같은 공용 컴포넌트는 `primary`, `success`, `warning`, `danger`처럼 의미에 따라 색상을 구분합니다.
 - 반응형 화면에서는 색상의 의미를 유지하고 크기, 간격과 배치만 변경합니다.
@@ -301,7 +302,11 @@ npm run lint
 **Axios 활용 준비**
 
 - [x] `[과제 6-0]` Axios 라이브러리를 설치했습니다.
-- [ ] OpenWeatherMap에 가입하고 API Key를 발급받습니다.
+- [x] OpenWeatherMap에 가입하고 API Key를 발급받았습니다.
+
+- [x] `[추가 구현]` Postman으로 OpenWeatherMap API를 테스트해 `200 OK` 응답을 확인했습니다.
+
+<img src="./src/assets/openweathermap-postman-api-test.png" alt="Postman OpenWeatherMap API 테스트 결과" width="700" />
 
 **과제 요구사항**
 
@@ -315,48 +320,48 @@ npm run lint
 
 #### 과제 1 변경 사항
 
-| 과제 1 요구사항 | 현재 구현 | 변경 내용 및 이유 |
-| --- | --- | --- |
-| 컴포넌트 내부의 날씨 배열을 `ref()`로 관리 | `weatherData.js`를 초기 데이터로 사용하고 `weatherStore`의 `weatherList`로 관리 | 메인 화면과 상세 화면이 같은 날씨 목록을 공유하고 새 도시 추가 기능도 한 곳에서 처리하도록 변경했습니다. |
-| 한 화면에서 검색, 통계와 카드 목록을 직접 렌더링 | `WeatherHomeView`가 상태를 관리하고 `components/weather`의 기능 컴포넌트를 조립 | 과제 1의 기능은 유지하면서 검색, 통계, 목록과 선택 상태의 화면 책임을 분리했습니다. |
-| 상세보기 버튼에서 단순 이벤트 처리 | `/weather/:cityId` 동적 Route로 이동 | 도시 ID를 기준으로 `WeatherDetailView`에서 상세 날씨와 벌레 정보를 표시하도록 확장했습니다. |
+| 과제 1 요구사항                                  | 현재 구현                                                                       | 변경 내용 및 이유                                                                                        |
+| ------------------------------------------------ | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| 컴포넌트 내부의 날씨 배열을 `ref()`로 관리       | `weatherData.js`를 초기 데이터로 사용하고 `weatherStore`의 `weatherList`로 관리 | 메인 화면과 상세 화면이 같은 날씨 목록을 공유하고 새 도시 추가 기능도 한 곳에서 처리하도록 변경했습니다. |
+| 한 화면에서 검색, 통계와 카드 목록을 직접 렌더링 | `WeatherHomeView`가 상태를 관리하고 `components/weather`의 기능 컴포넌트를 조립 | 과제 1의 기능은 유지하면서 검색, 통계, 목록과 선택 상태의 화면 책임을 분리했습니다.                      |
+| 상세보기 버튼에서 단순 이벤트 처리               | `/weather/:cityId` 동적 Route로 이동                                            | 도시 ID를 기준으로 `WeatherDetailView`에서 상세 날씨와 벌레 정보를 표시하도록 확장했습니다.              |
 
 #### 과제 2 변경 사항
 
-| 과제 2 요구사항 | 현재 구현 | 변경 내용 및 이유 |
-| --- | --- | --- |
-| 검색어와 날씨 목록을 지역 반응형 상태로 관리 | 검색어는 `WeatherHomeView`의 지역 상태, 날씨 목록은 `weatherStore`의 전역 상태로 관리 | 한 화면에서만 사용하는 검색 상태는 지역 상태로 유지하고 여러 Route가 공유하는 날씨 데이터만 Store로 이동했습니다. |
-| `computed`, `watch`, `watchEffect`를 한 컴포넌트에 작성 | 계산과 감시 로직은 `WeatherHomeView`, 출력 UI는 하위 컴포넌트가 담당 | 반응형 학습 요구사항은 유지하면서 데이터 처리와 화면 출력의 책임을 분리했습니다. |
-| 검색 결과와 전국 통계를 같은 템플릿에서 표시 | `CitySearchPanel`, `NationalWeatherPanel`, `WeatherCardList`로 분리 | props와 emits를 사용해 과제 2의 반응형 결과를 역할별 컴포넌트에 전달합니다. |
+| 과제 2 요구사항                                         | 현재 구현                                                                             | 변경 내용 및 이유                                                                                                 |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| 검색어와 날씨 목록을 지역 반응형 상태로 관리            | 검색어는 `WeatherHomeView`의 지역 상태, 날씨 목록은 `weatherStore`의 전역 상태로 관리 | 한 화면에서만 사용하는 검색 상태는 지역 상태로 유지하고 여러 Route가 공유하는 날씨 데이터만 Store로 이동했습니다. |
+| `computed`, `watch`, `watchEffect`를 한 컴포넌트에 작성 | 계산과 감시 로직은 `WeatherHomeView`, 출력 UI는 하위 컴포넌트가 담당                  | 반응형 학습 요구사항은 유지하면서 데이터 처리와 화면 출력의 책임을 분리했습니다.                                  |
+| 검색 결과와 전국 통계를 같은 템플릿에서 표시            | `CitySearchPanel`, `NationalWeatherPanel`, `WeatherCardList`로 분리                   | props와 emits를 사용해 과제 2의 반응형 결과를 역할별 컴포넌트에 전달합니다.                                       |
 
 #### 과제 3 변경 사항
 
-| 과제 3 요구사항 | 현재 구현 | 변경 내용 및 이유 |
-| --- | --- | --- |
-| `WeatherParent.vue` | `WeatherHomeView.vue` | Router를 적용하면서 `/` 경로의 View가 화면 상태와 조립을 담당하도록 변경했습니다. 역할이 겹치던 중간 컴포넌트는 제거하고 기존 `ref`, `computed`, `watch`, `watchEffect`를 `WeatherHomeView`로 이동했습니다. |
-| `BaseDashboardCard.vue` | `DashboardCard.vue` | 특정 상속 구조로 오해할 수 있는 `Base`를 제거하고 공통 대시보드 박스라는 역할을 표현했습니다. `<slot>`과 공통 박스 스타일은 그대로 유지합니다. |
-| `SearchBar.vue` | `CitySearchPanel.vue` | 검색 입력뿐 아니라 검색 결과 개수와 상태 문구도 표시하므로 실제 책임을 나타내는 `Panel` 이름을 사용합니다. 검색값은 props로 받고 `update-query` 이벤트로 부모에 전달합니다. |
-| `WeatherCard`를 Slot에 직접 배치 | `DashboardCard` 안에 `WeatherCardList` 배치 | 반복 렌더링과 빈 결과 처리를 `WeatherCardList`가 담당하고, 개별 `WeatherCard`의 이벤트를 `WeatherHomeView`까지 전달하도록 책임을 분리했습니다. |
-| 필수 컴포넌트 4개 | 날씨 컴포넌트 9개와 공용 Base 컴포넌트 3개 | 검색, 통계, 선택 상태, 단위 전환과 벌레 안내를 각각 분리했습니다. 날씨 기능은 `components/weather`, 재사용 UI는 `components/common`에서 관리합니다. |
-| 각 컴포넌트의 `<style scoped>` 분리 | 컴포넌트 전용 스타일과 전역 디자인 토큰 분리 | 개별 레이아웃은 `<style scoped>`에서 관리하고 색상, 폰트, 간격, 모서리와 그림자는 `main.css`의 전역 토큰을 사용합니다. |
+| 과제 3 요구사항                     | 현재 구현                                    | 변경 내용 및 이유                                                                                                                                                                                           |
+| ----------------------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `WeatherParent.vue`                 | `WeatherHomeView.vue`                        | Router를 적용하면서 `/` 경로의 View가 화면 상태와 조립을 담당하도록 변경했습니다. 역할이 겹치던 중간 컴포넌트는 제거하고 기존 `ref`, `computed`, `watch`, `watchEffect`를 `WeatherHomeView`로 이동했습니다. |
+| `BaseDashboardCard.vue`             | `DashboardCard.vue`                          | 특정 상속 구조로 오해할 수 있는 `Base`를 제거하고 공통 대시보드 박스라는 역할을 표현했습니다. `<slot>`과 공통 박스 스타일은 그대로 유지합니다.                                                              |
+| `SearchBar.vue`                     | `CitySearchPanel.vue`                        | 검색 입력뿐 아니라 검색 결과 개수와 상태 문구도 표시하므로 실제 책임을 나타내는 `Panel` 이름을 사용합니다. 검색값은 props로 받고 `update-query` 이벤트로 부모에 전달합니다.                                 |
+| `WeatherCard`를 Slot에 직접 배치    | `DashboardCard` 안에 `WeatherCardList` 배치  | 반복 렌더링과 빈 결과 처리를 `WeatherCardList`가 담당하고, 개별 `WeatherCard`의 이벤트를 `WeatherHomeView`까지 전달하도록 책임을 분리했습니다.                                                              |
+| 필수 컴포넌트 4개                   | 날씨 컴포넌트 9개와 공용 Base 컴포넌트 3개   | 검색, 통계, 선택 상태, 단위 전환과 벌레 안내를 각각 분리했습니다. 날씨 기능은 `components/weather`, 재사용 UI는 `components/common`에서 관리합니다.                                                         |
+| 각 컴포넌트의 `<style scoped>` 분리 | 컴포넌트 전용 스타일과 전역 디자인 토큰 분리 | 개별 레이아웃은 `<style scoped>`에서 관리하고 색상, 폰트, 간격, 모서리와 그림자는 `main.css`의 전역 토큰을 사용합니다.                                                                                      |
 
 #### 과제 4 변경 사항
 
-| 과제 4 요구사항 | 현재 구현 | 변경 내용 및 이유 |
-| --- | --- | --- |
-| 홈, 소개, 상세와 Catch-all Route 구성 | 기존 Route에 날씨 생활 팁 Route를 추가하고 View를 지연 로딩 | 기본 Router 요구사항을 유지하면서 별도의 생활 수칙 화면을 추가했습니다. |
-| `RouterLink` 중심의 Navigation Bar | Navigation Bar 옆에 `UnitToggler`를 배치하고 전역 CSS에서 한 줄 표시를 관리 | Route 이동과 단위 변경을 한 영역에서 제공하며, 화면이 좁아져도 링크 문구가 줄바꿈되지 않도록 보완했습니다. |
-| Mock Data에서 상세 도시 조회 | `weatherStore.findWeatherById()`로 상세 도시 조회 | 메인 화면과 상세 Route가 동일한 Store 데이터를 사용하도록 조회 경로를 통일했습니다. |
-| 기본 날씨 상세 정보 표시 | 상세 날씨와 함께 벌레 목록, 출몰 조건과 영향을 표시 | `InsectConditionBadge`를 사용해 마우스 호버와 키보드 포커스로 추가 정보를 확인하도록 확장했습니다. |
+| 과제 4 요구사항                       | 현재 구현                                                                   | 변경 내용 및 이유                                                                                          |
+| ------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| 홈, 소개, 상세와 Catch-all Route 구성 | 기존 Route에 날씨 생활 팁 Route를 추가하고 View를 지연 로딩                 | 기본 Router 요구사항을 유지하면서 별도의 생활 수칙 화면을 추가했습니다.                                    |
+| `RouterLink` 중심의 Navigation Bar    | Navigation Bar 옆에 `UnitToggler`를 배치하고 전역 CSS에서 한 줄 표시를 관리 | Route 이동과 단위 변경을 한 영역에서 제공하며, 화면이 좁아져도 링크 문구가 줄바꿈되지 않도록 보완했습니다. |
+| Mock Data에서 상세 도시 조회          | `weatherStore.findWeatherById()`로 상세 도시 조회                           | 메인 화면과 상세 Route가 동일한 Store 데이터를 사용하도록 조회 경로를 통일했습니다.                        |
+| 기본 날씨 상세 정보 표시              | 상세 날씨와 함께 벌레 목록, 출몰 조건과 영향을 표시                         | `InsectConditionBadge`를 사용해 마우스 호버와 키보드 포커스로 추가 정보를 확인하도록 확장했습니다.         |
 
 #### 과제 5 변경 사항
 
-| 과제 5 요구사항 | 현재 구현 | 변경 내용 및 이유 |
-| --- | --- | --- |
-| 단위 설정용 `configStore` 작성 | `configStore`와 날씨 데이터용 `weatherStore`를 분리해 사용 | 단위 설정과 날씨 목록의 변경 책임이 다르므로 Store를 역할별로 분리했습니다. |
-| 컴포넌트에서 섭씨·화씨 변환 | `utils/temperature.js`의 `convertTemperature()`를 공통 사용 | 카드, 전국 통계와 상세 화면의 중복 변환 공식을 하나의 순수 함수로 통일했습니다. |
-| 컴포넌트별 날씨 데이터 구조 사용 | `types/weather.js`와 `types/insect.js`의 공용 JSDoc 타입 참조 | Store, 데이터와 컴포넌트가 같은 속성 구조를 사용하도록 타입 정의를 한 곳에서 관리합니다. |
-| 날씨 정보 중심의 Store 데이터 | 각 날씨 객체가 공용 벌레 정보 객체 배열을 참조 | `insectData.js`에서 벌레 ID, 이름, 출몰 조건과 영향을 관리해 새로운 벌레를 쉽게 추가할 수 있도록 확장했습니다. |
+| 과제 5 요구사항                  | 현재 구현                                                     | 변경 내용 및 이유                                                                                              |
+| -------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| 단위 설정용 `configStore` 작성   | `configStore`와 날씨 데이터용 `weatherStore`를 분리해 사용    | 단위 설정과 날씨 목록의 변경 책임이 다르므로 Store를 역할별로 분리했습니다.                                    |
+| 컴포넌트에서 섭씨·화씨 변환      | `utils/temperature.js`의 `convertTemperature()`를 공통 사용   | 카드, 전국 통계와 상세 화면의 중복 변환 공식을 하나의 순수 함수로 통일했습니다.                                |
+| 컴포넌트별 날씨 데이터 구조 사용 | `types/weather.js`와 `types/insect.js`의 공용 JSDoc 타입 참조 | Store, 데이터와 컴포넌트가 같은 속성 구조를 사용하도록 타입 정의를 한 곳에서 관리합니다.                       |
+| 날씨 정보 중심의 Store 데이터    | 각 날씨 객체가 공용 벌레 정보 객체 배열을 참조                | `insectData.js`에서 벌레 ID, 이름, 출몰 조건과 영향을 관리해 새로운 벌레를 쉽게 추가할 수 있도록 확장했습니다. |
 
 ## 커밋 컨벤션
 
@@ -375,15 +380,15 @@ type: [과제 n-n] 한글 제목
 
 ### 사용하는 타입
 
-| 타입 | 설명 |
-| --- | --- |
-| `feat` | 새로운 기능 추가 |
-| `fix` | 버그 수정 |
-| `docs` | 문서 수정 |
-| `style` | 코드 동작에 영향이 없는 형식 수정 |
-| `refactor` | 기능 변경 없이 코드 구조 개선 |
-| `test` | 테스트 코드 추가 또는 수정 |
-| `chore` | 빌드, 설정, 패키지 등 기타 작업 |
+| 타입       | 설명                              |
+| ---------- | --------------------------------- |
+| `feat`     | 새로운 기능 추가                  |
+| `fix`      | 버그 수정                         |
+| `docs`     | 문서 수정                         |
+| `style`    | 코드 동작에 영향이 없는 형식 수정 |
+| `refactor` | 기능 변경 없이 코드 구조 개선     |
+| `test`     | 테스트 코드 추가 또는 수정        |
+| `chore`    | 빌드, 설정, 패키지 등 기타 작업   |
 
 ### 예시
 
