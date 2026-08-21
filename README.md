@@ -91,6 +91,12 @@ src/
 - 자주 사용하는 `type`, `value`, `placeholder`는 타입이 확인되는 props로 받고, 나머지 네이티브 속성은 `v-bind="$attrs"`로 전달합니다.
 - 검색 입력창은 부모 래퍼가 너비를 담당하고 `BaseInput`은 래퍼 안에서 전체 너비를 사용하며, `input` 이벤트를 부모에 다시 전달합니다.
 
+### 공용 배지 컴포넌트
+
+- `BaseBadge.vue`는 `primary`, `success`, `warning`, `danger` variant와 `small`, `medium`, `large` 크기를 지원합니다.
+- pill 형태, 상태 점과 연한 배경으로 짧은 상태 정보를 구분하며 기본값은 `primary`, `medium`입니다.
+- 날씨 카드의 현재 날씨와 미세먼지 상태에 적용하고 미세먼지 상태에 따라 성공, 주의, 위험 색상을 표시합니다.
+
 ## 배포
 
 - 배포 주소: [https://homework.christmas](https://homework.christmas)
@@ -258,6 +264,9 @@ src/
   - `variant`와 `size`에 따라 공용 색상 및 크기 토큰을 사용합니다.
   - `type`, `value`, `placeholder`를 props로 받고 나머지 네이티브 속성은 `$attrs`로 전달합니다.
   - 검색 입력창의 너비는 부모 래퍼에서 조절하고 `input` 이벤트를 명시적으로 부모에 전달합니다.
+- `[과제 3-7 추가 공용 배지 컴포넌트]` `BaseBadge.vue`를 추가하고 날씨 카드의 현재 날씨와 미세먼지 상태 표시에 적용했습니다.
+  - `variant`와 `size` 기본값을 제공하고 공용 색상, 폰트, 간격과 모서리 토큰을 사용합니다.
+  - 미세먼지 좋음, 보통, 나쁨 상태를 각각 `success`, `warning`, `danger` 색상으로 구분합니다.
 
 ## 커밋 컨벤션
 

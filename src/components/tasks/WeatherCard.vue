@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 
+import BaseBadge from '@/components/tasks/common/BaseBadge.vue'
 import BaseButton from '@/components/tasks/common/BaseButton.vue'
 import { useConfigStore } from '@/stores/configStore'
 
@@ -31,6 +32,13 @@ const displayTemperature = computed(() => {
   return rawTemperature
 })
 
+/** @type {import('vue').ComputedRef<'success' | 'warning' | 'danger'>} */
+const dustVariant = computed(() => {
+  if (props.weatherItem.dust === '나쁨') return 'danger'
+  if (props.weatherItem.dust === '보통') return 'warning'
+  return 'success'
+})
+
 const handleCardSelect = () => {
   emit('select-card', `${props.weatherItem.name}이 선택되었습니다.`)
 }
@@ -43,11 +51,13 @@ const handleDetailClick = () => {
 <template>
   <div class="weather-card" @click="handleCardSelect">
     <div>{{ weatherItem.name }}</div>
-    <div>현재 날씨: {{ weatherItem.status }}</div>
+    <div class="weather-card__badges">
+      <BaseBadge size="small">날씨 {{ weatherItem.status }}</BaseBadge>
+      <BaseBadge :variant="dustVariant" size="small">미세먼지 {{ weatherItem.dust }}</BaseBadge>
+    </div>
     <div>기온: {{ displayTemperature }}{{ configStore.unitSymbol }}</div>
     <div>습도: {{ weatherItem.humidity }}%</div>
     <div>풍속: {{ weatherItem.windSpeed }}m/s</div>
-    <div>미세먼지: {{ weatherItem.dust }}</div>
 
     <div v-if="weatherItem.dust === '나쁨'">외출할 때 마스크를 착용하세요.</div>
     <div v-else-if="weatherItem.dust === '보통'">미세먼지 농도가 보통입니다.</div>
@@ -64,5 +74,11 @@ const handleDetailClick = () => {
 .weather-card {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
+}
+
+.weather-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
 }
 </style>
