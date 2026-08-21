@@ -19,6 +19,9 @@ Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적�
 ```text
 src/
 ├── App.vue
+├── assets/
+│   ├── base.css
+│   └── main.css
 ├── components/
 │   └── tasks/
 │       ├── CitySearchPanel.vue
@@ -28,14 +31,29 @@ src/
 │       ├── UnitToggler.vue
 │       ├── WeatherCard.vue
 │       ├── WeatherCardList.vue
-│       └── WeatherHeader.vue
+│       ├── WeatherHeader.vue
+│       └── common/
+│           ├── BaseBadge.vue
+│           ├── BaseButton.vue
+│           └── BaseInput.vue
 ├── data/
 │   └── weatherData.js
+├── main.js
+├── router/
+│   └── index.js
 ├── stores/
 │   ├── configStore.js
 │   └── weatherStore.js
+├── types/
+│   └── weather.js
+├── utils/
+│   └── temperature.js
 └── views/
-    └── WeatherHomeView.vue
+    ├── NotFoundView.vue
+    ├── WeatherAboutView.vue
+    ├── WeatherDetailView.vue
+    ├── WeatherHomeView.vue
+    └── WeatherTipsView.vue
 ```
 
 ## 주요 기능
@@ -246,11 +264,9 @@ src/
   - `WeatherDetailView.vue`에서는 `findWeatherById`를 호출해 동적 경로의 도시 ID에 해당하는 상세 날씨를 조회했습니다.
   - 검색어와 필터링은 메인 화면에서만 사용하므로 전역 Store로 이동하지 않고 `WeatherHomeView.vue`의 지역 상태와 계산된 값으로 유지했습니다.
 
-**참고 사항**
+#### 추가 보완 작업 로그 - 시간순
 
-- 메인 화면과 상세 화면의 온도 변환 코드가 중복될 수 있으며 Composable로 분리할 수 있지만, 이번 과제 범위에서는 제외합니다.
-
-#### 과제 3 보완 - 공용 디자인 시스템
+과제 구현 이후 진행한 디자인 시스템과 리팩터링 작업을 실제 작업 순서대로 기록합니다.
 
 - `[과제 3-5 보완]` 기본 팔레트, 역할별 색상과 상태별 그림자를 `main.css`의 CSS 변수로 분리해 컴포넌트 디자인의 공통 기준을 구성했습니다.
 - `[과제 3-7 추가 공용 컴포넌트]` 반복되는 버튼 디자인을 `src/components/tasks/common/BaseButton.vue`로 분리하고 단위 변경과 날씨 상세보기 버튼에 적용했습니다.
@@ -270,6 +286,9 @@ src/
 - `[과제 5-3 온도 변환 리팩터링]` 컴포넌트마다 중복된 섭씨·화씨 변환 공식을 `src/utils/temperature.js`의 순수 함수로 분리했습니다.
   - `WeatherCard`, `NationalWeatherPanel`, `WeatherDetailView`에서 온도와 현재 단위를 인자로 전달해 동일한 변환 함수를 사용합니다.
   - 단위 Store를 utils에서 직접 참조하지 않아 변환 함수를 독립적으로 재사용하고 검증할 수 있도록 구성했습니다.
+- `[과제 5-4 공용 타입 리팩터링]` 세 파일에 중복 선언된 `WeatherItem` JSDoc 타입을 `src/types/weather.js`로 분리했습니다.
+  - `weatherStore`, `WeatherCard`, `WeatherCardList`가 하나의 날씨 데이터 구조를 참조하도록 통일했습니다.
+  - README 파일 트리에 공용 컴포넌트, 타입과 utils 디렉터리를 반영했습니다.
 
 ## 커밋 컨벤션
 

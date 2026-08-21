@@ -1,16 +1,7 @@
 <script setup>
 import WeatherCard from '@/components/tasks/WeatherCard.vue'
 
-/**
- * @typedef {Object} WeatherItem
- * @property {string} id
- * @property {string} name
- * @property {string} status
- * @property {number} temp
- * @property {number} humidity
- * @property {number} windSpeed
- * @property {string} dust
- */
+/** @typedef {import('@/types/weather').WeatherItem} WeatherItem */
 
 defineProps({
   weatherList: {
