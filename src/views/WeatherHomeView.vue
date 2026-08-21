@@ -57,7 +57,18 @@ const updateSelectionMessage = (message) => (selectionMessage.value = message)
 /** @param {string} cityId */
 const navigateToWeatherDetail = (cityId) => router.push('/weather/' + cityId)
 /** @param {Region} region */
-const selectRegion = (region) => console.log(region)
+const selectRegion = async (region) => {
+  selectionMessage.value = `${region.name} 날씨를 불러오는 중입니다.`
+  const weatherItem = await weatherStore.fetchWeatherByRegion(region)
+
+  if (!weatherItem) {
+    selectionMessage.value = `${region.name} 날씨를 불러오지 못했습니다.`
+    return
+  }
+
+  searchQuery.value = ''
+  selectionMessage.value = `${region.name} 날씨를 추가했습니다.`
+}
 
 watch(searchResultCount, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`))
 watch(searchStatusMessage, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 상태가 변경되었습니다. ${oldValue} -> ${newValue}`))

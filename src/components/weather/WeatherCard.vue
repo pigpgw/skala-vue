@@ -21,8 +21,9 @@ const configStore = useConfigStore()
 
 const displayTemperature = computed(() => convertTemperature(props.weatherItem.temp, configStore.unit))
 
-/** @type {import('vue').ComputedRef<'success' | 'warning' | 'danger'>} */
+/** @type {import('vue').ComputedRef<'primary' | 'success' | 'warning' | 'danger'>} */
 const dustVariant = computed(() => {
+  if (props.weatherItem.dust === '정보 없음') return 'primary'
   if (props.weatherItem.dust === '나쁨') return 'danger'
   if (props.weatherItem.dust === '보통') return 'warning'
   return 'success'
@@ -48,7 +49,8 @@ const handleDetailClick = () => {
     <div>습도: {{ weatherItem.humidity }}%</div>
     <div>풍속: {{ weatherItem.windSpeed }}m/s</div>
 
-    <div v-if="weatherItem.dust === '나쁨'">외출할 때 마스크를 착용하세요.</div>
+    <div v-if="weatherItem.dust === '정보 없음'">미세먼지 정보를 준비 중입니다.</div>
+    <div v-else-if="weatherItem.dust === '나쁨'">외출할 때 마스크를 착용하세요.</div>
     <div v-else-if="weatherItem.dust === '보통'">미세먼지 농도가 보통입니다.</div>
     <div v-else>공기가 깨끗합니다.</div>
 
@@ -57,13 +59,14 @@ const handleDetailClick = () => {
 
     <div class="weather-card__insects">
       <div class="weather-card__insects-title">자주 출몰하는 벌레</div>
-      <div class="weather-card__insect-list">
+      <div v-if="weatherItem.insects.length > 0" class="weather-card__insect-list">
         <InsectConditionBadge
           v-for="insect in weatherItem.insects"
           :key="insect.id"
           :insect="insect"
         />
       </div>
+      <div v-else>벌레 정보를 준비 중입니다.</div>
     </div>
 
     <BaseButton @click.stop="handleDetailClick">날씨 자세히 보기</BaseButton>
