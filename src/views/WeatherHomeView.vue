@@ -3,12 +3,12 @@ import { computed, ref, watch, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
-import DashboardCard from '@/components/tasks/DashboardCard.vue'
+import DashboardCard from '@/components/weather/DashboardCard.vue'
 
-import CitySearchPanel from '@/components/tasks/CitySearchPanel.vue'
-import CitySelectionStatusPanel from '@/components/tasks/CitySelectionStatusPanel.vue'
-import NationalWeatherPanel from '@/components/tasks/NationalWeatherPanel.vue'
-import WeatherCardList from '@/components/tasks/WeatherCardList.vue'
+import CitySearchPanel from '@/components/weather/CitySearchPanel.vue'
+import CitySelectionStatusPanel from '@/components/weather/CitySelectionStatusPanel.vue'
+import NationalWeatherPanel from '@/components/weather/NationalWeatherPanel.vue'
+import WeatherCardList from '@/components/weather/WeatherCardList.vue'
 import { useWeatherStore } from '@/stores/weatherStore'
 
 const router = useRouter()

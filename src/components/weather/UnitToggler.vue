@@ -1,5 +1,5 @@
 <script setup>
-import BaseButton from '@/components/tasks/common/BaseButton.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 import { useConfigStore } from '@/stores/configStore'
 
 const configStore = useConfigStore()

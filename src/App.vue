@@ -1,8 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 
-import UnitToggler from '@/components/tasks/UnitToggler.vue'
-import WeatherHeader from '@/components/tasks/WeatherHeader.vue'
+import UnitToggler from '@/components/weather/UnitToggler.vue'
+import WeatherHeader from '@/components/weather/WeatherHeader.vue'
 </script>
 
 <template>

@@ -11,7 +11,7 @@ Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적�
 
 ## 과제 파일
 
-- 과제 컴포넌트는 `src/components/tasks/`에서 관리합니다.
+- 날씨 기능 컴포넌트는 `src/components/weather/`, 재사용 가능한 기본 컴포넌트는 `src/components/common/`에서 관리합니다.
 - 날씨 과제의 상태 관리, 화면 조립과 상세 페이지 이동은 `/` 경로의 `src/views/WeatherHomeView.vue`가 담당합니다.
 - `src/App.vue`의 `RouterView`에서 현재 경로에 해당하는 View를 렌더링합니다.
 - 날씨 더미 데이터는 `src/data/weatherData.js`에서 별도로 관리합니다.
@@ -23,7 +23,11 @@ src/
 │   ├── base.css
 │   └── main.css
 ├── components/
-│   └── tasks/
+│   ├── common/
+│   │   ├── BaseBadge.vue
+│   │   ├── BaseButton.vue
+│   │   └── BaseInput.vue
+│   └── weather/
 │       ├── CitySearchPanel.vue
 │       ├── CitySelectionStatusPanel.vue
 │       ├── DashboardCard.vue
@@ -32,11 +36,7 @@ src/
 │       ├── UnitToggler.vue
 │       ├── WeatherCard.vue
 │       ├── WeatherCardList.vue
-│       ├── WeatherHeader.vue
-│       └── common/
-│           ├── BaseBadge.vue
-│           ├── BaseButton.vue
-│           └── BaseInput.vue
+│       └── WeatherHeader.vue
 ├── data/
 │   ├── insectData.js
 │   └── weatherData.js
@@ -183,7 +183,7 @@ src/
 - `[과제 3-7 추가 컴포넌트]` 애플리케이션 제목을 `WeatherHeader.vue`로 분리하고, 전체 화면 골격을 담당하는 `App.vue`에 Header와 `<main>`을 배치했습니다. `WeatherParent.vue`는 검색, 통계와 목록 기능에 집중하도록 변경했으며 표시할 내용이 없는 Footer는 만들지 않았습니다.
 - `[과제 3-7 구조 및 네이밍 리팩터링]` 선택 결과 영역을 `CitySelectionStatusPanel.vue`로 분리해 `DashboardCard`를 적용하고, 검색 결과 없음 문구는 목록 상태를 담당하는 `WeatherCardList.vue`로 이동했습니다. 화면과 도메인 역할이 드러나도록 `WeatherParent`를 `WeatherDashboard`, `BaseDashboardCard`를 `DashboardCard`, `SearchPanel`을 `CitySearchPanel`, `NationalWeatherSummary`를 `NationalWeatherPanel`로 변경했으며 상태, props, 함수와 CSS 클래스 이름도 함께 정리했습니다. 과제에서 지정한 이벤트 이름은 유지하고 README 파일 트리를 최종 컴포넌트 구조에 맞게 갱신했습니다.
 - `[과제 3-7 코드 스타일 정리]` 함수의 매개변수 타입만 설명하는 짧은 JSDoc은 한 줄 형식으로 통일했습니다. 여러 속성을 설명해야 하는 `WeatherItem` 타입 정의는 가독성을 위해 여러 줄 형식을 유지했습니다.
-- `[과제 3-7 임포트 경로 정리]` Vite와 `jsconfig.json`에 설정된 `@` 별칭을 사용해 `App.vue`와 `src/components/tasks`의 과제 코드 임포트를 절대 경로로 통일했습니다. 임포트는 외부 패키지와 내부 모듈 사이를 한 줄 띄우고, 같은 그룹 안에서는 이름순으로 정리했습니다.
+- `[과제 3-7 임포트 경로 정리]` Vite와 `jsconfig.json`에 설정된 `@` 별칭을 사용해 `App.vue`와 `src/components/weather`의 과제 코드 임포트를 절대 경로로 통일했습니다. 임포트는 외부 패키지와 내부 모듈 사이를 한 줄 띄우고, 같은 그룹 안에서는 이름순으로 정리했습니다.
 - `[과제 3-7 코드 구조 정리]` 과제 컴포넌트의 선언 순서를 임포트, props/emits, 원본 반응형 상태, 파생 상태, 이벤트 함수, watch/watchEffect 순으로 통일했습니다. 같은 종류의 선언은 글자 길이가 아니라 데이터 의존 관계와 화면의 검색, 전국 통계, 선택 결과 흐름에 맞춰 배치했습니다.
 
 #### 과제 3 요구사항과 최종 구조의 차이
@@ -201,7 +201,7 @@ src/
 
 #### 과제 4 - Hands on: Weather Router Vue Router
 
-- 진행 상태: 구현 예정
+- 진행 상태: 구현 완료
 
 **프로젝트 폴더 트리**
 
@@ -212,11 +212,17 @@ src/
 ├── router/
 │   └── index.js                    # routes 배열, Lazy Loading과 Catch-all Route 설정
 ├── components/
-│   └── tasks/                      # 과제 3에서 이어서 사용하는 날씨 컴포넌트
+│   ├── common/                     # 여러 기능에서 재사용하는 기본 UI 컴포넌트
+│   │   ├── BaseBadge.vue
+│   │   ├── BaseButton.vue
+│   │   └── BaseInput.vue
+│   └── weather/                    # 과제 3에서 이어서 사용하는 날씨 기능 컴포넌트
 │       ├── CitySearchPanel.vue
 │       ├── CitySelectionStatusPanel.vue
 │       ├── DashboardCard.vue
+│       ├── InsectConditionBadge.vue
 │       ├── NationalWeatherPanel.vue
+│       ├── UnitToggler.vue
 │       ├── WeatherCard.vue
 │       ├── WeatherCardList.vue
 │       └── WeatherHeader.vue
@@ -273,7 +279,7 @@ src/
 과제 구현 이후 진행한 디자인 시스템과 리팩터링 작업을 실제 작업 순서대로 기록합니다.
 
 - `[과제 3-5 보완]` 기본 팔레트, 역할별 색상과 상태별 그림자를 `main.css`의 CSS 변수로 분리해 컴포넌트 디자인의 공통 기준을 구성했습니다.
-- `[과제 3-7 추가 공용 컴포넌트]` 반복되는 버튼 디자인을 `src/components/tasks/common/BaseButton.vue`로 분리하고 단위 변경과 날씨 상세보기 버튼에 적용했습니다.
+- `[과제 3-7 추가 공용 컴포넌트]` 반복되는 버튼 디자인을 `src/components/common/BaseButton.vue`로 분리하고 단위 변경과 날씨 상세보기 버튼에 적용했습니다.
   - `variant`는 `primary`, `success`, `warning`, `danger`를 지원합니다.
   - `size`는 `small`, `medium`, `large`를 지원합니다.
   - 기본값은 `variant="primary"`, `size="medium"`입니다.
@@ -302,6 +308,9 @@ src/
 - `[과제 5-4 벌레 정보 구조 및 안내 기능 확장]` `insects`를 문자열 배열에서 `id`, `name`, `condition`, `sideEffects`를 가진 객체 배열로 변경했습니다.
   - 공용 벌레 정보는 `insectData.js`, 타입은 `types/insect.js`에서 관리해 새 벌레를 한 곳에서 쉽게 추가할 수 있도록 구성했습니다.
   - `InsectConditionBadge.vue`를 추가해 벌레 배지에 마우스를 올리거나 키보드로 포커스하면 출몰 조건과 영향을 확인할 수 있도록 했습니다.
+- `[과제 제출 파일 구조 정리]` 현재 과제에서 사용하는 파일만 남기고 Vue 기본 예제, 수업 연습본, 자동 생성본과 단계별 백업 파일을 제거했습니다.
+  - `tasks` 폴더를 없애고 기능 컴포넌트는 `components/weather`, 공용 Base 컴포넌트는 `components/common`으로 역할에 맞게 분리했습니다.
+  - 실행에 필요한 프로젝트 설정과 날씨 View, 데이터, Store, 타입 및 utils 구조는 그대로 유지했습니다.
 
 ## 커밋 컨벤션
 

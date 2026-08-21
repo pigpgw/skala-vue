@@ -1,7 +1,7 @@
 <script setup>
 import { useId } from 'vue'
 
-import BaseBadge from '@/components/tasks/common/BaseBadge.vue'
+import BaseBadge from '@/components/common/BaseBadge.vue'
 import { getInsectVariant } from '@/utils/insect'
 
 /** @typedef {import('@/types/insect').Insect} Insect */

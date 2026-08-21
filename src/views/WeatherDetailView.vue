@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
-import InsectConditionBadge from '@/components/tasks/InsectConditionBadge.vue'
+import InsectConditionBadge from '@/components/weather/InsectConditionBadge.vue'
 import { useConfigStore } from '@/stores/configStore'
 import { useWeatherStore } from '@/stores/weatherStore'
 import { convertTemperature } from '@/utils/temperature'

@@ -1,5 +1,5 @@
 <script setup>
-import BaseInput from '@/components/tasks/common/BaseInput.vue'
+import BaseInput from '@/components/common/BaseInput.vue'
 
 defineProps({
   searchQuery: {

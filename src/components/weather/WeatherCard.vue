@@ -1,9 +1,9 @@
 <script setup>
 import { computed } from 'vue'
 
-import BaseBadge from '@/components/tasks/common/BaseBadge.vue'
-import BaseButton from '@/components/tasks/common/BaseButton.vue'
-import InsectConditionBadge from '@/components/tasks/InsectConditionBadge.vue'
+import BaseBadge from '@/components/common/BaseBadge.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
+import InsectConditionBadge from '@/components/weather/InsectConditionBadge.vue'
 import { useConfigStore } from '@/stores/configStore'
 import { convertTemperature } from '@/utils/temperature'
 
