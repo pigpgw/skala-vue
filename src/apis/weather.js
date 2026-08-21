@@ -1,13 +1,15 @@
-/** @typedef {import('@/types/openWeather').OpenWeatherResponse} OpenWeatherResponse */
-/** @typedef {import('@/types/openWeather').OpenWeatherAirPollutionResponse} OpenWeatherAirPollutionResponse */
+/** @typedef {import('@/dto/openWeatherDto').WeatherByCoordinatesRequest} WeatherByCoordinatesRequest */
+/** @typedef {import('@/dto/openWeatherDto').WeatherByCityNameRequest} WeatherByCityNameRequest */
+/** @typedef {import('@/dto/openWeatherDto').AirPollutionRequest} AirPollutionRequest */
+/** @typedef {import('@/dto/openWeatherDto').WeatherResponse} WeatherResponse */
+/** @typedef {import('@/dto/openWeatherDto').AirPollutionResponse} AirPollutionResponse */
 import openWeatherClient from '@/utils/openWeatherClient'
 
 /**
- * @param {number} latitude
- * @param {number} longitude
- * @returns {Promise<OpenWeatherResponse>}
+ * @param {WeatherByCoordinatesRequest} request
+ * @returns {Promise<WeatherResponse>}
  */
-export const getWeatherByCoordinates = async (latitude, longitude) => {
+export const getWeatherByCoordinates = async ({ latitude, longitude }) => {
   const response = await openWeatherClient.get('/weather', {
     params: {
       lat: latitude,
@@ -18,10 +20,10 @@ export const getWeatherByCoordinates = async (latitude, longitude) => {
 }
 
 /**
- * @param {string} city
- * @returns {Promise<OpenWeatherResponse>}
+ * @param {WeatherByCityNameRequest} request
+ * @returns {Promise<WeatherResponse>}
  */
-export const getWeatherByCityName = async (city) => {
+export const getWeatherByCityName = async ({ city }) => {
   const response = await openWeatherClient.get('/weather', {
     params: { q: city },
   })
@@ -29,11 +31,10 @@ export const getWeatherByCityName = async (city) => {
 }
 
 /**
- * @param {number} latitude
- * @param {number} longitude
- * @returns {Promise<OpenWeatherAirPollutionResponse>}
+ * @param {AirPollutionRequest} request
+ * @returns {Promise<AirPollutionResponse>}
  */
-export const getAirPollutionByCoordinates = async (latitude, longitude) => {
+export const getAirPollutionByCoordinates = async ({ latitude, longitude }) => {
   const response = await openWeatherClient.get('/air_pollution', {
     params: {
       lat: latitude,

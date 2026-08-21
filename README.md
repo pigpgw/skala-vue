@@ -23,6 +23,7 @@ Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적�
 - 날씨 기능 컴포넌트는 `src/components/weather/`, 재사용 가능한 기본 컴포넌트는 `src/components/common/`에서 관리합니다.
 - 날씨와 지역 상태는 `src/stores/`에서 관리하고, `/` 경로의 `WeatherHomeView.vue`가 화면 조립과 상세 페이지 이동을 담당합니다.
 - 외부 API 요청 함수는 `src/apis/`, API별 Axios 인스턴스와 인터셉터는 `src/utils/`에서 관리합니다.
+- 외부 API에서 사용하는 Request와 Response DTO는 `src/dto/`에서 API별로 관리합니다.
 - `src/App.vue`의 `RouterView`에서 현재 경로에 해당하는 View를 렌더링합니다.
 - 날씨 더미 데이터는 `src/data/weatherData.js`에서 별도로 관리합니다.
 
@@ -55,6 +56,9 @@ src/
 │   ├── cityData.js
 │   ├── insectData.js
 │   └── weatherData.js
+├── dto/
+│   ├── openWeatherDto.js
+│   └── regionalCodeDto.js
 ├── main.js
 ├── router/
 │   └── index.js
@@ -329,6 +333,7 @@ npm run lint
 - [x] `[과제 6-1]` 메인 화면 Mount 시 서울·수원·부산·제주의 현재 날씨를 조회해 카드와 전국 통계의 기온, 날씨 상태, 습도와 풍속에 실제 API 데이터를 적용했습니다.
 - [x] `[과제 6-3 보완]` 지역 검색 후보를 선택하면 해당 지역의 실제 날씨를 카드로 추가하고, 같은 지역을 다시 선택하면 중복 없이 갱신하도록 연결했습니다. 아직 조회하지 않은 미세먼지와 벌레 정보는 준비 중 상태로 표시합니다.
 - [x] `[과제 6-2]` OpenWeatherMap Air Pollution API를 추가로 연동하고, 기본 도시와 검색 지역의 PM2.5 농도를 `좋음`, `보통`, `나쁨` 상태로 변환해 카드에 적용했습니다.
+- [x] `[과제 6 DTO 정리]` OpenWeatherMap과 지역코드 API에서 실제로 사용하는 요청·응답 필드만 `src/dto/`에 JSDoc 타입으로 분리하고 모든 타입 이름을 `Request` 또는 `Response`로 통일했습니다.
 
 - [x] `[추가 구현]` Postman으로 OpenWeatherMap API를 테스트해 `200 OK` 응답을 확인했습니다.
 
@@ -353,6 +358,10 @@ npm run lint
 2. `[과제 6]` 공공데이터포털의 Encoding 인증키를 Axios `params`로 전달하면서 키가 이중 인코딩되어 `403 Forbidden`이 발생했습니다. 환경변수의 인증키를 `decodeURIComponent()`로 한 번 디코딩한 뒤 Axios가 요청 과정에서 한 번만 인코딩하도록 수정했습니다.
 
 3. `[과제 6]` 국토교통부 지역코드 API로 전국 시군구 검색 목록을 구성하려 했지만, 응답이 읍면동 단위의 총 50,077건으로 제공되어 전체 조회 시 앱을 실행할 때마다 최대 1,000건씩 약 51회 호출해야 하는 문제가 있었습니다. 과제 단계에서는 첫 페이지 100건을 활용해 지역 검색과 날씨 조회 흐름을 우선 구현하고, 이후 시군구 전용 API 또는 정적 지역 목록으로 보완하기로 했습니다.
+
+4. `[과제 6]` 여러 OpenAPI를 JavaScript로 연동하면서 API마다 요청 변수와 응답 데이터 구조가 달라 사용할 속성을 파악하기 어려웠습니다. 각 API의 Request와 Response 구조를 JSDoc 타입으로 선언해 자동 완성과 타입 검사를 활용할 수 있도록 해결했습니다.
+
+5. `[과제 6]` 기존에는 API 응답의 모든 필드를 타입으로 하나씩 선언해 사용하지 않는 데이터까지 관리해야 하는 불편함이 있었습니다. 백엔드에서 학습한 DTO 개념을 적용해 API별 Request와 Response 타입을 분리하고 현재 기능에 필요한 필드만 정의했습니다. 개발 중 자동 완성에도 사용할 필드만 표시되어 개발 효율이 높아졌고, API 구조가 변경되어도 관련 DTO만 수정하면 되어 유지보수가 쉬워졌습니다.
 
 ### 과제 요구사항 대비 변경 사항
 

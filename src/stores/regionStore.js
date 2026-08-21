@@ -1,4 +1,4 @@
-/** @typedef {import('@/types/region').RegionalCodeItem} RegionalCodeItem */
+/** @typedef {import('@/dto/regionalCodeDto').RegionalCodeItemResponse} RegionalCodeItemResponse */
 /** @typedef {import('@/types/region').Region} Region */
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
@@ -13,7 +13,7 @@ export const useRegionStore = defineStore('region', () => {
     if (regions.value.length > 0) return
     const data = await getRegionalCodes()
 
-    /**@type {RegionalCodeItem[]} */
+    /** @type {RegionalCodeItemResponse[]} */
     const items = data.Response.body.items.item
 
     /** @type {Map<string, Region>} */

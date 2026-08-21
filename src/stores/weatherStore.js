@@ -30,8 +30,8 @@ export const useWeatherStore = defineStore('weather', () => {
       const results = await Promise.all(
         cityData.map(async (city) => {
           const [weather, airPollution] = await Promise.all([
-            getWeatherByCoordinates(city.latitude, city.longitude),
-            getAirPollutionByCoordinates(city.latitude, city.longitude),
+            getWeatherByCoordinates({ latitude: city.latitude, longitude: city.longitude }),
+            getAirPollutionByCoordinates({ latitude: city.latitude, longitude: city.longitude }),
           ])
           const mockData = weatherData.find((weatherItem) => weatherItem.name === city.name)
 
@@ -66,8 +66,11 @@ export const useWeatherStore = defineStore('weather', () => {
     isLoading.value = true
 
     try {
-      const weather = await getWeatherByCityName(region.weatherName)
-      const airPollution = await getAirPollutionByCoordinates(weather.coord.lat, weather.coord.lon)
+      const weather = await getWeatherByCityName({ city: region.weatherName })
+      const airPollution = await getAirPollutionByCoordinates({
+        latitude: weather.coord.lat,
+        longitude: weather.coord.lon,
+      })
       const currentWeatherItem = weatherList.value.find((weatherItem) => weatherItem.id === region.id)
 
       /** @type {WeatherItem} */
