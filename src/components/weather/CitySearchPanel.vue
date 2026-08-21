@@ -1,7 +1,7 @@
 <script setup>
 /** @typedef {import('@/types/region').Region} Region */
-import BaseButton from '@/components/common/BaseButton.vue'
-import BaseInput from '@/components/common/BaseInput.vue'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 defineProps({
   searchQuery: {
@@ -28,12 +28,8 @@ defineProps({
 
 const emit = defineEmits(['update-query', 'select-region'])
 
-/** @param {Event} event */
-const handleSearchInput = (event) => {
-  const input = event.currentTarget
-  if (!(input instanceof HTMLInputElement)) return
-  emit('update-query', input.value)
-}
+/** @param {string | number} value */
+const handleSearchInput = (value) => emit('update-query', String(value))
 
 /** @param {Region} region */
 const selectRegion = (region) => {
@@ -42,70 +38,32 @@ const selectRegion = (region) => {
 </script>
 
 <template>
-  <div class="city-search-panel">
-    <div>검색할 도시</div>
-    <div class="search-input-wrapper">
-      <BaseInput
-        variant="primary"
-        size="medium"
+  <div class="flex w-full flex-col items-start gap-1">
+    <label for="city-search" class="w-full max-w-md text-left text-sm font-medium">검색할 도시</label>
+    <div class="mb-1 w-full max-w-md">
+      <Input
+        id="city-search"
         type="text"
-        :value="searchQuery"
+        :model-value="searchQuery"
         placeholder="도시명을 입력하세요"
         :disabled="disabled"
-        @input="handleSearchInput"
+        @update:model-value="handleSearchInput"
       />
     </div>
-    <div v-if="regions.length > 0" class="region-search-results">
-      <BaseButton
+    <div v-if="regions.length > 0" class="mt-3 flex w-full max-w-md flex-col gap-2">
+      <Button
         v-for="region in regions"
         :key="region.id"
-        class="region-result-button"
+        class="w-full justify-start text-left"
         type="button"
-        variant="primary"
-        size="medium"
         :disabled="disabled"
         @click="selectRegion(region)"
       >
         {{ region.name }}
-      </BaseButton>
+      </Button>
     </div>
-    <div>입력한 도시: {{ searchQuery }}</div>
-    <div>검색 결과 개수: {{ searchResultCount }}개</div>
-    <div>검색 상태: {{ searchStatusMessage }}</div>
+    <div class="w-full max-w-md text-left text-sm">입력한 도시: {{ searchQuery }}</div>
+    <div class="w-full max-w-md text-left text-sm">검색 결과 개수: {{ searchResultCount }}개</div>
+    <div class="w-full max-w-md text-left text-sm text-muted-foreground">검색 상태: {{ searchStatusMessage }}</div>
   </div>
 </template>
-
-<style scoped>
-.city-search-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.city-search-panel > div {
-  width: 100%;
-  max-width: 28rem;
-  text-align: left;
-}
-
-.search-input-wrapper {
-  width: 100%;
-  max-width: 28rem;
-}
-
-.region-search-results {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  width: 100%;
-  max-width: 28rem;
-  margin-top: var(--space-3);
-}
-
-.region-result-button {
-  justify-content: flex-start;
-  width: 100%;
-  text-align: left;
-}
-</style>

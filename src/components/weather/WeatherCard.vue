@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from 'vue'
 
-import BaseBadge from '@/components/common/BaseBadge.vue'
-import BaseButton from '@/components/common/BaseButton.vue'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import InsectConditionBadge from '@/components/weather/InsectConditionBadge.vue'
 import { useConfigStore } from '@/stores/configStore'
 import { convertTemperature } from '@/utils/temperature'
@@ -21,10 +21,10 @@ const configStore = useConfigStore()
 
 const displayTemperature = computed(() => convertTemperature(props.weatherItem.temp, configStore.unit))
 
-/** @type {import('vue').ComputedRef<'primary' | 'success' | 'warning' | 'danger'>} */
+/** @type {import('vue').ComputedRef<'default' | 'success' | 'warning' | 'destructive'>} */
 const dustVariant = computed(() => {
-  if (props.weatherItem.dust === '정보 없음') return 'primary'
-  if (props.weatherItem.dust === '나쁨') return 'danger'
+  if (props.weatherItem.dust === '정보 없음') return 'default'
+  if (props.weatherItem.dust === '나쁨') return 'destructive'
   if (props.weatherItem.dust === '보통') return 'warning'
   return 'success'
 })
@@ -39,11 +39,11 @@ const handleDetailClick = () => {
 </script>
 
 <template>
-  <div class="weather-card" @click="handleCardSelect">
+  <article class="rounded-lg border p-4" @click="handleCardSelect">
     <div>{{ weatherItem.name }}</div>
-    <div class="weather-card__badges">
-      <BaseBadge size="small">날씨 {{ weatherItem.status }}</BaseBadge>
-      <BaseBadge :variant="dustVariant" size="small">미세먼지 {{ weatherItem.dust }}</BaseBadge>
+    <div class="flex flex-wrap gap-2">
+      <Badge>날씨 {{ weatherItem.status }}</Badge>
+      <Badge :variant="dustVariant">미세먼지 {{ weatherItem.dust }}</Badge>
     </div>
     <div>기온: {{ displayTemperature }}{{ configStore.unitSymbol }}</div>
     <div>습도: {{ weatherItem.humidity }}%</div>
@@ -57,9 +57,9 @@ const handleDetailClick = () => {
     <div v-if="weatherItem.temp >= 25">25도 이상으로 덥습니다.</div>
     <div v-else>25도 미만으로 선선합니다.</div>
 
-    <div class="weather-card__insects">
-      <div class="weather-card__insects-title">자주 출몰하는 벌레</div>
-      <div v-if="weatherItem.insects.length > 0" class="weather-card__insect-list">
+    <div class="my-3 grid gap-2">
+      <div class="text-sm font-semibold text-muted-foreground">자주 출몰하는 벌레</div>
+      <div v-if="weatherItem.insects.length > 0" class="flex flex-wrap gap-1">
         <InsectConditionBadge
           v-for="insect in weatherItem.insects"
           :key="insect.id"
@@ -69,37 +69,6 @@ const handleDetailClick = () => {
       <div v-else>벌레 정보를 준비 중입니다.</div>
     </div>
 
-    <BaseButton @click.stop="handleDetailClick">날씨 자세히 보기</BaseButton>
-  </div>
+    <Button @click.stop="handleDetailClick">날씨 자세히 보기</Button>
+  </article>
 </template>
-
-<style scoped>
-.weather-card {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-}
-
-.weather-card__badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.weather-card__insects {
-  display: grid;
-  gap: var(--space-2);
-  margin: var(--space-3) 0;
-}
-
-.weather-card__insects-title {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-}
-
-.weather-card__insect-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
-}
-</style>

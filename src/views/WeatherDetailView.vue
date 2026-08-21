@@ -2,6 +2,8 @@
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import InsectConditionBadge from '@/components/weather/InsectConditionBadge.vue'
 import { useConfigStore } from '@/stores/configStore'
 import { useWeatherStore } from '@/stores/weatherStore'
@@ -26,49 +28,33 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="weather-detail">
-    <h2>지역별 상세 날씨</h2>
+  <section class="grid gap-4 p-4">
+    <h2 class="text-2xl font-bold">지역별 상세 날씨</h2>
 
-    <div v-if="cityData">
-      <h3>{{ cityData.name }}</h3>
-      <p>기온: {{ displayTemperature }}{{ configStore.unitSymbol }}</p>
-      <p>현재 날씨: {{ cityData.status }}</p>
-      <p>습도: {{ cityData.humidity }}%</p>
-      <p>풍속: {{ cityData.windSpeed }}m/s</p>
-      <p>미세먼지: {{ cityData.dust }}</p>
-      <div class="weather-detail__insects">
-        <h4>자주 출몰하는 벌레</h4>
-        <div class="weather-detail__insect-list">
-          <InsectConditionBadge
-            v-for="insect in cityData.insects"
-            :key="insect.id"
-            :insect="insect"
-          />
+    <Card v-if="cityData">
+      <CardHeader>
+        <CardTitle>{{ cityData.name }}</CardTitle>
+      </CardHeader>
+      <CardContent class="grid gap-1">
+        <p>기온: {{ displayTemperature }}{{ configStore.unitSymbol }}</p>
+        <p>현재 날씨: {{ cityData.status }}</p>
+        <p>습도: {{ cityData.humidity }}%</p>
+        <p>풍속: {{ cityData.windSpeed }}m/s</p>
+        <p>미세먼지: {{ cityData.dust }}</p>
+        <div class="my-4">
+          <h4 class="mb-2 font-semibold">자주 출몰하는 벌레</h4>
+          <div class="flex flex-wrap gap-2">
+            <InsectConditionBadge
+              v-for="insect in cityData.insects"
+              :key="insect.id"
+              :insect="insect"
+            />
+          </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
     <p v-else>해당 도시의 날씨 정보가 없습니다.</p>
 
-    <RouterLink to="/">메인 대시보드로 돌아가기</RouterLink>
+    <Button as-child variant="link" class="w-fit px-0"><RouterLink to="/">메인 대시보드로 돌아가기</RouterLink></Button>
   </section>
 </template>
-
-<style scoped>
-.weather-detail {
-  padding: var(--space-4);
-}
-
-.weather-detail__insects {
-  margin: var(--space-4) 0;
-}
-
-.weather-detail__insects h4 {
-  margin-bottom: var(--space-2);
-}
-
-.weather-detail__insect-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-</style>

@@ -1,16 +1,11 @@
-<template>
-  <section class="dashboard-card">
-    <slot />
-  </section>
-</template>
+<script setup>
+import { Card, CardContent } from '@/components/ui/card'
+</script>
 
-<style scoped>
-.dashboard-card {
-  margin-bottom: var(--space-4);
-  padding: var(--space-4);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-}
-</style>
+<template>
+  <Card class="mb-4 shadow-sm">
+    <CardContent>
+      <slot />
+    </CardContent>
+  </Card>
+</template>

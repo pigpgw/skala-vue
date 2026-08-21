@@ -2,9 +2,9 @@ import { insectData } from '@/data/insectData'
 
 /**
  * @param {import('@/types/insect').Insect} insect
- * @returns {'warning' | 'danger'}
+ * @returns {'warning' | 'destructive'}
  */
-export const getInsectVariant = (insect) => (insect.id === 'chigger-mite' ? 'danger' : 'warning')
+export const getInsectVariant = (insect) => (insect.id === 'chigger-mite' ? 'destructive' : 'warning')
 
 /**
  * @param {import('@/types/insect').InsectWeatherCondition} weather

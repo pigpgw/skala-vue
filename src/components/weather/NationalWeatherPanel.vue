@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 
+import { Checkbox } from '@/components/ui/checkbox'
 import { useConfigStore } from '@/stores/configStore'
 import { convertTemperature } from '@/utils/temperature'
 
@@ -50,22 +51,18 @@ const displayAverageTemperature = computed(() => convertTemperature(props.averag
 const displayHottestTemperature = computed(() => convertTemperature(props.hottestCity.temp, configStore.unit))
 const displayColdestTemperature = computed(() => convertTemperature(props.coldestCity.temp, configStore.unit))
 
-/** @param {Event} event */
-const handleVisibilityChange = (event) => {
-  const checkbox = event.currentTarget
-  if (!(checkbox instanceof HTMLInputElement)) return
-  emit('visibility-change', checkbox.checked)
-}
+/** @param {boolean} isChecked */
+const handleVisibilityChange = (isChecked) => emit('visibility-change', isChecked)
 </script>
 
 <template>
-  <label>
-    <input type="checkbox" :checked="isVisible" @change="handleVisibilityChange" />
+  <label class="flex items-center gap-2 font-medium">
+    <Checkbox :model-value="isVisible" @update:model-value="handleVisibilityChange" />
     전국 통계 보기
   </label>
 
-  <div v-show="isVisible">
-    <div>전국 날씨 통계</div>
+  <div v-show="isVisible" class="mt-3 grid gap-1 text-sm">
+    <div class="font-semibold">전국 날씨 통계</div>
     <div>평균 기온: {{ displayAverageTemperature.toFixed(1) }}{{ configStore.unitSymbol }}</div>
     <div>평균 습도: {{ averageHumidity.toFixed(1) }}%</div>
     <div>평균 풍속: {{ averageWindSpeed.toFixed(1) }}m/s</div>

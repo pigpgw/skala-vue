@@ -1,22 +1,13 @@
 <script setup>
-import BaseButton from '@/components/common/BaseButton.vue'
+import { Button } from '@/components/ui/button'
 import { useConfigStore } from '@/stores/configStore'
 
 const configStore = useConfigStore()
 </script>
 
 <template>
-  <div class="unit-toggler">
+  <div class="flex items-center gap-2 whitespace-nowrap">
     <span>{{ configStore.unit }} {{ configStore.unitSymbol }}</span>
-    <BaseButton size="small" @click="configStore.toggleUnit()">섭씨 화씨 변경</BaseButton>
+    <Button size="sm" @click="configStore.toggleUnit()">섭씨 화씨 변경</Button>
   </div>
 </template>
-
-<style scoped>
-.unit-toggler {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  white-space: nowrap;
-}
-</style>

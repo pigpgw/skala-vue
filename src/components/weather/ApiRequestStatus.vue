@@ -1,5 +1,7 @@
 <script setup>
-import BaseButton from '@/components/common/BaseButton.vue'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 defineProps({
   isLoading: {
@@ -20,40 +22,17 @@ const emit = defineEmits(['retry'])
 </script>
 
 <template>
-  <div v-if="isLoading" class="api-request-status api-request-status--loading" role="status" aria-live="polite">
-    {{ loadingMessage }}
-  </div>
+  <Alert v-if="isLoading" class="mb-4 border-primary/30 bg-primary/5" role="status" aria-live="polite">
+    <AlertDescription class="flex items-center gap-3 text-primary">
+      <Skeleton class="size-4 shrink-0 rounded-full bg-primary/20" />
+      {{ loadingMessage }}
+    </AlertDescription>
+  </Alert>
 
-  <div v-else-if="errorMessage" class="api-request-status api-request-status--error" role="alert">
-    <span>{{ errorMessage }}</span>
-    <BaseButton type="button" variant="danger" size="small" @click="emit('retry')">다시 시도</BaseButton>
-  </div>
+  <Alert v-else-if="errorMessage" variant="destructive" class="mb-4">
+    <AlertDescription class="flex items-center justify-between gap-3 text-destructive">
+      <span>{{ errorMessage }}</span>
+      <Button type="button" variant="destructive" size="sm" @click="emit('retry')">다시 시도</Button>
+    </AlertDescription>
+  </Alert>
 </template>
-
-<style scoped>
-.api-request-status {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  margin-bottom: var(--space-4);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-}
-
-.api-request-status--loading {
-  border-color: var(--color-primary);
-  color: var(--color-primary-hover);
-  background: var(--color-primary-soft);
-}
-
-.api-request-status--error {
-  border-color: var(--color-danger);
-  color: var(--color-danger);
-  background: var(--color-surface);
-}
-</style>
