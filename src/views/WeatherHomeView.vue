@@ -89,7 +89,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
 </script>
 
 <template>
-  <div class="weather-home">
+  <div class="p-4">
     <ApiRequestStatus
       :is-loading="isRegionLoading"
       loading-message="지역 검색 목록을 불러오는 중입니다."
@@ -140,9 +140,3 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
     </DashboardCard>
   </div>
 </template>
-
-<style scoped>
-.weather-home {
-  padding: var(--space-4);
-}
-</style>

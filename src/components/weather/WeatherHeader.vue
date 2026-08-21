@@ -1,11 +1,5 @@
 <template>
-  <header class="weather-header">
-    <h1>Weather App</h1>
+  <header class="p-4">
+    <h1 class="font-heading text-3xl font-bold tracking-tight">Weather App</h1>
   </header>
 </template>
-
-<style scoped>
-.weather-header {
-  padding: var(--space-4);
-}
-</style>

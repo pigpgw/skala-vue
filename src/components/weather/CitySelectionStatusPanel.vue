@@ -8,6 +8,6 @@ defineProps({
 </script>
 
 <template>
-  <div>선택 결과</div>
-  <div>{{ message }}</div>
+  <div class="font-medium">선택 결과</div>
+  <div class="text-sm text-muted-foreground">{{ message }}</div>
 </template>

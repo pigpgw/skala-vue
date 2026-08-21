@@ -20,7 +20,7 @@ const handleDetailClick = (cityId) => emit('click-detail', cityId)
 </script>
 
 <template>
-  <div v-if="weatherList.length > 0" class="weather-list">
+  <div v-if="weatherList.length > 0" class="grid gap-3">
     <WeatherCard
       v-for="weatherItem in weatherList"
       :key="weatherItem.id"

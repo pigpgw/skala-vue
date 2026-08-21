@@ -369,17 +369,17 @@ npm run lint
 
 #### 과제 7 - Hands on: Weather UI Library
 
-- 진행 상태: 구현 중 (선택지 2)
+- 진행 상태: 구현 완료 (선택지 2: shadcn-vue + Tailwind CSS)
 - [x] Tailwind CSS와 Vite 플러그인을 설치하고 `vite.config.js`, `main.css`에 연결했습니다.
 - [x] 기존 전역 스타일을 유지하기 위해 Tailwind Preflight는 제외하고 Theme과 Utilities만 적용했습니다.
 - [x] shadcn-vue를 JavaScript·Vite·Reka Nova·Neutral·CSS 변수 구성으로 초기화하고 `components.json`을 생성했습니다.
 - [x] Button, Input, Badge, Card, Tooltip, Alert, Checkbox, Skeleton 컴포넌트 소스와 `cn()` 클래스 조합 유틸을 프로젝트에 추가했습니다.
 - [x] JavaScript strict template 검사에서 shadcn의 `data-slot` 속성을 인식하도록 Vue 공용 속성 타입을 확장했습니다.
 - [x] 기존 파란색 디자인 토큰을 shadcn-vue semantic color와 Tailwind 테마 변수에 연결했습니다.
-- shadcn-vue는 완성된 컴포넌트 소스를 프로젝트에 받아 직접 수정할 수 있어 일반 패키지형 UI 라이브러리보다 내부 구현에 대한 의존이 낮고 프로젝트 디자인에 맞게 확장하기 쉬워 선정했습니다.
-- 과제 3에서 직접 만든 `BaseButton`, `BaseInput`, `BaseBadge`는 학습 기록으로 유지하고 실제 화면의 사용처만 `components/ui`로 교체합니다.
-- [ ] 추가한 shadcn-vue 컴포넌트를 과제 3 화면에 적용합니다.
-- [ ] 기존 scoped CSS를 Tailwind 유틸리티 클래스로 전환합니다.
+- [x] 과제 3 화면의 Button, Input, Badge와 Card를 shadcn-vue로 교체하고 Tooltip, Alert, Checkbox, Skeleton도 실제 기능에 적용했습니다.
+- [x] 활성 화면의 scoped CSS를 Tailwind 유틸리티 클래스로 전환하고 사용하지 않던 Element Plus 의존성을 제거했습니다.
+- shadcn-vue는 완성된 컴포넌트 소스를 프로젝트에 받아 직접 수정할 수 있어 선정했습니다. 공용 컴포넌트를 직접 만들 때 반복되던 상태·접근성 보완을 검증된 코드로 대체하고, Badge 변형처럼 앱에 필요한 디자인만 직접 확장할 수 있어 편리했습니다.
+- 과제 3에서 직접 만든 `BaseButton`, `BaseInput`, `BaseBadge`는 학습 기록으로 유지하되 실제 화면은 `components/ui`를 사용합니다.
 
 ### 트러블슈팅 기록
 
@@ -394,16 +394,6 @@ npm run lint
 4. `[과제 6]` 여러 OpenAPI를 JavaScript로 연동하면서 API마다 요청 변수와 응답 데이터 구조가 달라 사용할 속성을 파악하기 어려웠습니다. 각 API의 Request와 Response 구조를 JSDoc 타입으로 선언해 자동 완성과 타입 검사를 활용할 수 있도록 해결했습니다.
 
 5. `[과제 6]` 기존에는 API 응답의 모든 필드를 타입으로 하나씩 선언해 사용하지 않는 데이터까지 관리해야 하는 불편함이 있었습니다. 백엔드에서 학습한 DTO 개념을 적용해 API별 Request와 Response 타입을 분리하고 현재 기능에 필요한 필드만 정의했습니다. 개발 중 자동 완성에도 사용할 필드만 표시되어 개발 효율이 높아졌고, API 구조가 변경되어도 관련 DTO만 수정하면 되어 유지보수가 쉬워졌습니다.
-
-6. `[과제 7]` Tailwind CSS를 연결하자 Preflight가 기존 제목과 요소의 기본 스타일을 초기화했습니다. 기존 디자인을 유지하면서 단계적으로 전환할 수 있도록 Theme과 Utilities만 불러오고 Preflight는 제외했습니다.
-
-7. `[과제 7]` shadcn-vue CLI가 분리된 Tailwind Theme·Utilities import를 설정으로 인식하지 못했고 도움말에 표시된 Slate 색상도 실제 검증 목록과 달랐습니다. 초기화할 때만 전체 Tailwind import를 사용하고 현재 지원되는 Neutral을 선택한 뒤 기존 import를 복원했으며, 파란색 브랜드 색상은 이후 테마 단계에서 직접 연결하기로 했습니다.
-
-8. `[과제 7]` 기본 스타일 자동 설치를 제외한 상태에서 UI 소스를 추가하자 생성된 컴포넌트가 참조하는 `cn()` 유틸과 클래스 조합 의존성이 포함되지 않았습니다. `class-variance-authority`, `clsx`, `tailwind-merge`, `tw-animate-css`를 직접 설치하고 `src/lib/utils.js`를 추가해 생성된 소스를 독립적으로 사용할 수 있게 했습니다.
-
-9. `[과제 7]` JavaScript 프로젝트의 strict template 검사에서 shadcn-vue가 사용하는 `data-slot` 속성을 컴포넌트 props로 인식하지 못했습니다. 생성된 UI 파일을 각각 수정하는 대신 Vue의 `HTMLAttributes`와 `ComponentCustomProps`를 확장해 원본 컴포넌트 코드를 유지하면서 타입 오류를 해결했습니다.
-
-10. `[과제 7]` UI 소스를 추가하면서 CLI가 아직 정의하지 않은 shadcn 테마 유틸리티를 전역 `@apply`에 먼저 사용해 빌드가 실패했습니다. 컴포넌트 추가 단계에서는 해당 base 적용을 제외하고, 다음 테마 통합 단계에서 semantic color를 Tailwind에 등록한 뒤 적용하도록 순서를 분리했습니다.
 
 ### 과제 요구사항 대비 변경 사항
 
@@ -430,18 +420,18 @@ npm run lint
 | 과제 3 요구사항                     | 현재 구현                                    | 변경 내용 및 이유                                                                                                                                                                                           |
 | ----------------------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `WeatherParent.vue`                 | `WeatherHomeView.vue`                        | Router를 적용하면서 `/` 경로의 View가 화면 상태와 조립을 담당하도록 변경했습니다. 역할이 겹치던 중간 컴포넌트는 제거하고 기존 `ref`, `computed`, `watch`, `watchEffect`를 `WeatherHomeView`로 이동했습니다. |
-| `BaseDashboardCard.vue`             | `DashboardCard.vue`                          | 특정 상속 구조로 오해할 수 있는 `Base`를 제거하고 공통 대시보드 박스라는 역할을 표현했습니다. `<slot>`과 공통 박스 스타일은 그대로 유지합니다.                                                              |
+| `BaseDashboardCard.vue`             | `DashboardCard.vue`                          | 특정 상속 구조로 오해할 수 있는 `Base`를 제거하고, 과제 7부터 내부 구현은 shadcn-vue `Card`와 `CardContent`를 조합해 사용합니다.                                                                            |
 | `SearchBar.vue`                     | `CitySearchPanel.vue`                        | 검색 입력뿐 아니라 검색 결과 개수와 상태 문구도 표시하므로 실제 책임을 나타내는 `Panel` 이름을 사용합니다. 검색값은 props로 받고 `update-query` 이벤트로 부모에 전달합니다.                                 |
 | `WeatherCard`를 Slot에 직접 배치    | `DashboardCard` 안에 `WeatherCardList` 배치  | 반복 렌더링과 빈 결과 처리를 `WeatherCardList`가 담당하고, 개별 `WeatherCard`의 이벤트를 `WeatherHomeView`까지 전달하도록 책임을 분리했습니다.                                                              |
-| 필수 컴포넌트 4개                   | 날씨 컴포넌트 9개와 공용 Base 컴포넌트 3개   | 검색, 통계, 선택 상태, 단위 전환과 벌레 안내를 각각 분리했습니다. 날씨 기능은 `components/weather`, 재사용 UI는 `components/common`에서 관리합니다.                                                         |
-| 각 컴포넌트의 `<style scoped>` 분리 | 컴포넌트 전용 스타일과 전역 디자인 토큰 분리 | 개별 레이아웃은 `<style scoped>`에서 관리하고 색상, 폰트, 간격, 모서리와 그림자는 `main.css`의 전역 토큰을 사용합니다.                                                                                      |
+| 필수 컴포넌트 4개                   | 날씨 기능 컴포넌트와 shadcn-vue UI 컴포넌트  | 날씨 기능은 `components/weather`, 실제 재사용 UI는 `components/ui`에서 관리합니다. 기존 `components/common`의 Base 3개는 직접 구현한 학습 기록으로만 유지합니다.                                           |
+| 각 컴포넌트의 `<style scoped>` 분리 | Tailwind 유틸리티와 shadcn-vue 스타일 사용    | 과제 7에서 활성 화면의 scoped CSS를 Tailwind 클래스로 대체했습니다. 기존 Base 3개의 scoped CSS와 전역 디자인 토큰은 과제 3의 구현 기록을 보존하기 위해 남겼습니다.                                        |
 
 #### 과제 4 변경 사항
 
 | 과제 4 요구사항                       | 현재 구현                                                                   | 변경 내용 및 이유                                                                                          |
 | ------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | 홈, 소개, 상세와 Catch-all Route 구성 | 기존 Route에 날씨 생활 팁 Route를 추가하고 View를 지연 로딩                 | 기본 Router 요구사항을 유지하면서 별도의 생활 수칙 화면을 추가했습니다.                                    |
-| `RouterLink` 중심의 Navigation Bar    | Navigation Bar 옆에 `UnitToggler`를 배치하고 전역 CSS에서 한 줄 표시를 관리 | Route 이동과 단위 변경을 한 영역에서 제공하며, 화면이 좁아져도 링크 문구가 줄바꿈되지 않도록 보완했습니다. |
+| `RouterLink` 중심의 Navigation Bar    | shadcn-vue `Button`의 `as-child`로 RouterLink를 조합하고 옆에 `UnitToggler` 배치 | Route 이동 의미는 유지하면서 링크와 버튼의 디자인을 통일하고 Tailwind로 한 줄 표시와 가로 스크롤을 관리합니다. |
 | Mock Data에서 상세 도시 조회          | `weatherStore.findWeatherById()`로 상세 도시 조회                           | 메인 화면과 상세 Route가 동일한 Store 데이터를 사용하도록 조회 경로를 통일했습니다.                        |
 | 기본 날씨 상세 정보 표시              | 상세 날씨와 함께 벌레 목록, 출몰 조건과 영향을 표시                         | `InsectConditionBadge`를 사용해 마우스 호버와 키보드 포커스로 추가 정보를 확인하도록 확장했습니다.         |
 
@@ -464,10 +454,11 @@ npm run lint
 
 #### 과제 7 변경 사항
 
-| 과제 7 요구사항                     | 현재 구현                                        | 적용 방식                                                                                       |
-| ----------------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| UI Library와 Tailwind CSS 활용 준비 | shadcn-vue UI 소스와 Tailwind 테마 통합 완료       | 기존 파란색 팔레트를 shadcn semantic color에 연결해 생성된 컴포넌트도 같은 디자인 토큰을 사용합니다. |
-| 기존 공용 컴포넌트 교체 준비        | 기존 Base 컴포넌트 보존 및 `components/ui` 설정 | 직접 구현한 코드는 학습 기록으로 남기고 실제 화면의 import만 shadcn-vue 컴포넌트로 교체합니다.     |
+| 과제 7 요구사항                     | 현재 구현                                           | 적용 방식                                                                                                                  |
+| ----------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| 외부 UI Library 적용               | 실제 화면에 shadcn-vue 컴포넌트 적용 완료           | Button, Input, Badge, Card, Tooltip, Alert, Checkbox, Skeleton을 기능에 맞게 사용하고 Badge에 앱 전용 상태 변형을 추가했습니다. |
+| Tailwind CSS를 활용한 기존 CSS 변경 | 활성 화면의 scoped CSS를 Tailwind 유틸리티로 전환    | 레이아웃과 간격은 템플릿에서 바로 확인하도록 바꾸고, 전역 색상은 기존 디자인 토큰과 shadcn semantic color를 연결했습니다.       |
+| 과제 3의 직접 만든 Base 컴포넌트    | 코드 보존, 실제 사용 경로는 `components/ui`로 교체   | 이전 과제 구현을 삭제하지 않아 학습 과정을 남기고, 과제 7에서 라이브러리를 적용한 이유와 현재 구조의 차이를 함께 기록했습니다.  |
 
 ## 커밋 컨벤션
 
