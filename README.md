@@ -232,6 +232,12 @@ src/
 #### 과제 3 보완 - 공용 디자인 시스템
 
 - `[과제 3-5 보완]` 기본 팔레트, 역할별 색상과 상태별 그림자를 `main.css`의 CSS 변수로 분리해 컴포넌트 디자인의 공통 기준을 구성했습니다.
+- `[과제 3-7 추가 공용 컴포넌트]` 반복되는 버튼 디자인을 `src/components/tasks/common/BaseButton.vue`로 분리하고 단위 변경과 날씨 상세보기 버튼에 적용했습니다.
+  - `variant`는 `primary`, `success`, `warning`, `danger`를 지원합니다.
+  - `size`는 `small`, `medium`, `large`를 지원합니다.
+  - 기본값은 `variant="primary"`, `size="medium"`입니다.
+  - 네이티브 `click` 이벤트를 명시적으로 선언해 부모 컴포넌트에 전달합니다.
+  - 호버, 클릭, 키보드 포커스와 비활성 상태 스타일을 제공합니다.
 
 ## 커밋 컨벤션
 

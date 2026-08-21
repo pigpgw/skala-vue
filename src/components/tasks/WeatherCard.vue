@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 
+import BaseButton from '@/components/tasks/common/BaseButton.vue'
 import { useConfigStore } from '@/stores/configStore'
 
 /**
@@ -55,7 +56,7 @@ const handleDetailClick = () => {
     <div v-if="weatherItem.temp >= 25">25도 이상으로 덥습니다.</div>
     <div v-else>25도 미만으로 선선합니다.</div>
 
-    <button @click.stop="handleDetailClick">날씨 자세히 보기</button>
+    <BaseButton @click.stop="handleDetailClick">날씨 자세히 보기</BaseButton>
   </div>
 </template>
 
