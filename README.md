@@ -157,6 +157,14 @@ src/
 npm install
 ```
 
+### 환경변수 설정
+
+`.env.example`을 복사해 `.env`를 만들고 OpenWeatherMap과 공공데이터포털에서 발급받은 API Key를 입력합니다. 실제 `.env`는 Git에 업로드되지 않습니다.
+
+```sh
+cp .env.example .env
+```
+
 ### 개발 서버 실행
 
 ```sh
@@ -427,7 +435,7 @@ npm run lint
 
 <img src="./src/assets/eslint-terminal-result.png" alt="Terminal에서 실행한 ESLint 검사 결과" width="700" />
 
-- [ ] `[과제 8-2 품질 관리]` API Key를 환경변수로 관리하고 Git에 업로드되지 않도록 확인합니다.
+- [x] `[과제 8-2 품질 관리]` API Key를 `.env`로 관리하고 Git 추적 및 업로드 대상에서 제외했으며, 필요한 변수 이름은 값이 없는 `.env.example`로 제공합니다.
 - [ ] `[과제 8-3]` Vite 프로젝트를 Build합니다.
 - [ ] `[과제 8-4]` Build된 정적 파일을 서버에 Hosting하고 배포 화면을 확인합니다.
 
