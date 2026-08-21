@@ -175,7 +175,9 @@ npm run build
 npm run lint
 ```
 
-## 배포
+## 현재 배포 상태
+
+기존 Cloudflare Pages 배포 정보입니다. 과제 8에서는 ESLint, 환경변수, Build와 Hosting 상태를 현재 코드 기준으로 다시 점검하고 완료 여부를 과제 진행 기록에 남깁니다.
 
 - 배포 주소: [https://homework.christmas](https://homework.christmas)
 - 기본 Pages 주소: [https://skala-vue.pages.dev](https://skala-vue.pages.dev)
@@ -194,42 +196,58 @@ npm run lint
 
 ## 과제 진행 기록
 
+각 과제는 진행 상태와 요구사항을 공통 형식으로 표시하고, 필요한 경우 활용 준비와 추가 구현 및 리팩터링 기록을 구분합니다. 날짜 안에서는 실제 과제 진행 순서를 유지합니다.
+
 ### 2026-08-19
 
 과제 1과 과제 2의 반응형 날씨 기능은 현재 `/` 경로의 `WeatherHomeView.vue`에서 이어서 사용합니다.
 
 #### 과제 1 - Weather Mockup
 
-1. `[과제 1-1]` 날씨 배열을 `ref()`로 관리하고 `v-for`와 `:key`로 도시별 카드를 출력했습니다.
-2. `[과제 1-2]` `v-if`와 `v-else`로 25도 기준의 기온 안내를 표시했습니다.
-3. `[과제 1-3]` `:value`와 `@input`으로 입력한 한글 도시명을 화면에 표시했습니다.
-4. `[과제 1-4]` 카드 선택 이벤트와 `@click.stop`을 적용한 상세보기 버튼을 구현했습니다.
-5. `[과제 1-5]` 제주, 습도, 풍속, 미세먼지, 도시 검색과 최소 테두리를 추가해 목업을 확장했습니다.
+- 진행 상태: 구현 완료
+
+**과제 요구사항**
+
+- [x] `[과제 1-1]` 날씨 배열을 `ref()`로 관리하고 `v-for`와 `:key`로 도시별 카드를 출력했습니다.
+- [x] `[과제 1-2]` `v-if`와 `v-else`로 25도 기준의 기온 안내를 표시했습니다.
+- [x] `[과제 1-3]` `:value`와 `@input`으로 입력한 한글 도시명을 화면에 표시했습니다.
+- [x] `[과제 1-4]` 카드 선택 이벤트와 `@click.stop`을 적용한 상세보기 버튼을 구현했습니다.
+- [x] `[과제 1-5]` 제주, 습도, 풍속, 미세먼지, 도시 검색과 최소 테두리를 추가해 목업을 확장했습니다.
 
 #### 과제 2 - Weather Composition
 
-1. `[과제 2-1]` 검색어, 선택 도시와 날씨 배열을 별도의 반응형 상태로 구성했습니다.
-2. `[과제 2-2]` `computed`로 검색어와 일치하는 도시를 반환하는 `filteredWeatherList`를 만들었습니다.
-3. `[과제 2-3]` `watch`와 `watchEffect`로 선택 문구와 검색어 변화를 콘솔에 기록했습니다.
-4. `[과제 2-4]` 검색 결과 유무에 따라 도시 목록이나 결과 없음 문구를 표시했습니다.
-5. `[과제 2-5]` 검색 결과 도시 개수를 `computed`로 계산하고 `watch`로 변화를 감시했습니다.
-6. `[과제 2-5]` 전국 평균 기온, 습도와 풍속을 `computed`로 계산하고 `watch`로 변화를 감시했습니다.
-7. `[과제 2-5]` 미세먼지 나쁨 도시 개수를 `computed`로 계산하고 `watch`로 변화를 감시했습니다.
-8. `[과제 2-5]` 가장 덥고 춥고 습하며 풍속이 강한 도시를 `computed`와 `reduce()`로 찾았습니다.
-9. `[과제 2-5]` `ref`, `v-model`, `v-show`로 전국 통계 표시 여부를 제어하고 `watch`로 변화를 감시했습니다.
-10. `[과제 2-5]` 검색어와 검색 결과 개수를 `computed`로 조합해 검색 상태 문구를 만들고 `watch`로 변화를 감시했습니다.
+- 진행 상태: 구현 완료
+
+**과제 요구사항**
+
+- [x] `[과제 2-1]` 검색어, 선택 도시와 날씨 배열을 별도의 반응형 상태로 구성했습니다.
+- [x] `[과제 2-2]` `computed`로 검색어와 일치하는 도시를 반환하는 `filteredWeatherList`를 만들었습니다.
+- [x] `[과제 2-3]` `watch`와 `watchEffect`로 선택 문구와 검색어 변화를 콘솔에 기록했습니다.
+- [x] `[과제 2-4]` 검색 결과 유무에 따라 도시 목록이나 결과 없음 문구를 표시했습니다.
+- [x] `[과제 2-5]` 검색 결과 도시 개수를 `computed`로 계산하고 `watch`로 변화를 감시했습니다.
+- [x] `[과제 2-5]` 전국 평균 기온, 습도와 풍속을 `computed`로 계산하고 `watch`로 변화를 감시했습니다.
+- [x] `[과제 2-5]` 미세먼지 나쁨 도시 개수를 `computed`로 계산하고 `watch`로 변화를 감시했습니다.
+- [x] `[과제 2-5]` 가장 덥고 춥고 습하며 풍속이 강한 도시를 `computed`와 `reduce()`로 찾았습니다.
+- [x] `[과제 2-5]` `ref`, `v-model`, `v-show`로 전국 통계 표시 여부를 제어하고 `watch`로 변화를 감시했습니다.
+- [x] `[과제 2-5]` 검색어와 검색 결과 개수를 `computed`로 조합해 검색 상태 문구를 만들고 `watch`로 변화를 감시했습니다.
 
 ### 2026-08-20
 
 #### 과제 3 - Hands on: Weather Component Vue Components
 
-- 과제 요구사항: Weather 화면의 기능을 역할별 Vue Component로 분리합니다.
-- `[과제 3-1]` `WeatherParent.vue`를 부모 컴포넌트로 분리하고 모든 반응형 데이터와 계산 및 감시 로직을 유지했습니다.
-- `[과제 3-2]` `BaseDashboardCard.vue`에 `<slot>`과 공통 박스 디자인을 구성하고 검색 영역과 날씨 리스트 영역에 적용했습니다.
-- `[과제 3-3]` `SearchBar.vue`를 분리하고 검색어를 props로 전달받아 표시하며, 입력 시 `update-query` 이벤트로 변경된 검색어를 부모 `WeatherParent.vue`에 전달했습니다.
-- `[과제 3-4]` `WeatherCard.vue`를 분리하고 도시 객체를 props로 전달받아 표시하며, 카드 선택 시 `select-card`, 상세보기 버튼 클릭 시 `click-detail` 이벤트를 부모로 전달했습니다.
-- `[과제 3-5]` 각 필수 컴포넌트의 기본 디자인을 `<style scoped>`로 분리하고 바깥 여백, 공통 박스, 검색 입력창과 날씨 카드에 필요한 최소 스타일만 적용했습니다.
-- `[과제 3-6]` `BaseDashboardCard`의 Slot에 `SearchBar`와 `WeatherCard`를 배치하고, `WeatherParent`에서 props와 emits를 직접 바인딩하는 기본 구조를 적용했습니다.
+- 진행 상태: 구현 완료
+
+**과제 요구사항**
+
+- [x] `[과제 3-1]` `WeatherParent.vue`를 부모 컴포넌트로 분리하고 모든 반응형 데이터와 계산 및 감시 로직을 유지했습니다.
+- [x] `[과제 3-2]` `BaseDashboardCard.vue`에 `<slot>`과 공통 박스 디자인을 구성하고 검색 영역과 날씨 리스트 영역에 적용했습니다.
+- [x] `[과제 3-3]` `SearchBar.vue`를 분리하고 검색어를 props로 전달받아 표시하며, 입력 시 `update-query` 이벤트로 변경된 검색어를 부모 `WeatherParent.vue`에 전달했습니다.
+- [x] `[과제 3-4]` `WeatherCard.vue`를 분리하고 도시 객체를 props로 전달받아 표시하며, 카드 선택 시 `select-card`, 상세보기 버튼 클릭 시 `click-detail` 이벤트를 부모로 전달했습니다.
+- [x] `[과제 3-5]` 각 필수 컴포넌트의 기본 디자인을 `<style scoped>`로 분리하고 바깥 여백, 공통 박스, 검색 입력창과 날씨 카드에 필요한 최소 스타일만 적용했습니다.
+- [x] `[과제 3-6]` `BaseDashboardCard`의 Slot에 `SearchBar`와 `WeatherCard`를 배치하고, `WeatherParent`에서 props와 emits를 직접 바인딩하는 기본 구조를 적용했습니다.
+
+**추가 구현 및 리팩터링**
+
 - `[과제 3-7 추가 컴포넌트]` 이후 날씨 카드의 반복 렌더링과 이벤트 전달을 `WeatherCardList.vue`로 추가 분리하고 기존 기능이 유지되도록 구성했습니다.
 - `[과제 3-7 추가 컴포넌트]` 추가로 전국 날씨 통계 영역을 `NationalWeatherSummary.vue`로 분리하고 부모가 계산한 통계를 props로 전달받아 표시하도록 구성했습니다.
 - `[과제 3-7 추가 컴포넌트]` 검색 입력과 결과 안내의 추상화 계층을 맞추기 위해 `SearchBar.vue`를 `SearchPanel.vue`로 확장했습니다. 검색어, 결과 개수와 검색 상태를 props로 전달받아 표시하고, 입력 시 `update-query` 이벤트로 변경된 검색어를 부모에 전달하도록 구성했습니다.
@@ -279,6 +297,9 @@ npm run lint
   - 동적 경로의 `cityId`를 기준으로 Mount 시점에 Mock Data에서 도시 객체를 선택합니다.
 - [x] `[과제 4-5]` `WeatherAboutView.vue`에 날씨 서비스의 주요 기능을 소개하고 `RouterLink`로 메인 대시보드에 돌아가는 기능을 작성했습니다.
 - [x] `[과제 4-6]` `WeatherTipsView.vue`를 추가하고 `/tips` 경로와 Navigation Bar를 연결해 날씨별 생활 수칙을 안내하도록 구성했습니다.
+
+**추가 구현 및 리팩터링**
+
 - `[과제 4-2 반응형 내비게이션 보완]` 작은 화면에서 내비게이션 링크와 단위 변경 버튼 문구가 두 줄로 나뉘지 않도록 한 줄 표시를 적용했습니다.
   - 내비게이션 전역 레이아웃은 `main.css`에서 관리하며 화면 너비보다 길어지면 항목을 축소하거나 줄바꿈하지 않고 가로로 스크롤할 수 있도록 구성했습니다.
 
@@ -304,6 +325,9 @@ npm run lint
   - `WeatherHomeView.vue`에서는 `storeToRefs`로 `weatherList`의 반응성을 유지하면서 카드 목록과 전국 통계에 사용했습니다.
   - `WeatherDetailView.vue`에서는 `findWeatherById`를 호출해 동적 경로의 도시 ID에 해당하는 상세 날씨를 조회했습니다.
   - 검색어와 필터링은 메인 화면에서만 사용하므로 전역 Store로 이동하지 않고 `WeatherHomeView.vue`의 지역 상태와 계산된 값으로 유지했습니다.
+
+**추가 구현 및 리팩터링**
+
 - `[과제 5-3 온도 변환 리팩터링]` 컴포넌트마다 중복된 섭씨·화씨 변환 공식을 `src/utils/temperature.js`의 순수 함수로 분리했습니다.
   - `WeatherCard`, `NationalWeatherPanel`, `WeatherDetailView`에서 온도와 현재 단위를 인자로 전달해 동일한 변환 함수를 사용합니다.
   - 단위 Store를 utils에서 직접 참조하지 않아 변환 함수를 독립적으로 재사용하고 검증할 수 있도록 구성했습니다.
@@ -328,7 +352,7 @@ npm run lint
 
 - 진행 상태: 구현 완료 (`6-1`, `6-2`, `6-3` 완료)
 
-**Axios 활용 준비**
+**활용 준비**
 
 - [x] `[과제 6-0]` Axios 라이브러리를 설치했습니다.
 - [x] OpenWeatherMap에 가입하고 API Key를 발급받았습니다.
@@ -340,6 +364,15 @@ npm run lint
 - [x] `[과제 6-3 준비]` 지역코드 원본 응답과 검색용 지역 객체의 JSDoc 타입을 분리했습니다.
 - [x] `[과제 6-3 준비]` `regionStore`에서 지역 목록을 관리하고 시군구 코드 기준으로 중복을 제거했습니다.
 - [x] `[과제 6-3 준비]` `CitySearchPanel`에 지역 검색 결과 목록과 지역 선택 이벤트를 추가했습니다.
+
+**과제 요구사항**
+
+- [x] `[과제 6-1]` OpenWeatherMap API를 통해 실제 날씨 데이터를 가져와 애플리케이션에 적용합니다.
+- [x] `[과제 6-2]` OpenWeatherMap Air Pollution API를 연동해 애플리케이션의 미세먼지 기능을 확장했습니다.
+- [x] `[과제 6-3]` 국토교통부 지역코드 OpenAPI를 추가로 연동해 조회된 시군구의 검색 기능을 확장했습니다.
+
+**구현 기록**
+
 - [x] `[과제 6-3]` `WeatherHomeView`에서 지역 데이터를 조회하고 입력한 지역명과 일치하는 검색 후보를 최대 10개까지 표시했습니다.
 - [x] `[과제 6-3 UI 보완]` 지역 검색 결과를 공용 `BaseButton` 세로 목록으로 표시하고, 전체 화면은 좁은 단일 칼럼으로 구성해 입력창과 결과 목록을 카드 왼쪽 기준선에 정렬했습니다.
 - [x] `[과제 6-1 준비]` 메인에 표시할 서울·수원·부산·제주의 이름과 위도·경도를 `cityData.js`에 분리했습니다.
@@ -353,33 +386,47 @@ npm run lint
 - [x] `[과제 6 추가 구현]` 날씨와 지역코드 API의 로딩·오류 상태를 Store에서 관리하고, 화면에 진행 상태와 오류 메시지 및 재시도 버튼을 표시하며 요청 중 중복 선택을 방지했습니다.
 - [x] `[과제 6 추가 구현]` 도시별 날씨와 대기질 요청을 `Promise.allSettled()`로 독립 처리해 일부 요청이 실패해도 성공한 카드는 갱신하고, 실패한 도시 이름을 안내한 뒤 해당 도시만 다시 요청하도록 개선했습니다.
 
+**추가 검증**
+
 - [x] `[과제 6 추가 구현]` Postman으로 OpenWeatherMap API를 테스트해 `200 OK` 응답을 확인했습니다.
 
 <img src="./src/assets/openweathermap-postman-api-test.png" alt="Postman OpenWeatherMap API 테스트 결과" width="700" />
 
-**기타 외부 API: 국토교통부 지역코드**
-
-- [x] `[과제 6-3]` [국토교통부 지역코드 OpenAPI](https://www.data.go.kr/data/15142029/openapi.do)를 연동해 시군구 검색 후보를 표시하고 선택 이벤트를 연결했습니다.
-
-**과제 요구사항**
-
-- [x] `[과제 6-1]` OpenWeatherMap API를 통해 실제 날씨 데이터를 가져와 애플리케이션에 적용합니다.
-- [x] `[과제 6-2]` OpenWeatherMap Air Pollution API를 연동해 애플리케이션의 미세먼지 기능을 확장했습니다.
-- [x] `[과제 6-3]` 국토교통부 지역코드 OpenAPI를 추가로 연동해 조회된 시군구의 검색 기능을 확장했습니다.
+### 2026-08-22
 
 #### 과제 7 - Hands on: Weather UI Library
 
 - 진행 상태: 구현 완료 (선택지 2: shadcn-vue + Tailwind CSS)
-- [x] Tailwind CSS와 Vite 플러그인을 설치하고 `vite.config.js`, `main.css`에 연결했습니다.
-- [x] 기존 전역 스타일을 유지하기 위해 Tailwind Preflight는 제외하고 Theme과 Utilities만 적용했습니다.
-- [x] shadcn-vue를 JavaScript·Vite·Reka Nova·Neutral·CSS 변수 구성으로 초기화하고 `components.json`을 생성했습니다.
-- [x] Button, Input, Badge, Card, Tooltip, Alert, Checkbox, Skeleton 컴포넌트 소스와 `cn()` 클래스 조합 유틸을 프로젝트에 추가했습니다.
-- [x] JavaScript strict template 검사에서 shadcn의 `data-slot` 속성을 인식하도록 Vue 공용 속성 타입을 확장했습니다.
-- [x] 기존 파란색 디자인 토큰을 shadcn-vue semantic color와 Tailwind 테마 변수에 연결했습니다.
-- [x] 과제 3 화면의 Button, Input, Badge와 Card를 shadcn-vue로 교체하고 Tooltip, Alert, Checkbox, Skeleton도 실제 기능에 적용했습니다.
-- [x] 활성 화면의 scoped CSS를 Tailwind 유틸리티 클래스로 전환하고 사용하지 않던 Element Plus 의존성을 제거했습니다.
+
+**활용 준비**
+
+- [x] `[과제 7 준비]` Tailwind CSS와 Vite 플러그인을 설치하고 `vite.config.js`, `main.css`에 연결했습니다.
+- [x] `[과제 7 준비]` 기존 전역 스타일을 유지하기 위해 Tailwind Preflight는 제외하고 Theme과 Utilities만 적용했습니다.
+- [x] `[과제 7 준비]` shadcn-vue를 JavaScript·Vite·Reka Nova·Neutral·CSS 변수 구성으로 초기화하고 `components.json`을 생성했습니다.
+- [x] `[과제 7 준비]` Button, Input, Badge, Card, Tooltip, Alert, Checkbox, Skeleton 컴포넌트 소스와 `cn()` 클래스 조합 유틸을 프로젝트에 추가했습니다.
+- [x] `[과제 7 준비]` JavaScript strict template 검사에서 shadcn의 `data-slot` 속성을 인식하도록 Vue 공용 속성 타입을 확장했습니다.
+- [x] `[과제 7 준비]` 기존 파란색 디자인 토큰을 shadcn-vue semantic color와 Tailwind 테마 변수에 연결했습니다.
+
+**과제 요구사항**
+
+- [x] `[과제 7-1]` 과제 3 화면의 Button, Input, Badge와 Card를 shadcn-vue로 교체하고 Tooltip, Alert, Checkbox, Skeleton도 실제 기능에 적용했습니다.
+
+**추가 구현 및 리팩터링**
+
+- [x] `[과제 7 추가 구현]` 활성 화면의 scoped CSS를 Tailwind 유틸리티 클래스로 전환하고 사용하지 않던 Element Plus 의존성을 제거했습니다.
 - shadcn-vue는 완성된 컴포넌트 소스를 프로젝트에 받아 직접 수정할 수 있어 선정했습니다. 공용 컴포넌트를 직접 만들 때 반복되던 상태·접근성 보완을 검증된 코드로 대체하고, Badge 변형처럼 앱에 필요한 디자인만 직접 확장할 수 있어 편리했습니다.
 - 과제 3에서 직접 만든 `BaseButton`, `BaseInput`, `BaseBadge`는 학습 기록으로 유지하되 실제 화면은 `components/ui`를 사용합니다.
+
+#### 과제 8 - Hands on: Weather Deployment Vite Build & Deployment
+
+- 진행 상태: 구현 중 (기존 Cloudflare Pages 배포를 과제 8 기준으로 재검증 예정)
+
+**과제 요구사항**
+
+- [ ] `[과제 8-1 품질 관리]` ESLint로 프로젝트를 점검하고 제출 코드의 오류를 제거합니다.
+- [ ] `[과제 8-2 품질 관리]` API Key를 환경변수로 관리하고 Git에 업로드되지 않도록 확인합니다.
+- [ ] `[과제 8-3]` Vite 프로젝트를 Build합니다.
+- [ ] `[과제 8-4]` Build된 정적 파일을 서버에 Hosting하고 배포 화면을 확인합니다.
 
 ### 트러블슈팅 기록
 
