@@ -7,6 +7,7 @@
  * @property {number} humidity
  * @property {number} windSpeed
  * @property {string} dust
+ * @property {string[]} insects
  */
 
 export {}

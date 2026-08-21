@@ -47,6 +47,7 @@ src/
 ├── types/
 │   └── weather.js
 ├── utils/
+│   ├── insect.js
 │   └── temperature.js
 └── views/
     ├── NotFoundView.vue
@@ -289,6 +290,10 @@ src/
 - `[과제 5-4 공용 타입 리팩터링]` 세 파일에 중복 선언된 `WeatherItem` JSDoc 타입을 `src/types/weather.js`로 분리했습니다.
   - `weatherStore`, `WeatherCard`, `WeatherCardList`가 하나의 날씨 데이터 구조를 참조하도록 통일했습니다.
   - README 파일 트리에 공용 컴포넌트, 타입과 utils 디렉터리를 반영했습니다.
+- `[과제 5-4 날씨별 벌레 정보 확장]` 날씨 Mock Data에 도시별 `insects` 목록을 추가하고 날씨 카드와 상세 화면에서 자주 출몰하는 벌레를 표시했습니다.
+  - 모기, 러브버그, 초파리, 매미, 잠자리, 나방과 쯔쯔가무시를 매개하는 털진드기 정보를 포함합니다.
+  - 벌레 목록은 공용 `BaseBadge`로 표시하고 털진드기 주의 정보는 `danger`, 나머지는 `warning` 색상으로 구분합니다.
+  - 두 화면에서 사용하는 벌레 위험도 판별은 `src/utils/insect.js`의 공용 함수로 분리했습니다.
 
 ## 커밋 컨벤션
 

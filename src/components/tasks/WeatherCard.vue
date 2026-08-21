@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import BaseBadge from '@/components/tasks/common/BaseBadge.vue'
 import BaseButton from '@/components/tasks/common/BaseButton.vue'
 import { useConfigStore } from '@/stores/configStore'
+import { getInsectVariant } from '@/utils/insect'
 import { convertTemperature } from '@/utils/temperature'
 
 /** @typedef {import('@/types/weather').WeatherItem} WeatherItem */
@@ -54,6 +55,20 @@ const handleDetailClick = () => {
     <div v-if="weatherItem.temp >= 25">25도 이상으로 덥습니다.</div>
     <div v-else>25도 미만으로 선선합니다.</div>
 
+    <div class="weather-card__insects">
+      <div class="weather-card__insects-title">자주 출몰하는 벌레</div>
+      <div class="weather-card__insect-list">
+        <BaseBadge
+          v-for="insect in weatherItem.insects"
+          :key="insect"
+          :variant="getInsectVariant(insect)"
+          size="small"
+        >
+          {{ insect }}
+        </BaseBadge>
+      </div>
+    </div>
+
     <BaseButton @click.stop="handleDetailClick">날씨 자세히 보기</BaseButton>
   </div>
 </template>
@@ -68,5 +83,23 @@ const handleDetailClick = () => {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+}
+
+.weather-card__insects {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+}
+
+.weather-card__insects-title {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.weather-card__insect-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
 }
 </style>
