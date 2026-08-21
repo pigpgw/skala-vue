@@ -4,8 +4,7 @@ import { ref } from 'vue'
 import { getAirPollutionByCoordinates, getWeatherByCityName, getWeatherByCoordinates } from '@/apis/weather'
 import { cityData } from '@/data/cityData'
 import { weatherData } from '@/data/weatherData'
-import { getFineDustStatus } from '@/utils/airQuality'
-import { getActiveInsects } from '@/utils/insect'
+import { createWeatherItem } from '@/utils/weather'
 
 /** @typedef {import('@/types/region').Region} Region */
 /** @typedef {import('@/types/weather').WeatherItem} WeatherItem */
@@ -68,22 +67,15 @@ export const useWeatherStore = defineStore('weather', () => {
     }
 
     const weather = weatherResult.value
+    const airPollution = airPollutionResult.status === 'fulfilled' ? airPollutionResult.value : undefined
 
     return {
-      weatherItem: {
+      weatherItem: createWeatherItem({
         id: city.id,
         name: city.name,
-        temp: weather.main.temp,
-        status: weather.weather[0]?.description ?? '정보 없음',
-        humidity: weather.main.humidity,
-        windSpeed: weather.wind.speed,
-        dust: airPollutionResult.status === 'fulfilled' ? getFineDustStatus(airPollutionResult.value.list[0]?.components.pm2_5) : '정보 없음',
-        insects: getActiveInsects({
-          temp: weather.main.temp,
-          humidity: weather.main.humidity,
-          windSpeed: weather.wind.speed,
-        }),
-      },
+        weather,
+        airPollution,
+      }),
       isWeatherFailed: false,
       isAirPollutionFailed: airPollutionResult.status === 'rejected',
     }
@@ -160,21 +152,14 @@ export const useWeatherStore = defineStore('weather', () => {
           longitude: weather.coord.lon,
         }),
       ])
+      const airPollution = airPollutionResult.status === 'fulfilled' ? airPollutionResult.value : undefined
       /** @type {WeatherItem} */
-      const weatherItem = {
+      const weatherItem = createWeatherItem({
         id: region.id,
         name: region.name,
-        temp: weather.main.temp,
-        status: weather.weather[0]?.description ?? '정보 없음',
-        humidity: weather.main.humidity,
-        windSpeed: weather.wind.speed,
-        dust: airPollutionResult.status === 'fulfilled' ? getFineDustStatus(airPollutionResult.value.list[0]?.components.pm2_5) : '정보 없음',
-        insects: getActiveInsects({
-          temp: weather.main.temp,
-          humidity: weather.main.humidity,
-          windSpeed: weather.wind.speed,
-        }),
-      }
+        weather,
+        airPollution,
+      })
 
       upsertWeatherItem(weatherItem)
 
