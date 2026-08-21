@@ -21,6 +21,7 @@ const { regions } = storeToRefs(regionStore)
 
 onMounted(() => {
   regionStore.fetchRegions()
+  weatherStore.fetchMainCityDatasById()
 })
 
 const searchQuery = ref('')
