@@ -11,13 +11,12 @@ Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적�
 
 ## 주요 기능
 
-- 도시별 날씨 카드 반복 출력
-- 국내 지역 검색과 날씨 카드 추가
-- 등록된 날씨 카드 이름 필터
-- 기온과 미세먼지 상태별 조건부 문구
-- 카드 선택과 상세보기 이벤트 분리
-- 등록 지역 평균 기온, 습도와 풍속 계산
-- 주요 날씨 통계와 반응형 상태 변화 감시
+- OpenWeatherMap 기반 현재 날씨와 미세먼지 조회
+- 국내 지역 검색, 날씨 카드 추가·갱신과 등록 카드 필터
+- 등록 지역의 평균 기온·습도·풍속과 주요 지역 비교
+- 섭씨·화씨 단위 전환과 지역별 상세 화면
+- 현재 기상 조건에 따른 벌레 정보와 생활 팁 제공
+- 검색 지역 상세 URL 새로고침 복구와 API 오류 재시도
 
 ## 프로젝트 구조
 
@@ -29,7 +28,7 @@ Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적�
 - 외부 API에서 사용하는 Request와 Response DTO는 `src/dto/`에서 API별로 관리합니다.
 - shadcn-vue의 생성 설정과 경로 별칭은 프로젝트 루트의 `components.json`에서 관리합니다.
 - `src/App.vue`의 `RouterView`에서 현재 경로에 해당하는 View를 렌더링합니다.
-- 날씨 더미 데이터는 `src/data/weatherData.js`에서 별도로 관리합니다.
+- API 응답 전 초기 표시용 날씨 데이터는 `src/data/weatherData.js`, 기본 조회 도시와 좌표는 `src/data/cityData.js`에서 관리합니다.
 
 ```text
 src/
@@ -104,6 +103,7 @@ src/
 │   ├── regionStorage.js
 │   ├── temperature.js
 │   └── weather.js
+├── vite-env.d.ts
 └── views/
     ├── NotFoundView.vue
     ├── WeatherAboutView.vue
@@ -112,56 +112,13 @@ src/
     └── WeatherTipsView.vue
 ```
 
-## 공용 디자인 시스템
+## UI와 디자인 시스템
 
-과제 3-5의 컴포넌트 기본 디자인을 일관되게 적용하기 위해 파란색을 메인 색상으로 사용합니다. 공용 색상은 `src/assets/main.css`의 `:root`에 CSS 변수로 관리합니다.
-
-### 색상 관리 구조
-
-- `--color-white`, `--color-blue-600`과 같은 기본 팔레트에 실제 색상값을 정의합니다.
-- `--color-primary`, `--color-success`와 같은 역할별 색상은 기본 팔레트를 참조합니다.
-- shadcn-vue의 `--background`, `--card`, `--primary`, `--border`, `--ring`은 기존 팔레트를 참조하고 `@theme inline`을 통해 Tailwind 유틸리티에 연결합니다.
-- 컴포넌트에서는 색상 코드를 직접 작성하지 않고 역할별 CSS 변수를 사용합니다.
-- 버튼 그림자는 `--shadow-button-primary`처럼 상태별 공용 변수로 관리합니다.
-
-### 디자인 토큰
-
-- 폰트 크기는 `--font-size-xs`부터 `--font-size-xl`까지 단계별로 관리합니다.
-- 글자 굵기는 `--font-weight-regular`부터 `--font-weight-bold`까지 역할에 따라 사용합니다.
-- 간격은 4px 배수의 `--space-1`부터 `--space-8`까지 사용합니다.
-- 모서리는 `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-full`로 구분합니다.
-- 일반 표면 그림자는 `--shadow-sm`, `--shadow-md`, `--shadow-lg`로 깊이를 구분합니다.
-
-| 역할           | CSS 변수                 | 색상      |
-| -------------- | ------------------------ | --------- |
-| 메인           | `--color-primary`        | `#2563eb` |
-| 메인 호버      | `--color-primary-hover`  | `#1d4ed8` |
-| 연한 메인 배경 | `--color-primary-soft`   | `#eff6ff` |
-| 전체 배경      | `--color-background`     | `#f4f8fc` |
-| 카드 등 표면   | `--color-surface`        | `#ffffff` |
-| 기본 글자      | `--color-text-primary`   | `#0f172a` |
-| 보조 글자      | `--color-text-secondary` | `#475569` |
-| 테두리         | `--color-border`         | `#e2e8f0` |
-| 성공·좋음      | `--color-success`        | `#15803d` |
-| 주의·보통      | `--color-warning`        | `#b45309` |
-| 위험·나쁨      | `--color-danger`         | `#b91c1c` |
-
-- 버튼과 배지 같은 공용 컴포넌트는 `primary`, `success`, `warning`, `danger`처럼 의미에 따라 색상을 구분합니다.
-- 반응형 화면에서는 색상의 의미를 유지하고 크기, 간격과 배치만 변경합니다.
-- `body`에는 공용 배경색과 기본 글자색을 적용하고 링크에는 메인 색상과 호버 색상을 적용합니다.
-
-### 공용 입력 컴포넌트
-
-- `BaseInput.vue`는 `primary`, `success`, `warning`, `danger` variant를 지원합니다.
-- 입력창 크기는 `small`, `medium`, `large`로 구분하며 기본값은 `primary`, `medium`입니다.
-- 자주 사용하는 `type`, `value`, `placeholder`는 타입이 확인되는 props로 받고, 나머지 네이티브 속성은 `v-bind="$attrs"`로 전달합니다.
-- 검색 입력창은 부모 래퍼가 너비를 담당하고 `BaseInput`은 래퍼 안에서 전체 너비를 사용하며, `input` 이벤트를 부모에 다시 전달합니다.
-
-### 공용 배지 컴포넌트
-
-- `BaseBadge.vue`는 `primary`, `success`, `warning`, `danger` variant와 `small`, `medium`, `large` 크기를 지원합니다.
-- pill 형태, 상태 점과 연한 배경으로 짧은 상태 정보를 구분하며 기본값은 `primary`, `medium`입니다.
-- 날씨 카드의 현재 날씨와 미세먼지 상태에 적용하고 미세먼지 상태에 따라 성공, 주의, 위험 색상을 표시합니다.
+- 실제 화면은 `src/components/ui/`의 shadcn-vue Button, Input, Badge, Card, Tooltip, Alert, Checkbox와 Skeleton을 조합합니다.
+- `src/assets/main.css`에서 Tailwind CSS와 shadcn-vue Neutral 테마를 불러오고 배경, 글자, 카드, 테두리와 상태 색상을 semantic CSS 변수로 관리합니다.
+- 화면의 레이아웃, 간격, 글자 크기와 반응형 배치는 Tailwind 유틸리티 클래스로 작성합니다.
+- `success`, `warning` 상태 색상과 앱에 필요한 Badge 변형만 기본 테마에 추가했습니다.
+- 과제 3에서 직접 만든 `BaseButton`, `BaseInput`, `BaseBadge`는 컴포넌트 설계 학습 기록으로 보존하며 현재 화면에서는 사용하지 않습니다.
 
 ## 실행 방법
 
@@ -505,13 +462,6 @@ Cloudflare Pages에 최신 코드를 배포하고 실제 API 동작까지 확인
 - [x] 상세 화면의 로딩, 정상 데이터와 찾을 수 없는 지역 상태를 각각 Skeleton, 데이터 Card와 빈 상태 Card로 구분했습니다.
 - [x] 상세·404 화면의 불필요한 내부 여백을 제거하고 공통 본문 너비와 shadcn-vue Card·Button 패턴에 맞췄습니다.
 
-#### 최종 회귀 검증
-
-- [x] 로컬 브라우저에서 홈, 소개, 생활 팁, 기본·검색 지역 상세와 Catch-all 404 Route를 순서대로 확인했습니다.
-- [x] 등록 지역 요약 토글, 빈 카드 필터, 기존 지역 갱신, 신규 지역 추가, 섭씨·화씨 전환, 마우스·키보드 카드 선택과 벌레 Tooltip을 확인했습니다.
-- [x] 검색 지역 상세 URL을 새로고침해도 날씨가 복구되고 Route 이동 후 본문 포커스와 활성 내비게이션이 유지됨을 확인했습니다.
-- [x] 최종 브라우저 warning·error 로그가 없으며 `npm run lint`, `npm run type-check`, `npm run build`가 모두 성공했습니다.
-
 ### 트러블슈팅 기록
 
 과제 번호순이 아닌 문제가 발생한 시간순으로 기록하며, 각 항목에 관련 과제 번호를 함께 표시합니다.
@@ -590,7 +540,7 @@ Cloudflare Pages에 최신 코드를 배포하고 실제 API 동작까지 확인
 | 과제 7 요구사항                     | 현재 구현                                          | 적용 방식                                                                                                                       |
 | ----------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | 외부 UI Library 적용                | 실제 화면에 shadcn-vue 컴포넌트 적용 완료          | Button, Input, Badge, Card, Tooltip, Alert, Checkbox, Skeleton을 기능에 맞게 사용하고 Badge에 앱 전용 상태 변형을 추가했습니다. |
-| Tailwind CSS를 활용한 기존 CSS 변경 | 활성 화면의 scoped CSS를 Tailwind 유틸리티로 전환  | 레이아웃과 간격은 템플릿에서 바로 확인하도록 바꾸고, 전역 색상은 기존 디자인 토큰과 shadcn semantic color를 연결했습니다.       |
+| Tailwind CSS를 활용한 기존 CSS 변경 | 활성 화면의 scoped CSS를 Tailwind 유틸리티로 전환  | 레이아웃과 간격은 템플릿에서 관리하고, 전역 색상은 shadcn-vue Neutral semantic color와 앱의 상태 색상만 사용합니다.             |
 | 과제 3의 직접 만든 Base 컴포넌트    | 코드 보존, 실제 사용 경로는 `components/ui`로 교체 | 이전 과제 구현을 삭제하지 않아 학습 과정을 남기고, 과제 7에서 라이브러리를 적용한 이유와 현재 구조의 차이를 함께 기록했습니다.  |
 
 ## 커밋 컨벤션
