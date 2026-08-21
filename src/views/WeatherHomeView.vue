@@ -9,6 +9,7 @@ import CitySelectionStatusPanel from '@/components/weather/CitySelectionStatusPa
 import DashboardCard from '@/components/weather/DashboardCard.vue'
 import NationalWeatherPanel from '@/components/weather/NationalWeatherPanel.vue'
 import WeatherCardList from '@/components/weather/WeatherCardList.vue'
+import { REGION_SEARCH_RESULT_LIMIT } from '@/constants/region'
 import { useRegionStore } from '@/stores/regionStore'
 import { useWeatherStore } from '@/stores/weatherStore'
 
@@ -28,7 +29,7 @@ const filteredWeatherList = computed(() => weatherList.value.filter((weatherItem
 const filteredRegions = computed(() => {
   const query = searchQuery.value.trim()
   if (!query) return []
-  return regions.value.filter((region) => region.name.includes(query)).slice(0, 10)
+  return regions.value.filter((region) => region.name.includes(query)).slice(0, REGION_SEARCH_RESULT_LIMIT)
 })
 const searchResultCount = computed(() => filteredRegions.value.length)
 const searchStatusMessage = computed(() =>

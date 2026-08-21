@@ -1,0 +1,1 @@
+export const REGION_SEARCH_RESULT_LIMIT = 10

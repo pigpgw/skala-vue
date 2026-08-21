@@ -1,3 +1,4 @@
+import { REGIONAL_CODE_DEFAULT_PAGE_NUMBER, REGIONAL_CODE_DEFAULT_PAGE_SIZE } from '@/constants/api'
 import regionalCodeClient from '@/utils/regionalCodeClient'
 
 /** @typedef {import('@/dto/regionalCodeDto').RegionalCodeRequest} RegionalCodeRequest */
@@ -7,7 +8,7 @@ import regionalCodeClient from '@/utils/regionalCodeClient'
  * @param {RegionalCodeRequest} [request]
  * @returns {Promise<RegionalCodeResponse>}
  */
-export const getRegionalCodes = async ({ pageNo = 1, numOfRows = 100, ctpvCode } = {}) => {
+export const getRegionalCodes = async ({ pageNo = REGIONAL_CODE_DEFAULT_PAGE_NUMBER, numOfRows = REGIONAL_CODE_DEFAULT_PAGE_SIZE, ctpvCode } = {}) => {
   const response = await regionalCodeClient.get('/getRegionalCode', {
     params: {
       pageNo,

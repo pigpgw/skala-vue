@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 
 import { Checkbox } from '@/components/ui/checkbox'
+import { WEATHER_STATISTICS_DECIMAL_PLACES } from '@/constants/weather'
 import { useConfigStore } from '@/stores/configStore'
 import { convertTemperature } from '@/utils/temperature'
 
@@ -64,9 +65,9 @@ const handleVisibilityChange = (isChecked) => emit('visibility-change', isChecke
   <div v-show="isVisible" class="mt-4 grid gap-4 text-sm">
     <div class="font-semibold">전국 날씨 통계</div>
     <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
-      <div class="rounded-lg bg-muted/50 p-3"><div class="text-muted-foreground">평균 기온</div><div class="font-medium">{{ displayAverageTemperature.toFixed(1) }}{{ configStore.unitSymbol }}</div></div>
-      <div class="rounded-lg bg-muted/50 p-3"><div class="text-muted-foreground">평균 습도</div><div class="font-medium">{{ averageHumidity.toFixed(1) }}%</div></div>
-      <div class="rounded-lg bg-muted/50 p-3"><div class="text-muted-foreground">평균 풍속</div><div class="font-medium">{{ averageWindSpeed.toFixed(1) }}m/s</div></div>
+      <div class="rounded-lg bg-muted/50 p-3"><div class="text-muted-foreground">평균 기온</div><div class="font-medium">{{ displayAverageTemperature.toFixed(WEATHER_STATISTICS_DECIMAL_PLACES) }}{{ configStore.unitSymbol }}</div></div>
+      <div class="rounded-lg bg-muted/50 p-3"><div class="text-muted-foreground">평균 습도</div><div class="font-medium">{{ averageHumidity.toFixed(WEATHER_STATISTICS_DECIMAL_PLACES) }}%</div></div>
+      <div class="rounded-lg bg-muted/50 p-3"><div class="text-muted-foreground">평균 풍속</div><div class="font-medium">{{ averageWindSpeed.toFixed(WEATHER_STATISTICS_DECIMAL_PLACES) }}m/s</div></div>
       <div class="rounded-lg bg-muted/50 p-3"><div class="text-muted-foreground">미세먼지 나쁨</div><div class="font-medium">{{ badDustCityCount }}개 도시</div></div>
     </div>
     <div class="grid gap-1 text-muted-foreground">

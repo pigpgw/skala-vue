@@ -1,3 +1,5 @@
+import { CELSIUS_TO_FAHRENHEIT_RATIO, FAHRENHEIT_OFFSET } from '@/constants/weather'
+
 /** @typedef {'celsius' | 'fahrenheit'} TemperatureUnit */
 
 /**
@@ -5,6 +7,6 @@
  * @param {TemperatureUnit} unit
  */
 export const convertTemperature = (temperature, unit) => {
-  if (unit === 'fahrenheit') return Math.round((temperature * 9) / 5 + 32)
+  if (unit === 'fahrenheit') return Math.round(temperature * CELSIUS_TO_FAHRENHEIT_RATIO + FAHRENHEIT_OFFSET)
   return temperature
 }

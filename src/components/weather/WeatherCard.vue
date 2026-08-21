@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import InsectConditionBadge from '@/components/weather/InsectConditionBadge.vue'
+import { HOT_WEATHER_THRESHOLD_CELSIUS } from '@/constants/weather'
 import { useConfigStore } from '@/stores/configStore'
 import { convertTemperature } from '@/utils/temperature'
 
@@ -69,8 +70,8 @@ const handleDetailClick = () => {
         <div v-else-if="weatherItem.dust === '나쁨'">외출할 때 마스크를 착용하세요.</div>
         <div v-else-if="weatherItem.dust === '보통'">미세먼지 농도가 보통입니다.</div>
         <div v-else>공기가 깨끗합니다.</div>
-        <div v-if="weatherItem.temp >= 25">25도 이상으로 덥습니다.</div>
-        <div v-else>25도 미만으로 선선합니다.</div>
+        <div v-if="weatherItem.temp >= HOT_WEATHER_THRESHOLD_CELSIUS">{{ HOT_WEATHER_THRESHOLD_CELSIUS }}도 이상으로 덥습니다.</div>
+        <div v-else>{{ HOT_WEATHER_THRESHOLD_CELSIUS }}도 미만으로 선선합니다.</div>
       </div>
 
       <div class="grid gap-2">

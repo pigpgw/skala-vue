@@ -1,3 +1,5 @@
+import { FINE_DUST_GOOD_MAX, FINE_DUST_MODERATE_MAX, MINIMUM_PM25 } from '@/constants/weather'
+
 /** @typedef {import('@/types/weather').DustStatus} DustStatus */
 
 /**
@@ -7,8 +9,8 @@
  * @returns {DustStatus}
  */
 export const getFineDustStatus = (pm25) => {
-  if (typeof pm25 !== 'number' || !Number.isFinite(pm25) || pm25 < 0) return '정보 없음'
-  if (pm25 <= 15) return '좋음'
-  if (pm25 <= 35) return '보통'
+  if (typeof pm25 !== 'number' || !Number.isFinite(pm25) || pm25 < MINIMUM_PM25) return '정보 없음'
+  if (pm25 <= FINE_DUST_GOOD_MAX) return '좋음'
+  if (pm25 <= FINE_DUST_MODERATE_MAX) return '보통'
   return '나쁨'
 }

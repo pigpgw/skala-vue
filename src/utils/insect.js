@@ -1,3 +1,4 @@
+import { JAVASCRIPT_MONTH_OFFSET } from '@/constants/weather'
 import { insectData } from '@/data/insectData'
 
 /**
@@ -11,7 +12,7 @@ export const getInsectVariant = (insect) => (insect.id === 'chigger-mite' ? 'des
  * @param {number} [month]
  * @returns {import('@/types/insect').Insect[]}
  */
-export const getActiveInsects = (weather, month = new Date().getMonth() + 1) => {
+export const getActiveInsects = (weather, month = new Date().getMonth() + JAVASCRIPT_MONTH_OFFSET) => {
   return Object.values(insectData).filter((insect) => {
     const criteria = insect.appearanceCriteria
 

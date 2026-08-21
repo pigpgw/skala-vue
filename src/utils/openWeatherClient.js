@@ -1,11 +1,13 @@
 import axios from 'axios'
 
+import { API_TIMEOUT_MS } from '@/constants/api'
+
 const baseURL = import.meta.env.VITE_OPENWEATHER_BASE_URL
 const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY
 
 const openWeatherClient = axios.create({
   baseURL,
-  timeout: 10000,
+  timeout: API_TIMEOUT_MS,
 })
 
 openWeatherClient.interceptors.request.use(

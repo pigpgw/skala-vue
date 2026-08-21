@@ -1,12 +1,14 @@
 import axios from 'axios'
 
+import { API_TIMEOUT_MS } from '@/constants/api'
+
 const baseURL = import.meta.env.VITE_MOLIT_REGIONAL_CODE_BASE_URL
 const encodedServiceKey = import.meta.env.VITE_DATA_GO_KR_API_KEY
 const serviceKey = encodedServiceKey ? decodeURIComponent(encodedServiceKey) : ''
 
 const regionalCodeClient = axios.create({
   baseURL,
-  timeout: 10000,
+  timeout: API_TIMEOUT_MS,
 })
 
 regionalCodeClient.interceptors.request.use(
