@@ -4,6 +4,7 @@ import { RouterLink, useRoute } from 'vue-router'
 
 import { useConfigStore } from '@/stores/configStore'
 import { useWeatherStore } from '@/stores/weatherStore'
+import { convertTemperature } from '@/utils/temperature'
 
 const route = useRoute()
 const configStore = useConfigStore()
@@ -13,8 +14,7 @@ const cityData = ref()
 const displayTemperature = computed(() => {
   const rawTemperature = cityData.value?.temp
   if (typeof rawTemperature !== 'number') return null
-  if (configStore.unit === 'fahrenheit') return Math.round((rawTemperature * 9) / 5 + 32)
-  return rawTemperature
+  return convertTemperature(rawTemperature, configStore.unit)
 })
 
 onMounted(() => {

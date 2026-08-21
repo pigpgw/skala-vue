@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import BaseBadge from '@/components/tasks/common/BaseBadge.vue'
 import BaseButton from '@/components/tasks/common/BaseButton.vue'
 import { useConfigStore } from '@/stores/configStore'
+import { convertTemperature } from '@/utils/temperature'
 
 /**
  * @typedef {Object} WeatherItem
@@ -26,11 +27,7 @@ const props = defineProps({
 const emit = defineEmits(['select-card', 'click-detail'])
 const configStore = useConfigStore()
 
-const displayTemperature = computed(() => {
-  const rawTemperature = props.weatherItem.temp
-  if (configStore.unit === 'fahrenheit') return Math.round((rawTemperature * 9) / 5 + 32)
-  return rawTemperature
-})
+const displayTemperature = computed(() => convertTemperature(props.weatherItem.temp, configStore.unit))
 
 /** @type {import('vue').ComputedRef<'success' | 'warning' | 'danger'>} */
 const dustVariant = computed(() => {

@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 
 import { useConfigStore } from '@/stores/configStore'
+import { convertTemperature } from '@/utils/temperature'
 
 const props = defineProps({
   isVisible: {
@@ -45,15 +46,9 @@ const props = defineProps({
 const emit = defineEmits(['visibility-change'])
 const configStore = useConfigStore()
 
-/** @param {number} temperature */
-const convertTemperature = (temperature) => {
-  if (configStore.unit === 'fahrenheit') return Math.round((temperature * 9) / 5 + 32)
-  return temperature
-}
-
-const displayAverageTemperature = computed(() => convertTemperature(props.averageTemperature))
-const displayHottestTemperature = computed(() => convertTemperature(props.hottestCity.temp))
-const displayColdestTemperature = computed(() => convertTemperature(props.coldestCity.temp))
+const displayAverageTemperature = computed(() => convertTemperature(props.averageTemperature, configStore.unit))
+const displayHottestTemperature = computed(() => convertTemperature(props.hottestCity.temp, configStore.unit))
+const displayColdestTemperature = computed(() => convertTemperature(props.coldestCity.temp, configStore.unit))
 
 /** @param {Event} event */
 const handleVisibilityChange = (event) => {
