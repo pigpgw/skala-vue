@@ -24,6 +24,7 @@ Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적�
 - 날씨와 지역 상태는 `src/stores/`에서 관리하고, `/` 경로의 `WeatherHomeView.vue`가 화면 조립과 상세 페이지 이동을 담당합니다.
 - 외부 API 요청 함수는 `src/apis/`, API별 Axios 인스턴스와 인터셉터는 `src/utils/`에서 관리합니다.
 - 외부 API에서 사용하는 Request와 Response DTO는 `src/dto/`에서 API별로 관리합니다.
+- shadcn-vue의 생성 설정과 경로 별칭은 프로젝트 루트의 `components.json`에서 관리합니다.
 - `src/App.vue`의 `RouterView`에서 현재 경로에 해당하는 View를 렌더링합니다.
 - 날씨 더미 데이터는 `src/data/weatherData.js`에서 별도로 관리합니다.
 
@@ -358,7 +359,10 @@ npm run lint
 - 진행 상태: 구현 중 (선택지 2)
 - [x] Tailwind CSS와 Vite 플러그인을 설치하고 `vite.config.js`, `main.css`에 연결했습니다.
 - [x] 기존 전역 스타일을 유지하기 위해 Tailwind Preflight는 제외하고 Theme과 Utilities만 적용했습니다.
-- [ ] 외부 UI 컴포넌트 라이브러리를 과제 3 화면에 적용합니다.
+- [x] shadcn-vue를 JavaScript·Vite·Reka Nova·Neutral·CSS 변수 구성으로 초기화하고 `components.json`을 생성했습니다.
+- shadcn-vue는 완성된 컴포넌트 소스를 프로젝트에 받아 직접 수정할 수 있어 일반 패키지형 UI 라이브러리보다 내부 구현에 대한 의존이 낮고 프로젝트 디자인에 맞게 확장하기 쉬워 선정했습니다.
+- 과제 3에서 직접 만든 `BaseButton`, `BaseInput`, `BaseBadge`는 학습 기록으로 유지하고 실제 화면의 사용처만 `components/ui`로 교체합니다.
+- [ ] 필요한 shadcn-vue 컴포넌트를 추가하고 과제 3 화면에 적용합니다.
 - [ ] 기존 scoped CSS를 Tailwind 유틸리티 클래스로 전환합니다.
 
 ### 트러블슈팅 기록
@@ -376,6 +380,8 @@ npm run lint
 5. `[과제 6]` 기존에는 API 응답의 모든 필드를 타입으로 하나씩 선언해 사용하지 않는 데이터까지 관리해야 하는 불편함이 있었습니다. 백엔드에서 학습한 DTO 개념을 적용해 API별 Request와 Response 타입을 분리하고 현재 기능에 필요한 필드만 정의했습니다. 개발 중 자동 완성에도 사용할 필드만 표시되어 개발 효율이 높아졌고, API 구조가 변경되어도 관련 DTO만 수정하면 되어 유지보수가 쉬워졌습니다.
 
 6. `[과제 7]` Tailwind CSS를 연결하자 Preflight가 기존 제목과 요소의 기본 스타일을 초기화했습니다. 기존 디자인을 유지하면서 단계적으로 전환할 수 있도록 Theme과 Utilities만 불러오고 Preflight는 제외했습니다.
+
+7. `[과제 7]` shadcn-vue CLI가 분리된 Tailwind Theme·Utilities import를 설정으로 인식하지 못했고 도움말에 표시된 Slate 색상도 실제 검증 목록과 달랐습니다. 초기화할 때만 전체 Tailwind import를 사용하고 현재 지원되는 Neutral을 선택한 뒤 기존 import를 복원했으며, 파란색 브랜드 색상은 이후 테마 단계에서 직접 연결하기로 했습니다.
 
 ### 과제 요구사항 대비 변경 사항
 
@@ -436,9 +442,10 @@ npm run lint
 
 #### 과제 7 변경 사항
 
-| 과제 7 요구사항                     | 현재 구현                          | 적용 방식                                                                   |
-| ----------------------------------- | ---------------------------------- | --------------------------------------------------------------------------- |
-| UI Library와 Tailwind CSS 활용 준비 | Tailwind CSS 설치와 Vite 연결 완료 | 기존 디자인을 유지한 상태에서 유틸리티 클래스로 전환할 준비를 완료했습니다. |
+| 과제 7 요구사항                     | 현재 구현                                        | 적용 방식                                                                                       |
+| ----------------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| UI Library와 Tailwind CSS 활용 준비 | Tailwind CSS 연결 및 shadcn-vue 초기화 완료      | 기존 디자인을 유지한 상태에서 JavaScript용 UI 소스와 Tailwind 클래스를 추가할 준비를 완료했습니다. |
+| 기존 공용 컴포넌트 교체 준비        | 기존 Base 컴포넌트 보존 및 `components/ui` 설정 | 직접 구현한 코드는 학습 기록으로 남기고 실제 화면의 import만 shadcn-vue 컴포넌트로 교체합니다.     |
 
 ## 커밋 컨벤션
 
