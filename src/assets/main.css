@@ -1,5 +1,47 @@
 @import './base.css';
 
+:root {
+  /* Base color palette */
+  --color-white: #ffffff;
+  --color-blue-50: #eff6ff;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-sky-50: #f4f8fc;
+  --color-slate-200: #e2e8f0;
+  --color-slate-600: #475569;
+  --color-slate-900: #0f172a;
+  --color-green-700: #15803d;
+  --color-green-800: #166534;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+
+  /* Semantic colors */
+  --color-primary: var(--color-blue-600);
+  --color-primary-hover: var(--color-blue-700);
+  --color-primary-soft: var(--color-blue-50);
+  --color-background: var(--color-sky-50);
+  --color-surface: var(--color-white);
+  --color-text-primary: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-600);
+  --color-border: var(--color-slate-200);
+  --color-success: var(--color-green-700);
+  --color-success-hover: var(--color-green-800);
+  --color-warning: var(--color-amber-700);
+  --color-warning-hover: var(--color-amber-800);
+  --color-danger: var(--color-red-700);
+  --color-danger-hover: var(--color-red-800);
+  --color-button-border: rgb(255 255 255 / 18%);
+  --color-focus-ring: rgb(37 99 235 / 24%);
+
+  /* Shadows */
+  --shadow-button-primary: 0 6px 14px rgb(37 99 235 / 22%);
+  --shadow-button-success: 0 6px 14px rgb(21 128 61 / 20%);
+  --shadow-button-warning: 0 6px 14px rgb(180 83 9 / 20%);
+  --shadow-button-danger: 0 6px 14px rgb(185 28 28 / 20%);
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -10,26 +52,25 @@
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: var(--color-primary);
   transition: 0.4s;
   padding: 3px;
 }
 
+body {
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+}
+
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    color: var(--color-primary-hover);
+    background-color: var(--color-primary-soft);
   }
 }
 
 @media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
 }

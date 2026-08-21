@@ -47,6 +47,35 @@ src/
 - 전국 평균 기온, 습도와 풍속 계산
 - 주요 날씨 통계와 반응형 상태 변화 감시
 
+## 공용 색상 시스템
+
+과제 3-5의 컴포넌트 기본 디자인을 일관되게 적용하기 위해 파란색을 메인 색상으로 사용합니다. 공용 색상은 `src/assets/main.css`의 `:root`에 CSS 변수로 관리합니다.
+
+### 색상 관리 구조
+
+- `--color-white`, `--color-blue-600`과 같은 기본 팔레트에 실제 색상값을 정의합니다.
+- `--color-primary`, `--color-success`와 같은 역할별 색상은 기본 팔레트를 참조합니다.
+- 컴포넌트에서는 색상 코드를 직접 작성하지 않고 역할별 CSS 변수를 사용합니다.
+- 버튼 그림자는 `--shadow-button-primary`처럼 상태별 공용 변수로 관리합니다.
+
+| 역할 | CSS 변수 | 색상 |
+| --- | --- | --- |
+| 메인 | `--color-primary` | `#2563eb` |
+| 메인 호버 | `--color-primary-hover` | `#1d4ed8` |
+| 연한 메인 배경 | `--color-primary-soft` | `#eff6ff` |
+| 전체 배경 | `--color-background` | `#f4f8fc` |
+| 카드 등 표면 | `--color-surface` | `#ffffff` |
+| 기본 글자 | `--color-text-primary` | `#0f172a` |
+| 보조 글자 | `--color-text-secondary` | `#475569` |
+| 테두리 | `--color-border` | `#e2e8f0` |
+| 성공·좋음 | `--color-success` | `#15803d` |
+| 주의·보통 | `--color-warning` | `#b45309` |
+| 위험·나쁨 | `--color-danger` | `#b91c1c` |
+
+- 버튼과 배지 같은 공용 컴포넌트는 `primary`, `success`, `warning`, `danger`처럼 의미에 따라 색상을 구분합니다.
+- 반응형 화면에서는 색상의 의미를 유지하고 크기, 간격과 배치만 변경합니다.
+- `body`에는 공용 배경색과 기본 글자색을 적용하고 링크에는 메인 색상과 호버 색상을 적용합니다.
+
 ## 배포
 
 - 배포 주소: [https://homework.christmas](https://homework.christmas)
@@ -199,6 +228,10 @@ src/
 **참고 사항**
 
 - 메인 화면과 상세 화면의 온도 변환 코드가 중복될 수 있으며 Composable로 분리할 수 있지만, 이번 과제 범위에서는 제외합니다.
+
+#### 과제 3 보완 - 공용 디자인 시스템
+
+- `[과제 3-5 보완]` 기본 팔레트, 역할별 색상과 상태별 그림자를 `main.css`의 CSS 변수로 분리해 컴포넌트 디자인의 공통 기준을 구성했습니다.
 
 ## 커밋 컨벤션
 
