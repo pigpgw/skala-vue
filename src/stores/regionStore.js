@@ -1,41 +1,51 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-import { getRegionalCodes } from '@/apis/regionalCode'
+import { searchKoreanRegions } from '@/apis/geocoding'
 import { ERROR_MESSAGE } from '@/messages/error'
 import { normalizeRegions } from '@/utils/region'
-
-/** @typedef {import('@/dto/regionalCodeDto').RegionalCodeItemResponse} RegionalCodeItemResponse */
 
 export const useRegionStore = defineStore('region', () => {
   /** @type {import('vue').Ref<import('@/types/region').Region[]>} */
   const regions = ref([])
   const isLoading = ref(false)
   const errorMessage = ref('')
+  let latestRequestId = 0
 
-  const fetchRegions = async () => {
-    if (regions.value.length > 0) return
+  /** @param {string} query */
+  const searchRegions = async (query) => {
+    const normalizedQuery = query.trim()
+    const requestId = ++latestRequestId
     isLoading.value = true
     errorMessage.value = ''
 
     try {
-      const data = await getRegionalCodes()
+      const data = await searchKoreanRegions(normalizedQuery)
+      if (requestId !== latestRequestId) return
 
-      /** @type {RegionalCodeItemResponse[]} */
-      const items = data.Response.body.items.item
-      regions.value = normalizeRegions(items)
+      regions.value = normalizeRegions(data)
     } catch (e) {
-      console.error(e instanceof Error ? e.message : '지역 검색 목록 요청 실패')
-      errorMessage.value = ERROR_MESSAGE.REGION_LIST
+      if (requestId !== latestRequestId) return
+      console.error(e instanceof Error ? e.message : '지역 검색 요청 실패')
+      regions.value = []
+      errorMessage.value = ERROR_MESSAGE.REGION_SEARCH
     } finally {
-      isLoading.value = false
+      if (requestId === latestRequestId) isLoading.value = false
     }
+  }
+
+  const clearSearchResults = () => {
+    latestRequestId += 1
+    regions.value = []
+    isLoading.value = false
+    errorMessage.value = ''
   }
 
   return {
     regions,
     isLoading,
     errorMessage,
-    fetchRegions,
+    searchRegions,
+    clearSearchResults,
   }
 })

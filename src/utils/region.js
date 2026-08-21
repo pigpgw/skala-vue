@@ -1,25 +1,23 @@
-/** @typedef {import('@/dto/regionalCodeDto').RegionalCodeItemResponse} RegionalCodeItemResponse */
+/** @typedef {import('@/dto/openWeatherGeocodingDto').GeocodingLocationResponse} GeocodingLocationResponse */
 /** @typedef {import('@/types/region').Region} Region */
 
 /**
- * 지역코드 응답에서 사용 중인 시군구만 추려 중복 없는 검색 지역 목록으로 변환합니다.
+ * 지역 검색 응답을 화면과 날씨 조회에서 사용하는 지역 목록으로 변환합니다.
  *
- * @param {RegionalCodeItemResponse[]} items
+ * @param {GeocodingLocationResponse[]} locations
  * @returns {Region[]}
  */
-export const normalizeRegions = (items) => {
-  /** @type {Map<string, Region>} */
-  const regionMap = new Map()
+export const normalizeRegions = (locations) =>
+  locations
+    .filter((location) => location.country === 'KR')
+    .map((location) => {
+      const localizedName = location.local_names?.ko ?? location.name
 
-  items.forEach((region) => {
-    if (region.use_yn !== 'Y' || !region.sgg_cd || !region.sgg_nm) return
-
-    regionMap.set(region.sgg_cd, {
-      id: region.sgg_cd,
-      name: region.ctpv_nm === region.sgg_nm ? region.ctpv_nm : `${region.ctpv_nm} ${region.sgg_nm}`,
-      weatherName: region.sgg_nm,
+      return {
+        id: `${location.lat},${location.lon}`,
+        name: localizedName,
+        weatherName: localizedName,
+        latitude: location.lat,
+        longitude: location.lon,
+      }
     })
-  })
-
-  return [...regionMap.values()]
-}

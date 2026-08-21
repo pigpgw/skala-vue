@@ -1,15 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-import { getAirPollutionByCoordinates, getWeatherByCityName, getWeatherByCoordinates } from '@/apis/weather'
+import { getAirPollutionByCoordinates, getWeatherByCoordinates } from '@/apis/weather'
 import { cityData } from '@/data/cityData'
 import { weatherData } from '@/data/weatherData'
-import {
-  ERROR_MESSAGE,
-  createMainCityPartialErrorMessage,
-  createRegionAirPollutionErrorMessage,
-  createRegionWeatherErrorMessage,
-} from '@/messages/error'
+import { ERROR_MESSAGE, createMainCityPartialErrorMessage, createRegionAirPollutionErrorMessage, createRegionWeatherErrorMessage } from '@/messages/error'
 import { createWeatherItem } from '@/utils/weather'
 
 /** @typedef {import('@/types/region').Region} Region */
@@ -147,7 +142,10 @@ export const useWeatherStore = defineStore('weather', () => {
     lastFailedRegion.value = null
 
     try {
-      const weather = await getWeatherByCityName({ city: region.weatherName })
+      const weather = await getWeatherByCoordinates({
+        latitude: region.latitude,
+        longitude: region.longitude,
+      })
       const [airPollutionResult] = await Promise.allSettled([
         getAirPollutionByCoordinates({
           latitude: weather.coord.lat,

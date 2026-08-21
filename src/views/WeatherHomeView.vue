@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { computed, onMounted, ref, watch, watchEffect } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 
 import ApiRequestStatus from '@/components/weather/ApiRequestStatus.vue'
@@ -9,7 +9,8 @@ import CitySelectionStatusPanel from '@/components/weather/CitySelectionStatusPa
 import DashboardCard from '@/components/weather/DashboardCard.vue'
 import NationalWeatherPanel from '@/components/weather/NationalWeatherPanel.vue'
 import WeatherCardList from '@/components/weather/WeatherCardList.vue'
-import { REGION_SEARCH_RESULT_LIMIT } from '@/constants/region'
+import WeatherListFilter from '@/components/weather/WeatherListFilter.vue'
+import { REGION_SEARCH_DEBOUNCE_MS, REGION_SEARCH_MIN_LENGTH } from '@/constants/region'
 import { useRegionStore } from '@/stores/regionStore'
 import { useWeatherStore } from '@/stores/weatherStore'
 
@@ -21,20 +22,24 @@ const weatherStore = useWeatherStore()
 const { regions, isLoading: isRegionLoading, errorMessage: regionErrorMessage } = storeToRefs(regionStore)
 const { weatherList, isLoading: isWeatherLoading, errorMessage: weatherErrorMessage } = storeToRefs(weatherStore)
 
-const searchQuery = ref('')
+const regionSearchQuery = ref('')
+const weatherFilterQuery = ref('')
 const isNationalSummaryVisible = ref(true)
-const selectionMessage = ref('카드를 클릭하거나 검색해 보세요.')
+const selectionMessage = ref('날씨 카드를 선택하거나 새 지역을 추가해 보세요.')
+/** @type {ReturnType<typeof setTimeout> | undefined} */
+let regionSearchTimer
 
-const filteredWeatherList = computed(() => weatherList.value.filter((weatherItem) => weatherItem.name.includes(searchQuery.value.trim())))
-const filteredRegions = computed(() => {
-  const query = searchQuery.value.trim()
-  if (!query) return []
-  return regions.value.filter((region) => region.name.includes(query)).slice(0, REGION_SEARCH_RESULT_LIMIT)
+const filteredWeatherList = computed(() => weatherList.value.filter((weatherItem) => weatherItem.name.includes(weatherFilterQuery.value.trim())))
+const searchResultCount = computed(() => regions.value.length)
+const searchStatusMessage = computed(() => {
+  const query = regionSearchQuery.value.trim()
+  if (!query) return '추가할 지역을 검색해 보세요.'
+  if (query.length < REGION_SEARCH_MIN_LENGTH) return `${REGION_SEARCH_MIN_LENGTH}글자 이상 입력해 주세요.`
+  if (isRegionLoading.value) return `"${query}" 지역을 검색하고 있습니다.`
+  if (regionErrorMessage.value) return '지역 검색에 실패했습니다.'
+  if (searchResultCount.value === 0) return `"${query}"와 일치하는 국내 지역이 없습니다.`
+  return `"${query}"와 일치하는 국내 지역 ${searchResultCount.value}개를 찾았습니다.`
 })
-const searchResultCount = computed(() => filteredRegions.value.length)
-const searchStatusMessage = computed(() =>
-  searchQuery.value.trim() ? `"${searchQuery.value.trim()}" 검색 결과 ${searchResultCount.value}개를 표시하고 있습니다.` : '도시명을 입력하면 지역 검색 결과가 표시됩니다.',
-)
 
 const averageTemperature = computed(() => weatherList.value.reduce((sum, weatherItem) => sum + weatherItem.temp, 0) / weatherList.value.length)
 const averageHumidity = computed(() => weatherList.value.reduce((sum, weatherItem) => sum + weatherItem.humidity, 0) / weatherList.value.length)
@@ -46,13 +51,16 @@ const mostHumidCity = computed(() => weatherList.value.reduce((mostHumid, weathe
 const strongestWindCity = computed(() => weatherList.value.reduce((strongestWind, weatherItem) => (weatherItem.windSpeed > strongestWind.windSpeed ? weatherItem : strongestWind)))
 
 /** @param {string} query */
-const updateSearchQuery = (query) => (searchQuery.value = query)
+const updateRegionSearchQuery = (query) => (regionSearchQuery.value = query)
+/** @param {string} query */
+const updateWeatherFilterQuery = (query) => (weatherFilterQuery.value = query)
 /** @param {boolean} isVisible */
 const updateNationalSummaryVisibility = (isVisible) => (isNationalSummaryVisible.value = isVisible)
 /** @param {string} message */
 const updateSelectionMessage = (message) => (selectionMessage.value = message)
 /** @param {string} cityId */
 const navigateToWeatherDetail = (cityId) => router.push('/weather/' + cityId)
+const retryRegionSearch = () => regionStore.searchRegions(regionSearchQuery.value)
 /** @param {Region} region */
 const selectRegion = async (region) => {
   if (isWeatherLoading.value) return
@@ -64,13 +72,24 @@ const selectRegion = async (region) => {
     return
   }
 
-  searchQuery.value = ''
+  regionSearchQuery.value = ''
+  regionStore.clearSearchResults()
   selectionMessage.value = `${region.name} 날씨를 추가했습니다.`
 }
 
 onMounted(() => {
-  regionStore.fetchRegions()
   weatherStore.fetchMainCityDatasById()
+})
+
+onBeforeUnmount(() => clearTimeout(regionSearchTimer))
+
+watch(regionSearchQuery, (query) => {
+  clearTimeout(regionSearchTimer)
+  regionStore.clearSearchResults()
+
+  if (query.trim().length < REGION_SEARCH_MIN_LENGTH) return
+
+  regionSearchTimer = setTimeout(() => regionStore.searchRegions(query), REGION_SEARCH_DEBOUNCE_MS)
 })
 
 watch(searchResultCount, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`))
@@ -86,22 +105,24 @@ watch(mostHumidCity, (newValue, oldValue) => console.log(`[watch 자동 호출] 
 watch(strongestWindCity, (newValue, oldValue) => console.log(`[watch 자동 호출] 풍속이 가장 강한 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`))
 watch(selectionMessage, (newValue, oldValue) => console.log(`[watch 자동 호출] 상태 바 문구가 업데이트 되었습니다. ${oldValue} -> ${newValue}`))
 
-watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${searchQuery.value}`))
+watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 지역 검색어 ${regionSearchQuery.value}`))
 </script>
 
 <template>
   <div class="grid gap-4">
-    <ApiRequestStatus :is-loading="isRegionLoading" loading-message="지역 검색 목록을 불러오는 중입니다." :error-message="regionErrorMessage" @retry="regionStore.fetchRegions" />
     <ApiRequestStatus :is-loading="isWeatherLoading" loading-message="날씨 정보를 불러오는 중입니다." :error-message="weatherErrorMessage" @retry="weatherStore.retryFailedRequest" />
     <DashboardCard>
       <CitySearchPanel
-        :search-query="searchQuery"
+        :search-query="regionSearchQuery"
         :search-result-count="searchResultCount"
         :search-status-message="searchStatusMessage"
-        :regions="filteredRegions"
-        :disabled="isWeatherLoading || isRegionLoading"
-        @update-query="updateSearchQuery"
+        :regions="regions"
+        :disabled="isWeatherLoading"
+        :is-searching="isRegionLoading"
+        :error-message="regionErrorMessage"
+        @update-query="updateRegionSearchQuery"
         @select-region="selectRegion"
+        @retry-search="retryRegionSearch"
       />
     </DashboardCard>
     <DashboardCard>
@@ -120,6 +141,9 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
     </DashboardCard>
     <DashboardCard>
       <CitySelectionStatusPanel :message="selectionMessage" />
+    </DashboardCard>
+    <DashboardCard>
+      <WeatherListFilter :model-value="weatherFilterQuery" :result-count="filteredWeatherList.length" @update:model-value="updateWeatherFilterQuery" />
     </DashboardCard>
     <WeatherCardList :weather-list="filteredWeatherList" @select-card="updateSelectionMessage" @click-detail="navigateToWeatherDetail" />
   </div>
