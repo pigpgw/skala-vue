@@ -7,6 +7,7 @@ import { badgeVariants } from ".";
 const props = defineProps({
   asChild: { type: Boolean, required: false },
   as: { type: null, required: false },
+  type: { type: String, required: false },
   variant: { type: null, required: false },
   class: {
     type: [Boolean, null, String, Object, Array],
@@ -14,6 +15,13 @@ const props = defineProps({
     skipCheck: true,
   },
 });
+
+const emits = defineEmits(["click"]);
+
+/** @param {MouseEvent} event */
+const handleClick = (event) => emits("click", event);
+
+const forwardedEvents = { click: handleClick };
 
 const delegatedProps = reactiveOmit(props, "class");
 </script>
@@ -24,6 +32,7 @@ const delegatedProps = reactiveOmit(props, "class");
     :data-variant="variant"
     :class="cn(badgeVariants({ variant }), props.class)"
     v-bind="delegatedProps"
+    v-on="forwardedEvents"
   >
     <slot />
   </Primitive>

@@ -9,6 +9,11 @@ const props = defineProps({
     skipCheck: true,
   },
   variant: { type: null, required: false },
+  role: { type: String, required: false, default: "alert" },
+  "aria-live": {
+    type: /** @type {import('vue').PropType<'off' | 'assertive' | 'polite'>} */ (String),
+    required: false,
+  },
 });
 </script>
 
@@ -16,7 +21,8 @@ const props = defineProps({
   <div
     data-slot="alert"
     :class="cn(alertVariants({ variant }), props.class)"
-    role="alert"
+    :role="role"
+    :aria-live="props['aria-live']"
   >
     <slot />
   </div>

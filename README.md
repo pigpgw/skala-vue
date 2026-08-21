@@ -181,6 +181,7 @@ npm run build
 
 ```sh
 npm run lint
+npm run type-check
 ```
 
 ## 현재 배포 상태
@@ -432,6 +433,7 @@ npm run lint
 **과제 요구사항**
 
 - [x] `[과제 8-1 품질 관리]` `npm run lint`로 전체 소스를 점검해 ESLint 오류와 경고가 없음을 확인했습니다.
+- [x] `[과제 8 추가 품질 관리]` 호환되는 `vue-tsc`와 TypeScript 버전을 고정하고 `npm run type-check`로 JavaScript, JSDoc과 Vue strict template 타입 오류가 없음을 확인했습니다.
 
 <img src="./src/assets/eslint-terminal-result.png" alt="Terminal에서 실행한 ESLint 검사 결과" width="700" />
 
