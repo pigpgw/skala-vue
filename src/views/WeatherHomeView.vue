@@ -90,7 +90,7 @@ const selectRegion = async (region) => {
 }
 
 onMounted(() => {
-  weatherStore.fetchMainCityDatasById()
+  weatherStore.ensureMainCityWeather()
 })
 
 onBeforeUnmount(() => clearTimeout(regionSearchTimer))

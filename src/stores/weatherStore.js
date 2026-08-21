@@ -23,6 +23,9 @@ export const useWeatherStore = defineStore('weather', () => {
   const weatherList = ref([...weatherData])
   const isLoading = ref(false)
   const errorMessage = ref('')
+  const hasLoadedMainCityWeather = ref(false)
+  /** @type {Promise<void> | null} */
+  let mainCitiesRequest = null
   /** @type {import('vue').Ref<string[]>} */
   const failedMainCityIds = ref([])
   /** @type {import('vue').Ref<Region | null>} */
@@ -141,7 +144,21 @@ export const useWeatherStore = defineStore('weather', () => {
   }
 
   const fetchMainCityDatasById = async () => {
-    await fetchMainCitiesByIds(cityData.map((city) => city.id))
+    if (mainCitiesRequest) return mainCitiesRequest
+
+    mainCitiesRequest = fetchMainCitiesByIds(cityData.map((city) => city.id))
+
+    try {
+      await mainCitiesRequest
+      hasLoadedMainCityWeather.value = true
+    } finally {
+      mainCitiesRequest = null
+    }
+  }
+
+  const ensureMainCityWeather = async () => {
+    if (hasLoadedMainCityWeather.value) return
+    await fetchMainCityDatasById()
   }
 
   /**
@@ -233,11 +250,13 @@ export const useWeatherStore = defineStore('weather', () => {
     weatherList,
     isLoading,
     errorMessage,
+    hasLoadedMainCityWeather,
     failedMainCityIds,
     addWeatherItem,
     findWeatherById,
     fetchWeatherById,
     fetchMainCityDatasById,
+    ensureMainCityWeather,
     fetchWeatherByRegion,
     retryFailedRequest,
   }
