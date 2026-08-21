@@ -1,5 +1,6 @@
 <script setup>
 /** @typedef {import('@/types/region').Region} Region */
+import BaseButton from '@/components/common/BaseButton.vue'
 import BaseInput from '@/components/common/BaseInput.vue'
 
 defineProps({
@@ -42,10 +43,18 @@ const selectRegion = (region) => {
     <div class="search-input-wrapper">
       <BaseInput variant="primary" size="medium" type="text" :value="searchQuery" placeholder="도시명을 입력하세요" @input="handleSearchInput" />
     </div>
-    <div v-if="regions.length > 0">
-      <button v-for="region in regions" :key="region.id" type="button" @click="selectRegion(region)">
+    <div v-if="regions.length > 0" class="region-search-results">
+      <BaseButton
+        v-for="region in regions"
+        :key="region.id"
+        class="region-result-button"
+        type="button"
+        variant="primary"
+        size="medium"
+        @click="selectRegion(region)"
+      >
         {{ region.name }}
-      </button>
+      </BaseButton>
     </div>
     <div>입력한 도시: {{ searchQuery }}</div>
     <div>검색 결과 개수: {{ searchResultCount }}개</div>
@@ -54,7 +63,36 @@ const selectRegion = (region) => {
 </template>
 
 <style scoped>
+.city-search-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.city-search-panel > div {
+  width: 100%;
+  max-width: 28rem;
+  text-align: left;
+}
+
 .search-input-wrapper {
   width: 100%;
+  max-width: 28rem;
+}
+
+.region-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 28rem;
+  margin-top: var(--space-3);
+}
+
+.region-result-button {
+  justify-content: flex-start;
+  width: 100%;
+  text-align: left;
 }
 </style>
