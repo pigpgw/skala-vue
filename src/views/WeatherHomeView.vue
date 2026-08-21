@@ -1,5 +1,6 @@
 <script setup>
-import { computed, ref, watch, watchEffect } from 'vue'
+/** @typedef {import('@/types/region').Region} Region */
+import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
@@ -10,19 +11,31 @@ import CitySelectionStatusPanel from '@/components/weather/CitySelectionStatusPa
 import NationalWeatherPanel from '@/components/weather/NationalWeatherPanel.vue'
 import WeatherCardList from '@/components/weather/WeatherCardList.vue'
 import { useWeatherStore } from '@/stores/weatherStore'
+import { useRegionStore } from '@/stores/regionStore'
 
 const router = useRouter()
+const regionStore = useRegionStore()
 const weatherStore = useWeatherStore()
 const { weatherList } = storeToRefs(weatherStore)
+const { regions } = storeToRefs(regionStore)
+
+onMounted(() => {
+  regionStore.fetchRegions()
+})
 
 const searchQuery = ref('')
 const isNationalSummaryVisible = ref(true)
 const selectionMessage = ref('카드를 클릭하거나 검색해 보세요.')
 
 const filteredWeatherList = computed(() => weatherList.value.filter((weatherItem) => weatherItem.name.includes(searchQuery.value.trim())))
-const searchResultCount = computed(() => filteredWeatherList.value.length)
+const filteredRegions = computed(() => {
+  const query = searchQuery.value.trim()
+  if (!query) return []
+  return regions.value.filter((region) => region.name.includes(query)).slice(0, 10)
+})
+const searchResultCount = computed(() => filteredRegions.value.length)
 const searchStatusMessage = computed(() =>
-  searchQuery.value.trim() ? `"${searchQuery.value.trim()}" 검색 결과 ${searchResultCount.value}개를 표시하고 있습니다.` : `전체 도시 ${searchResultCount.value}개를 표시하고 있습니다.`,
+  searchQuery.value.trim() ? `"${searchQuery.value.trim()}" 검색 결과 ${searchResultCount.value}개를 표시하고 있습니다.` : '도시명을 입력하면 지역 검색 결과가 표시됩니다.',
 )
 
 const averageTemperature = computed(() => weatherList.value.reduce((sum, weatherItem) => sum + weatherItem.temp, 0) / weatherList.value.length)
@@ -35,13 +48,15 @@ const mostHumidCity = computed(() => weatherList.value.reduce((mostHumid, weathe
 const strongestWindCity = computed(() => weatherList.value.reduce((strongestWind, weatherItem) => (weatherItem.windSpeed > strongestWind.windSpeed ? weatherItem : strongestWind)))
 
 /** @param {string} query */
-const updateSearchQuery = (query) => searchQuery.value = query
+const updateSearchQuery = (query) => (searchQuery.value = query)
 /** @param {boolean} isVisible */
-const updateNationalSummaryVisibility = (isVisible) => isNationalSummaryVisible.value = isVisible
+const updateNationalSummaryVisibility = (isVisible) => (isNationalSummaryVisible.value = isVisible)
 /** @param {string} message */
-const updateSelectionMessage = (message) => selectionMessage.value = message
+const updateSelectionMessage = (message) => (selectionMessage.value = message)
 /** @param {string} cityId */
 const navigateToWeatherDetail = (cityId) => router.push('/weather/' + cityId)
+/** @param {Region} region */
+const selectRegion = (region) => console.log(region)
 
 watch(searchResultCount, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`))
 watch(searchStatusMessage, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 상태가 변경되었습니다. ${oldValue} -> ${newValue}`))
@@ -66,7 +81,9 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
         :search-query="searchQuery"
         :search-result-count="searchResultCount"
         :search-status-message="searchStatusMessage"
+        :regions="filteredRegions"
         @update-query="updateSearchQuery"
+        @select-region="selectRegion"
       />
     </DashboardCard>
 
@@ -90,11 +107,7 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 검색어 ${se
     </DashboardCard>
 
     <DashboardCard>
-      <WeatherCardList
-        :weather-list="filteredWeatherList"
-        @select-card="updateSelectionMessage"
-        @click-detail="navigateToWeatherDetail"
-      />
+      <WeatherCardList :weather-list="filteredWeatherList" @select-card="updateSelectionMessage" @click-detail="navigateToWeatherDetail" />
     </DashboardCard>
   </div>
 </template>
