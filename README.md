@@ -186,7 +186,7 @@ npm run type-check
 
 ## 현재 배포 상태
 
-기존 Cloudflare Pages 배포 정보입니다. 과제 8에서는 ESLint, 환경변수, Build와 Hosting 상태를 현재 코드 기준으로 다시 점검하고 완료 여부를 과제 진행 기록에 남깁니다.
+Cloudflare Pages에 최신 코드를 배포하고 실제 API 동작까지 확인한 배포 정보입니다.
 
 - 배포 주소: [https://homework.christmas](https://homework.christmas)
 - 기본 Pages 주소: [https://skala-vue.pages.dev](https://skala-vue.pages.dev)
@@ -430,7 +430,7 @@ npm run type-check
 
 #### 과제 8 - Hands on: Weather Deployment Vite Build & Deployment
 
-- 진행 상태: 구현 중 (기존 Cloudflare Pages 배포를 과제 8 기준으로 재검증 예정)
+- 진행 상태: 구현 완료
 
 **과제 요구사항**
 
@@ -441,7 +441,7 @@ npm run type-check
 
 - [x] `[과제 8-2 품질 관리]` API Key를 `.env`로 관리하고 Git 추적 및 업로드 대상에서 제외했으며, 필요한 변수 이름은 값이 없는 `.env.example`로 제공합니다.
 - [x] `[과제 8-3]` `npm run build`를 실행해 오류 없이 Vite Build를 완료하고 `dist/`에 정적 HTML, CSS와 JavaScript 파일이 생성됨을 확인했습니다.
-- [ ] `[과제 8-4]` Build된 정적 파일을 서버에 Hosting하고 배포 화면을 확인합니다.
+- [x] `[과제 8-4]` Build된 정적 파일을 Cloudflare Pages에 Hosting하고 배포 화면과 실제 API 동작을 확인했습니다.
 
 ### 트러블슈팅 기록
 
