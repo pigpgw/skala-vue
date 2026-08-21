@@ -24,9 +24,9 @@ const { weatherList, isLoading: isWeatherLoading, errorMessage: weatherErrorMess
 
 const regionSearchQuery = ref('')
 const weatherFilterQuery = ref('')
-const isNationalSummaryVisible = ref(true)
+const isRegionSummaryVisible = ref(true)
 const selectionMessage = ref('날씨 카드를 선택하거나 새 지역을 추가해 보세요.')
-const highlightedWeatherId = ref('')
+const selectedWeatherId = ref('')
 /** @type {ReturnType<typeof setTimeout> | undefined} */
 let regionSearchTimer
 
@@ -56,9 +56,15 @@ const updateRegionSearchQuery = (query) => (regionSearchQuery.value = query)
 /** @param {string} query */
 const updateWeatherFilterQuery = (query) => (weatherFilterQuery.value = query)
 /** @param {boolean} isVisible */
-const updateNationalSummaryVisibility = (isVisible) => (isNationalSummaryVisible.value = isVisible)
-/** @param {string} message */
-const updateSelectionMessage = (message) => (selectionMessage.value = message)
+const updateRegionSummaryVisibility = (isVisible) => (isRegionSummaryVisible.value = isVisible)
+/**
+ * @param {string} message
+ * @param {string} cityId
+ */
+const updateSelection = (message, cityId) => {
+  selectionMessage.value = message
+  selectedWeatherId.value = cityId
+}
 /** @param {string} cityId */
 const navigateToWeatherDetail = (cityId) => router.push('/weather/' + cityId)
 const retryRegionSearch = () => regionStore.searchRegions(regionSearchQuery.value)
@@ -76,7 +82,7 @@ const selectRegion = async (region) => {
   regionSearchQuery.value = ''
   regionStore.clearSearchResults()
   weatherFilterQuery.value = ''
-  highlightedWeatherId.value = weatherItem.id
+  selectedWeatherId.value = weatherItem.id
   selectionMessage.value = `${region.name} 날씨를 추가했습니다.`
 
   await nextTick()
@@ -100,10 +106,10 @@ watch(regionSearchQuery, (query) => {
 
 watch(searchResultCount, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 결과 개수가 변경되었습니다. ${oldValue}개 -> ${newValue}개`))
 watch(searchStatusMessage, (newValue, oldValue) => console.log(`[watch 자동 호출] 검색 상태가 변경되었습니다. ${oldValue} -> ${newValue}`))
-watch(isNationalSummaryVisible, (newValue) => console.log(`[watch 자동 호출] 전국 통계 표시 여부가 변경되었습니다. ${newValue}`))
-watch(averageTemperature, (newValue, oldValue) => console.log(`[watch 자동 호출] 전국 평균 기온이 변경되었습니다. ${oldValue}°C -> ${newValue}°C`))
-watch(averageHumidity, (newValue, oldValue) => console.log(`[watch 자동 호출] 전국 평균 습도가 변경되었습니다. ${oldValue}% -> ${newValue}%`))
-watch(averageWindSpeed, (newValue, oldValue) => console.log(`[watch 자동 호출] 전국 평균 풍속이 변경되었습니다. ${oldValue}m/s -> ${newValue}m/s`))
+watch(isRegionSummaryVisible, (newValue) => console.log(`[watch 자동 호출] 등록 지역 요약 표시 여부가 변경되었습니다. ${newValue}`))
+watch(averageTemperature, (newValue, oldValue) => console.log(`[watch 자동 호출] 등록 지역 평균 기온이 변경되었습니다. ${oldValue}°C -> ${newValue}°C`))
+watch(averageHumidity, (newValue, oldValue) => console.log(`[watch 자동 호출] 등록 지역 평균 습도가 변경되었습니다. ${oldValue}% -> ${newValue}%`))
+watch(averageWindSpeed, (newValue, oldValue) => console.log(`[watch 자동 호출] 등록 지역 평균 풍속이 변경되었습니다. ${oldValue}m/s -> ${newValue}m/s`))
 watch(badDustCityCount, (newValue, oldValue) => console.log(`[watch 자동 호출] 미세먼지 나쁨 도시가 변경되었습니다. ${oldValue}개 -> ${newValue}개`))
 watch(hottestCity, (newValue, oldValue) => console.log(`[watch 자동 호출] 가장 더운 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`))
 watch(coldestCity, (newValue, oldValue) => console.log(`[watch 자동 호출] 가장 추운 도시가 변경되었습니다. ${oldValue.name} -> ${newValue.name}`))
@@ -133,16 +139,17 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 지역 검색�
     </DashboardCard>
     <DashboardCard>
       <NationalWeatherPanel
-        :is-visible="isNationalSummaryVisible"
+        :is-visible="isRegionSummaryVisible"
         :average-temperature="averageTemperature"
         :average-humidity="averageHumidity"
         :average-wind-speed="averageWindSpeed"
         :bad-dust-city-count="badDustCityCount"
+        :region-count="weatherList.length"
         :hottest-city="hottestCity"
         :coldest-city="coldestCity"
         :most-humid-city="mostHumidCity"
         :strongest-wind-city="strongestWindCity"
-        @visibility-change="updateNationalSummaryVisibility"
+        @visibility-change="updateRegionSummaryVisibility"
       />
     </DashboardCard>
     <DashboardCard>
@@ -151,6 +158,6 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 지역 검색�
     <DashboardCard>
       <WeatherListFilter :model-value="weatherFilterQuery" :result-count="filteredWeatherList.length" @update:model-value="updateWeatherFilterQuery" />
     </DashboardCard>
-    <WeatherCardList :weather-list="filteredWeatherList" :highlighted-id="highlightedWeatherId" @select-card="updateSelectionMessage" @click-detail="navigateToWeatherDetail" />
+    <WeatherCardList :weather-list="filteredWeatherList" :selected-id="selectedWeatherId" @select-card="updateSelection" @click-detail="navigateToWeatherDetail" />
   </div>
 </template>

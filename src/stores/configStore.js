@@ -8,6 +8,8 @@ export const useConfigStore = defineStore('config', () => {
   const unitSymbol = computed(() => {
     return unit.value === 'celsius' ? '℃' : '℉'
   })
+  const unitLabel = computed(() => (unit.value === 'celsius' ? '섭씨' : '화씨'))
+  const nextUnitLabel = computed(() => (unit.value === 'celsius' ? '화씨' : '섭씨'))
 
   function toggleUnit() {
     unit.value = unit.value === 'celsius' ? 'fahrenheit' : 'celsius'
@@ -16,6 +18,8 @@ export const useConfigStore = defineStore('config', () => {
   return {
     unit,
     unitSymbol,
+    unitLabel,
+    nextUnitLabel,
     toggleUnit,
   }
 })

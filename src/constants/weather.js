@@ -6,3 +6,11 @@ export const HOT_WEATHER_THRESHOLD_CELSIUS = 25
 export const JAVASCRIPT_MONTH_OFFSET = 1
 export const MINIMUM_PM25 = 0
 export const WEATHER_STATISTICS_DECIMAL_PLACES = 1
+
+/** @type {Readonly<Record<string, string>>} */
+export const WEATHER_DESCRIPTION_LABELS = Object.freeze({
+  온흐림: '흐림',
+  '실 비': '약한 비',
+  '보통 비': '비',
+  튼구름: '구름 많음',
+})

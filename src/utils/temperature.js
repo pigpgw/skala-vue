@@ -1,4 +1,4 @@
-import { CELSIUS_TO_FAHRENHEIT_RATIO, FAHRENHEIT_OFFSET } from '@/constants/weather'
+import { CELSIUS_TO_FAHRENHEIT_RATIO, FAHRENHEIT_OFFSET, WEATHER_STATISTICS_DECIMAL_PLACES } from '@/constants/weather'
 
 /** @typedef {'celsius' | 'fahrenheit'} TemperatureUnit */
 
@@ -7,6 +7,12 @@ import { CELSIUS_TO_FAHRENHEIT_RATIO, FAHRENHEIT_OFFSET } from '@/constants/weat
  * @param {TemperatureUnit} unit
  */
 export const convertTemperature = (temperature, unit) => {
-  if (unit === 'fahrenheit') return Math.round(temperature * CELSIUS_TO_FAHRENHEIT_RATIO + FAHRENHEIT_OFFSET)
+  if (unit === 'fahrenheit') return temperature * CELSIUS_TO_FAHRENHEIT_RATIO + FAHRENHEIT_OFFSET
   return temperature
 }
+
+/**
+ * @param {number} temperature
+ * @param {TemperatureUnit} unit
+ */
+export const formatTemperature = (temperature, unit) => convertTemperature(temperature, unit).toFixed(WEATHER_STATISTICS_DECIMAL_PLACES)

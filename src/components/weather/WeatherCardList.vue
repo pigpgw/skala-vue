@@ -8,7 +8,7 @@ defineProps({
     type: /** @type {import('vue').PropType<WeatherItem[]>} */ (Array),
     required: true,
   },
-  highlightedId: {
+  selectedId: {
     type: String,
     default: '',
   },
@@ -16,8 +16,11 @@ defineProps({
 
 const emit = defineEmits(['select-card', 'click-detail'])
 
-/** @param {string} message */
-const handleCardSelect = (message) => emit('select-card', message)
+/**
+ * @param {string} message
+ * @param {string} cityId
+ */
+const handleCardSelect = (message, cityId) => emit('select-card', message, cityId)
 /** @param {string} cityId */
 const handleDetailClick = (cityId) => emit('click-detail', cityId)
 </script>
@@ -29,9 +32,9 @@ const handleDetailClick = (cityId) => emit('click-detail', cityId)
       :id="`weather-card-${weatherItem.id}`"
       :key="weatherItem.id"
       class="scroll-mt-4 rounded-xl transition-shadow"
-      :class="weatherItem.id === highlightedId ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''"
+      :class="weatherItem.id === selectedId ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''"
     >
-      <WeatherCard :weather-item="weatherItem" @select-card="handleCardSelect" @click-detail="handleDetailClick" />
+      <WeatherCard :weather-item="weatherItem" :selected="weatherItem.id === selectedId" @select-card="handleCardSelect" @click-detail="handleDetailClick" />
     </div>
   </div>
   <div v-else class="rounded-lg border border-dashed p-8 text-center text-sm text-muted-foreground">등록된 날씨 카드 중 일치하는 지역이 없습니다.</div>

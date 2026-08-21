@@ -5,9 +5,10 @@ import { RouterLink, useRoute } from 'vue-router'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import InsectConditionBadge from '@/components/weather/InsectConditionBadge.vue'
+import { WEATHER_STATISTICS_DECIMAL_PLACES } from '@/constants/weather'
 import { useConfigStore } from '@/stores/configStore'
 import { useWeatherStore } from '@/stores/weatherStore'
-import { convertTemperature } from '@/utils/temperature'
+import { formatTemperature } from '@/utils/temperature'
 
 const route = useRoute()
 const configStore = useConfigStore()
@@ -19,7 +20,7 @@ const isLoading = ref(true)
 const displayTemperature = computed(() => {
   const rawTemperature = cityData.value?.temp
   if (typeof rawTemperature !== 'number') return null
-  return convertTemperature(rawTemperature, configStore.unit)
+  return formatTemperature(rawTemperature, configStore.unit)
 })
 
 onMounted(async () => {
@@ -47,7 +48,7 @@ onMounted(async () => {
         <p>기온: {{ displayTemperature }}{{ configStore.unitSymbol }}</p>
         <p>현재 날씨: {{ cityData.status }}</p>
         <p>습도: {{ cityData.humidity }}%</p>
-        <p>풍속: {{ cityData.windSpeed }}m/s</p>
+        <p>풍속: {{ cityData.windSpeed.toFixed(WEATHER_STATISTICS_DECIMAL_PLACES) }}m/s</p>
         <p>미세먼지: {{ cityData.dust }}</p>
         <div class="my-4">
           <h4 class="mb-2 font-semibold">자주 출몰하는 벌레</h4>
