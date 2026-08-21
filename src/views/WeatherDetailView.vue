@@ -2,10 +2,9 @@
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
-import BaseBadge from '@/components/tasks/common/BaseBadge.vue'
+import InsectConditionBadge from '@/components/tasks/InsectConditionBadge.vue'
 import { useConfigStore } from '@/stores/configStore'
 import { useWeatherStore } from '@/stores/weatherStore'
-import { getInsectVariant } from '@/utils/insect'
 import { convertTemperature } from '@/utils/temperature'
 
 const route = useRoute()
@@ -40,14 +39,11 @@ onMounted(() => {
       <div class="weather-detail__insects">
         <h4>자주 출몰하는 벌레</h4>
         <div class="weather-detail__insect-list">
-          <BaseBadge
+          <InsectConditionBadge
             v-for="insect in cityData.insects"
-            :key="insect"
-            :variant="getInsectVariant(insect)"
-            size="small"
-          >
-            {{ insect }}
-          </BaseBadge>
+            :key="insect.id"
+            :insect="insect"
+          />
         </div>
       </div>
     </div>

@@ -27,6 +27,7 @@ src/
 │       ├── CitySearchPanel.vue
 │       ├── CitySelectionStatusPanel.vue
 │       ├── DashboardCard.vue
+│       ├── InsectConditionBadge.vue
 │       ├── NationalWeatherPanel.vue
 │       ├── UnitToggler.vue
 │       ├── WeatherCard.vue
@@ -37,6 +38,7 @@ src/
 │           ├── BaseButton.vue
 │           └── BaseInput.vue
 ├── data/
+│   ├── insectData.js
 │   └── weatherData.js
 ├── main.js
 ├── router/
@@ -45,6 +47,7 @@ src/
 │   ├── configStore.js
 │   └── weatherStore.js
 ├── types/
+│   ├── insect.js
 │   └── weather.js
 ├── utils/
 │   ├── insect.js
@@ -296,6 +299,9 @@ src/
   - 두 화면에서 사용하는 벌레 위험도 판별은 `src/utils/insect.js`의 공용 함수로 분리했습니다.
 - `[과제 4-2 반응형 내비게이션 보완]` 작은 화면에서 내비게이션 링크와 단위 변경 버튼 문구가 두 줄로 나뉘지 않도록 한 줄 표시를 적용했습니다.
   - 내비게이션 전역 레이아웃은 `main.css`에서 관리하며 화면 너비보다 길어지면 항목을 축소하거나 줄바꿈하지 않고 가로로 스크롤할 수 있도록 구성했습니다.
+- `[과제 5-4 벌레 정보 구조 및 안내 기능 확장]` `insects`를 문자열 배열에서 `id`, `name`, `condition`, `sideEffects`를 가진 객체 배열로 변경했습니다.
+  - 공용 벌레 정보는 `insectData.js`, 타입은 `types/insect.js`에서 관리해 새 벌레를 한 곳에서 쉽게 추가할 수 있도록 구성했습니다.
+  - `InsectConditionBadge.vue`를 추가해 벌레 배지에 마우스를 올리거나 키보드로 포커스하면 출몰 조건과 영향을 확인할 수 있도록 했습니다.
 
 ## 커밋 컨벤션
 

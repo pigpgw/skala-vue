@@ -3,8 +3,8 @@ import { computed } from 'vue'
 
 import BaseBadge from '@/components/tasks/common/BaseBadge.vue'
 import BaseButton from '@/components/tasks/common/BaseButton.vue'
+import InsectConditionBadge from '@/components/tasks/InsectConditionBadge.vue'
 import { useConfigStore } from '@/stores/configStore'
-import { getInsectVariant } from '@/utils/insect'
 import { convertTemperature } from '@/utils/temperature'
 
 /** @typedef {import('@/types/weather').WeatherItem} WeatherItem */
@@ -58,14 +58,11 @@ const handleDetailClick = () => {
     <div class="weather-card__insects">
       <div class="weather-card__insects-title">자주 출몰하는 벌레</div>
       <div class="weather-card__insect-list">
-        <BaseBadge
+        <InsectConditionBadge
           v-for="insect in weatherItem.insects"
-          :key="insect"
-          :variant="getInsectVariant(insect)"
-          size="small"
-        >
-          {{ insect }}
-        </BaseBadge>
+          :key="insect.id"
+          :insect="insect"
+        />
       </div>
     </div>
 
