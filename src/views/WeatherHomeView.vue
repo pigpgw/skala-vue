@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { computed, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 
 import ApiRequestStatus from '@/components/weather/ApiRequestStatus.vue'
@@ -26,6 +26,7 @@ const regionSearchQuery = ref('')
 const weatherFilterQuery = ref('')
 const isNationalSummaryVisible = ref(true)
 const selectionMessage = ref('날씨 카드를 선택하거나 새 지역을 추가해 보세요.')
+const highlightedWeatherId = ref('')
 /** @type {ReturnType<typeof setTimeout> | undefined} */
 let regionSearchTimer
 
@@ -74,7 +75,12 @@ const selectRegion = async (region) => {
 
   regionSearchQuery.value = ''
   regionStore.clearSearchResults()
+  weatherFilterQuery.value = ''
+  highlightedWeatherId.value = weatherItem.id
   selectionMessage.value = `${region.name} 날씨를 추가했습니다.`
+
+  await nextTick()
+  document.getElementById(`weather-card-${weatherItem.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 
 onMounted(() => {
@@ -145,6 +151,6 @@ watchEffect(() => console.log(`[watchEffect 자동 호출] 현재 지역 검색�
     <DashboardCard>
       <WeatherListFilter :model-value="weatherFilterQuery" :result-count="filteredWeatherList.length" @update:model-value="updateWeatherFilterQuery" />
     </DashboardCard>
-    <WeatherCardList :weather-list="filteredWeatherList" @select-card="updateSelectionMessage" @click-detail="navigateToWeatherDetail" />
+    <WeatherCardList :weather-list="filteredWeatherList" :highlighted-id="highlightedWeatherId" @select-card="updateSelectionMessage" @click-detail="navigateToWeatherDetail" />
   </div>
 </template>

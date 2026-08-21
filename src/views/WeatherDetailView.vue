@@ -12,7 +12,9 @@ import { convertTemperature } from '@/utils/temperature'
 const route = useRoute()
 const configStore = useConfigStore()
 const weatherStore = useWeatherStore()
-const cityData = ref()
+/** @type {import('vue').Ref<import('@/types/weather').WeatherItem | null>} */
+const cityData = ref(null)
+const isLoading = ref(true)
 
 const displayTemperature = computed(() => {
   const rawTemperature = cityData.value?.temp
@@ -20,10 +22,15 @@ const displayTemperature = computed(() => {
   return convertTemperature(rawTemperature, configStore.unit)
 })
 
-onMounted(() => {
+onMounted(async () => {
   const cityId = route.params.cityId
-  if (typeof cityId !== 'string') return
-  cityData.value = weatherStore.findWeatherById(cityId)
+  if (typeof cityId !== 'string') {
+    isLoading.value = false
+    return
+  }
+
+  cityData.value = await weatherStore.fetchWeatherById(cityId)
+  isLoading.value = false
 })
 </script>
 
@@ -31,7 +38,8 @@ onMounted(() => {
   <section class="grid gap-4 p-4">
     <h2 class="text-2xl font-bold">지역별 상세 날씨</h2>
 
-    <Card v-if="cityData">
+    <p v-if="isLoading" role="status">상세 날씨를 불러오는 중입니다.</p>
+    <Card v-else-if="cityData">
       <CardHeader>
         <CardTitle>{{ cityData.name }}</CardTitle>
       </CardHeader>
@@ -44,16 +52,12 @@ onMounted(() => {
         <div class="my-4">
           <h4 class="mb-2 font-semibold">자주 출몰하는 벌레</h4>
           <div class="flex flex-wrap gap-2">
-            <InsectConditionBadge
-              v-for="insect in cityData.insects"
-              :key="insect.id"
-              :insect="insect"
-            />
+            <InsectConditionBadge v-for="insect in cityData.insects" :key="insect.id" :insect="insect" />
           </div>
         </div>
       </CardContent>
     </Card>
-    <p v-else>해당 도시의 날씨 정보가 없습니다.</p>
+    <p v-else>해당 도시의 날씨 정보를 찾을 수 없습니다.</p>
 
     <Button as-child variant="link" class="w-fit px-0"><RouterLink to="/">메인 대시보드로 돌아가기</RouterLink></Button>
   </section>
