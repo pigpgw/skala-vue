@@ -304,6 +304,8 @@ npm run lint
 - [x] `[과제 6-0]` Axios 라이브러리를 설치했습니다.
 - [x] OpenWeatherMap에 가입하고 API Key를 발급받았습니다.
 - [x] API Key가 커밋되지 않도록 `.env`를 `.gitignore`에 추가했습니다.
+- [x] OpenWeatherMap 전용 Axios 인스턴스와 요청·응답 인터셉터를 구성했습니다.
+- [x] 위도·경도 및 도시명 기반 현재 날씨 조회 함수를 준비했습니다.
 
 - [x] `[추가 구현]` Postman으로 OpenWeatherMap API를 테스트해 `200 OK` 응답을 확인했습니다.
 
