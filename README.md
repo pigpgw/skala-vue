@@ -61,6 +61,8 @@ src/
 │   └── weather.js
 ├── utils/
 │   ├── insect.js
+│   ├── openWeatherClient.js
+│   ├── regionalCodeClient.js
 │   └── temperature.js
 └── views/
     ├── NotFoundView.vue
@@ -306,6 +308,7 @@ npm run lint
 - [x] API Key가 커밋되지 않도록 `.env`를 `.gitignore`에 추가했습니다.
 - [x] OpenWeatherMap 전용 Axios 인스턴스와 요청·응답 인터셉터를 구성했습니다.
 - [x] 위도·경도 및 도시명 기반 현재 날씨 조회 함수를 준비했습니다.
+- [x] `[과제 6-3 준비]` 국토교통부 지역코드 API 전용 Axios 인스턴스와 요청·응답 인터셉터를 구성했습니다.
 
 - [x] `[추가 구현]` Postman으로 OpenWeatherMap API를 테스트해 `200 OK` 응답을 확인했습니다.
 
@@ -316,6 +319,12 @@ npm run lint
 - [ ] `[과제 6-1]` OpenWeatherMap API를 통해 실제 날씨 데이터를 가져와 애플리케이션에 적용합니다.
 - [ ] `[과제 6-2]` OpenWeatherMap에서 제공하는 추가 API를 연동해 애플리케이션 기능을 확장합니다.
 - [ ] `[과제 6-3]` 기타 외부 API를 추가로 연동해 애플리케이션 기능을 확장합니다.
+
+### 트러블슈팅 기록
+
+과제 번호순이 아닌 문제가 발생한 시간순으로 기록하며, 각 항목에 관련 과제 번호를 함께 표시합니다.
+
+1. `[과제 6]` 공공데이터포털의 Encoding 인증키를 Axios `params`로 전달하면서 키가 이중 인코딩되어 `403 Forbidden`이 발생했습니다. 환경변수의 인증키를 `decodeURIComponent()`로 한 번 디코딩한 뒤 Axios가 요청 과정에서 한 번만 인코딩하도록 수정했습니다.
 
 ### 과제 요구사항 대비 변경 사항
 
