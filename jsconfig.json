@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "checkJs": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "strict": true,
+    "target": "ES2022",
+    "types": ["vite/client"],
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -9,5 +15,6 @@
   "vueCompilerOptions": {
     "strictTemplates": true
   },
+  "include": ["src/**/*.js", "src/**/*.vue"],
   "exclude": ["node_modules", "dist"]
 }
