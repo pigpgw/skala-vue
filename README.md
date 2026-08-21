@@ -24,6 +24,7 @@ Vue 3 수업에서 배운 문법을 하나의 날씨 조회 화면에 단계적�
 - 날씨와 지역 상태는 `src/stores/`에서 관리하고, `/` 경로의 `WeatherHomeView.vue`가 화면 조립과 상세 페이지 이동을 담당합니다.
 - 외부 API 요청 함수는 `src/apis/`, API별 Axios 인스턴스·인터셉터와 응답 변환 순수 함수는 `src/utils/`에서 관리합니다.
 - 여러 파일에서 사용하는 숫자 기준은 `src/constants/`에서 API, 지역과 날씨 도메인별로 관리합니다.
+- 사용자에게 표시하는 API 오류 문구와 동적 오류 메시지 생성 함수는 `src/messages/`에서 관리합니다.
 - 외부 API에서 사용하는 Request와 Response DTO는 `src/dto/`에서 API별로 관리합니다.
 - shadcn-vue의 생성 설정과 경로 별칭은 프로젝트 루트의 `components.json`에서 관리합니다.
 - `src/App.vue`의 `RouterView`에서 현재 경로에 해당하는 View를 렌더링합니다.
@@ -78,6 +79,8 @@ src/
 ├── lib/
 │   └── utils.js
 ├── main.js
+├── messages/
+│   └── error.js
 ├── router/
 │   └── index.js
 ├── stores/
@@ -403,6 +406,7 @@ Cloudflare Pages에 최신 코드를 배포하고 실제 API 동작까지 확인
 - [x] `[과제 6 추가 구현]` 도시별 날씨와 대기질 요청을 `Promise.allSettled()`로 독립 처리해 일부 요청이 실패해도 성공한 카드는 갱신하고, 실패한 도시 이름을 안내한 뒤 해당 도시만 다시 요청하도록 개선했습니다.
 - [x] `[과제 6 리팩터링]` API 응답을 화면용 날씨 객체로 변환하는 함수와 지역코드를 검색 지역 목록으로 정규화하는 함수를 `utils`로 분리해 Store에는 API 호출과 상태 관리 책임만 남겼습니다.
 - [x] `[과제 6 리팩터링]` API timeout, 지역 조회·검색 제한, 기온·미세먼지 판정과 표시 자릿수에 사용하던 매직 넘버를 도메인별 상수로 분리했습니다.
+- [x] `[과제 6 리팩터링]` 사용자용 API 오류 메시지를 `messages/error.js`로 분리하고 실패 대상과 재시도 방법이 드러나도록 문구를 통일했습니다.
 
 **추가 검증**
 

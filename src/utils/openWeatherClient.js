@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { API_TIMEOUT_MS } from '@/constants/api'
+import { ERROR_MESSAGE } from '@/messages/error'
 
 const baseURL = import.meta.env.VITE_OPENWEATHER_BASE_URL
 const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY
@@ -13,10 +14,10 @@ const openWeatherClient = axios.create({
 openWeatherClient.interceptors.request.use(
   (config) => {
     if (!baseURL) {
-      throw new Error('OpenWeatherMap Base URL이 설정되지 않았습니다.')
+      throw new Error(ERROR_MESSAGE.OPENWEATHER_BASE_URL_MISSING)
     }
     if (!apiKey) {
-      throw new Error('OpenWeatherMap API Key가 설정되지 않았습니다.')
+      throw new Error(ERROR_MESSAGE.OPENWEATHER_API_KEY_MISSING)
     }
     config.params = {
       units: 'metric',

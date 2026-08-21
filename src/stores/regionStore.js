@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 import { getRegionalCodes } from '@/apis/regionalCode'
+import { ERROR_MESSAGE } from '@/messages/error'
 import { normalizeRegions } from '@/utils/region'
 
 /** @typedef {import('@/dto/regionalCodeDto').RegionalCodeItemResponse} RegionalCodeItemResponse */
@@ -25,7 +26,7 @@ export const useRegionStore = defineStore('region', () => {
       regions.value = normalizeRegions(items)
     } catch (e) {
       console.error(e instanceof Error ? e.message : '지역 검색 목록 요청 실패')
-      errorMessage.value = '지역 검색 목록을 불러오지 못했습니다.'
+      errorMessage.value = ERROR_MESSAGE.REGION_LIST
     } finally {
       isLoading.value = false
     }

@@ -4,6 +4,12 @@ import { ref } from 'vue'
 import { getAirPollutionByCoordinates, getWeatherByCityName, getWeatherByCoordinates } from '@/apis/weather'
 import { cityData } from '@/data/cityData'
 import { weatherData } from '@/data/weatherData'
+import {
+  ERROR_MESSAGE,
+  createMainCityPartialErrorMessage,
+  createRegionAirPollutionErrorMessage,
+  createRegionWeatherErrorMessage,
+} from '@/messages/error'
 import { createWeatherItem } from '@/utils/weather'
 
 /** @typedef {import('@/types/region').Region} Region */
@@ -116,15 +122,11 @@ export const useWeatherStore = defineStore('weather', () => {
 
       failedMainCityIds.value = [...new Set(failedCityIds)]
 
-      /** @type {string[]} */
-      const messages = []
-      if (weatherFailedCityNames.length > 0) messages.push(`날씨 조회 실패: ${weatherFailedCityNames.join(', ')}`)
-      if (airPollutionFailedCityNames.length > 0) messages.push(`미세먼지 조회 실패: ${airPollutionFailedCityNames.join(', ')}`)
-      errorMessage.value = messages.join(' / ')
+      errorMessage.value = createMainCityPartialErrorMessage(weatherFailedCityNames, airPollutionFailedCityNames)
     } catch (e) {
       console.error(e instanceof Error ? e.message : '날씨 요청 처리 실패')
       failedMainCityIds.value = [...cityIds]
-      errorMessage.value = '도시별 날씨 요청을 처리하지 못했습니다.'
+      errorMessage.value = ERROR_MESSAGE.MAIN_CITY_WEATHER
     } finally {
       isLoading.value = false
     }
@@ -165,14 +167,14 @@ export const useWeatherStore = defineStore('weather', () => {
 
       if (airPollutionResult.status === 'rejected') {
         lastFailedRegion.value = region
-        errorMessage.value = `${region.name} 미세먼지 정보를 불러오지 못했습니다.`
+        errorMessage.value = createRegionAirPollutionErrorMessage(region.name)
       }
 
       return weatherItem
     } catch (e) {
       console.error(e instanceof Error ? e.message : '지역 날씨 요청 실패')
       lastFailedRegion.value = region
-      errorMessage.value = `${region.name} 날씨 정보를 불러오지 못했습니다.`
+      errorMessage.value = createRegionWeatherErrorMessage(region.name)
       return null
     } finally {
       isLoading.value = false
