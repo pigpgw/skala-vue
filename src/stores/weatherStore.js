@@ -5,6 +5,7 @@ import { weatherData } from '@/data/weatherData'
 import { cityData } from '@/data/cityData'
 import { getAirPollutionByCoordinates, getWeatherByCityName, getWeatherByCoordinates } from '@/apis/weather'
 import { getFineDustStatus } from '@/utils/airQuality'
+import { getActiveInsects } from '@/utils/insect'
 
 /** @typedef {import('@/types/weather').WeatherItem} WeatherItem */
 /** @typedef {import('@/types/region').Region} Region */
@@ -34,8 +35,6 @@ export const useWeatherStore = defineStore('weather', () => {
             getWeatherByCoordinates({ latitude: city.latitude, longitude: city.longitude }),
             getAirPollutionByCoordinates({ latitude: city.latitude, longitude: city.longitude }),
           ])
-          const mockData = weatherData.find((weatherItem) => weatherItem.name === city.name)
-
           return {
             id: city.id,
             name: city.name,
@@ -44,9 +43,11 @@ export const useWeatherStore = defineStore('weather', () => {
             humidity: weather.main.humidity,
             windSpeed: weather.wind.speed,
             dust: getFineDustStatus(airPollution.list[0]?.components.pm2_5),
-
-            // 벌레 계산을 적용하기 전까지 임시 사용
-            insects: mockData?.insects ?? [],
+            insects: getActiveInsects({
+              temp: weather.main.temp,
+              humidity: weather.main.humidity,
+              windSpeed: weather.wind.speed,
+            }),
           }
         }),
       )
@@ -72,8 +73,6 @@ export const useWeatherStore = defineStore('weather', () => {
         latitude: weather.coord.lat,
         longitude: weather.coord.lon,
       })
-      const currentWeatherItem = weatherList.value.find((weatherItem) => weatherItem.id === region.id)
-
       /** @type {WeatherItem} */
       const weatherItem = {
         id: region.id,
@@ -83,7 +82,11 @@ export const useWeatherStore = defineStore('weather', () => {
         humidity: weather.main.humidity,
         windSpeed: weather.wind.speed,
         dust: getFineDustStatus(airPollution.list[0]?.components.pm2_5),
-        insects: currentWeatherItem?.insects ?? [],
+        insects: getActiveInsects({
+          temp: weather.main.temp,
+          humidity: weather.main.humidity,
+          windSpeed: weather.wind.speed,
+        }),
       }
 
       const weatherItemIndex = weatherList.value.findIndex((item) => item.id === region.id)
