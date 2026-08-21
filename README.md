@@ -43,6 +43,15 @@ src/
 │   │   ├── BaseBadge.vue
 │   │   ├── BaseButton.vue
 │   │   └── BaseInput.vue
+│   ├── ui/
+│   │   ├── alert/
+│   │   ├── badge/
+│   │   ├── button/
+│   │   ├── card/
+│   │   ├── checkbox/
+│   │   ├── input/
+│   │   ├── skeleton/
+│   │   └── tooltip/
 │   └── weather/
 │       ├── CitySearchPanel.vue
 │       ├── CitySelectionStatusPanel.vue
@@ -61,6 +70,8 @@ src/
 ├── dto/
 │   ├── openWeatherDto.js
 │   └── regionalCodeDto.js
+├── lib/
+│   └── utils.js
 ├── main.js
 ├── router/
 │   └── index.js
@@ -71,6 +82,7 @@ src/
 ├── types/
 │   ├── insect.js
 │   ├── region.js
+│   ├── vue-shadcn.d.ts
 │   └── weather.js
 ├── utils/
 │   ├── airQuality.js
@@ -360,9 +372,11 @@ npm run lint
 - [x] Tailwind CSS와 Vite 플러그인을 설치하고 `vite.config.js`, `main.css`에 연결했습니다.
 - [x] 기존 전역 스타일을 유지하기 위해 Tailwind Preflight는 제외하고 Theme과 Utilities만 적용했습니다.
 - [x] shadcn-vue를 JavaScript·Vite·Reka Nova·Neutral·CSS 변수 구성으로 초기화하고 `components.json`을 생성했습니다.
+- [x] Button, Input, Badge, Card, Tooltip, Alert, Checkbox, Skeleton 컴포넌트 소스와 `cn()` 클래스 조합 유틸을 프로젝트에 추가했습니다.
+- [x] JavaScript strict template 검사에서 shadcn의 `data-slot` 속성을 인식하도록 Vue 공용 속성 타입을 확장했습니다.
 - shadcn-vue는 완성된 컴포넌트 소스를 프로젝트에 받아 직접 수정할 수 있어 일반 패키지형 UI 라이브러리보다 내부 구현에 대한 의존이 낮고 프로젝트 디자인에 맞게 확장하기 쉬워 선정했습니다.
 - 과제 3에서 직접 만든 `BaseButton`, `BaseInput`, `BaseBadge`는 학습 기록으로 유지하고 실제 화면의 사용처만 `components/ui`로 교체합니다.
-- [ ] 필요한 shadcn-vue 컴포넌트를 추가하고 과제 3 화면에 적용합니다.
+- [ ] 추가한 shadcn-vue 컴포넌트를 과제 3 화면에 적용합니다.
 - [ ] 기존 scoped CSS를 Tailwind 유틸리티 클래스로 전환합니다.
 
 ### 트러블슈팅 기록
@@ -382,6 +396,12 @@ npm run lint
 6. `[과제 7]` Tailwind CSS를 연결하자 Preflight가 기존 제목과 요소의 기본 스타일을 초기화했습니다. 기존 디자인을 유지하면서 단계적으로 전환할 수 있도록 Theme과 Utilities만 불러오고 Preflight는 제외했습니다.
 
 7. `[과제 7]` shadcn-vue CLI가 분리된 Tailwind Theme·Utilities import를 설정으로 인식하지 못했고 도움말에 표시된 Slate 색상도 실제 검증 목록과 달랐습니다. 초기화할 때만 전체 Tailwind import를 사용하고 현재 지원되는 Neutral을 선택한 뒤 기존 import를 복원했으며, 파란색 브랜드 색상은 이후 테마 단계에서 직접 연결하기로 했습니다.
+
+8. `[과제 7]` 기본 스타일 자동 설치를 제외한 상태에서 UI 소스를 추가하자 생성된 컴포넌트가 참조하는 `cn()` 유틸과 클래스 조합 의존성이 포함되지 않았습니다. `class-variance-authority`, `clsx`, `tailwind-merge`, `tw-animate-css`를 직접 설치하고 `src/lib/utils.js`를 추가해 생성된 소스를 독립적으로 사용할 수 있게 했습니다.
+
+9. `[과제 7]` JavaScript 프로젝트의 strict template 검사에서 shadcn-vue가 사용하는 `data-slot` 속성을 컴포넌트 props로 인식하지 못했습니다. 생성된 UI 파일을 각각 수정하는 대신 Vue의 `HTMLAttributes`와 `ComponentCustomProps`를 확장해 원본 컴포넌트 코드를 유지하면서 타입 오류를 해결했습니다.
+
+10. `[과제 7]` UI 소스를 추가하면서 CLI가 아직 정의하지 않은 shadcn 테마 유틸리티를 전역 `@apply`에 먼저 사용해 빌드가 실패했습니다. 컴포넌트 추가 단계에서는 해당 base 적용을 제외하고, 다음 테마 통합 단계에서 semantic color를 Tailwind에 등록한 뒤 적용하도록 순서를 분리했습니다.
 
 ### 과제 요구사항 대비 변경 사항
 
@@ -444,7 +464,7 @@ npm run lint
 
 | 과제 7 요구사항                     | 현재 구현                                        | 적용 방식                                                                                       |
 | ----------------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| UI Library와 Tailwind CSS 활용 준비 | Tailwind CSS 연결 및 shadcn-vue 초기화 완료      | 기존 디자인을 유지한 상태에서 JavaScript용 UI 소스와 Tailwind 클래스를 추가할 준비를 완료했습니다. |
+| UI Library와 Tailwind CSS 활용 준비 | Tailwind CSS 연결 및 shadcn-vue UI 소스 추가 완료 | 기존 디자인을 유지한 상태에서 필요한 컴포넌트 코드를 프로젝트 내부에 생성했습니다.                   |
 | 기존 공용 컴포넌트 교체 준비        | 기존 Base 컴포넌트 보존 및 `components/ui` 설정 | 직접 구현한 코드는 학습 기록으로 남기고 실제 화면의 import만 shadcn-vue 컴포넌트로 교체합니다.     |
 
 ## 커밋 컨벤션
