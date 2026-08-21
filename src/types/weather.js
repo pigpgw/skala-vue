@@ -1,3 +1,5 @@
+/** @typedef {'좋음' | '보통' | '나쁨' | '정보 없음'} DustStatus */
+
 /**
  * @typedef {Object} WeatherItem
  * @property {string} id
@@ -6,7 +8,7 @@
  * @property {number} temp
  * @property {number} humidity
  * @property {number} windSpeed
- * @property {string} dust
+ * @property {DustStatus} dust
  * @property {import('@/types/insect').Insect[]} insects
  */
 

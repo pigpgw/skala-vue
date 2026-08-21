@@ -62,4 +62,29 @@
  * @property {number} cod
  */
 
+/**
+ * @typedef {Object} OpenWeatherAirPollutionComponents
+ * @property {number} co
+ * @property {number} no
+ * @property {number} no2
+ * @property {number} o3
+ * @property {number} so2
+ * @property {number} pm2_5
+ * @property {number} pm10
+ * @property {number} nh3
+ */
+
+/**
+ * @typedef {Object} OpenWeatherAirPollutionItem
+ * @property {{ aqi: 1 | 2 | 3 | 4 | 5 }} main
+ * @property {OpenWeatherAirPollutionComponents} components
+ * @property {number} dt
+ */
+
+/**
+ * @typedef {Object} OpenWeatherAirPollutionResponse
+ * @property {OpenWeatherCoordinates} coord
+ * @property {OpenWeatherAirPollutionItem[]} list
+ */
+
 export {}

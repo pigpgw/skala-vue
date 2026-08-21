@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 
 import { weatherData } from '@/data/weatherData'
 import { cityData } from '@/data/cityData'
-import { getWeatherByCityName, getWeatherByCoordinates } from '@/apis/weather'
+import { getAirPollutionByCoordinates, getWeatherByCityName, getWeatherByCoordinates } from '@/apis/weather'
+import { getFineDustStatus } from '@/utils/airQuality'
 
 /** @typedef {import('@/types/weather').WeatherItem} WeatherItem */
 /** @typedef {import('@/types/region').Region} Region */
@@ -28,18 +29,22 @@ export const useWeatherStore = defineStore('weather', () => {
     try {
       const results = await Promise.all(
         cityData.map(async (city) => {
-          const data = await getWeatherByCoordinates(city.latitude, city.longitude)
+          const [weather, airPollution] = await Promise.all([
+            getWeatherByCoordinates(city.latitude, city.longitude),
+            getAirPollutionByCoordinates(city.latitude, city.longitude),
+          ])
           const mockData = weatherData.find((weatherItem) => weatherItem.name === city.name)
+
           return {
             id: city.id,
             name: city.name,
-            temp: data.main.temp,
-            status: data.weather[0]?.description ?? '정보 없음',
-            humidity: data.main.humidity,
-            windSpeed: data.wind.speed,
+            temp: weather.main.temp,
+            status: weather.weather[0]?.description ?? '정보 없음',
+            humidity: weather.main.humidity,
+            windSpeed: weather.wind.speed,
+            dust: getFineDustStatus(airPollution.list[0]?.components.pm2_5),
 
-            // 미세먼지 API와 벌레 계산을 적용하기 전까지 임시 사용
-            dust: mockData?.dust ?? '정보 없음',
+            // 벌레 계산을 적용하기 전까지 임시 사용
             insects: mockData?.insects ?? [],
           }
         }),
@@ -61,18 +66,19 @@ export const useWeatherStore = defineStore('weather', () => {
     isLoading.value = true
 
     try {
-      const data = await getWeatherByCityName(region.weatherName)
+      const weather = await getWeatherByCityName(region.weatherName)
+      const airPollution = await getAirPollutionByCoordinates(weather.coord.lat, weather.coord.lon)
       const currentWeatherItem = weatherList.value.find((weatherItem) => weatherItem.id === region.id)
 
       /** @type {WeatherItem} */
       const weatherItem = {
         id: region.id,
         name: region.name,
-        temp: data.main.temp,
-        status: data.weather[0]?.description ?? '정보 없음',
-        humidity: data.main.humidity,
-        windSpeed: data.wind.speed,
-        dust: currentWeatherItem?.dust ?? '정보 없음',
+        temp: weather.main.temp,
+        status: weather.weather[0]?.description ?? '정보 없음',
+        humidity: weather.main.humidity,
+        windSpeed: weather.wind.speed,
+        dust: getFineDustStatus(airPollution.list[0]?.components.pm2_5),
         insects: currentWeatherItem?.insects ?? [],
       }
 
