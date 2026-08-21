@@ -19,12 +19,3 @@ import WeatherHeader from '@/components/tasks/WeatherHeader.vue'
     <RouterView />
   </main>
 </template>
-
-<style scoped>
-.navigation-area,
-nav {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-</style>

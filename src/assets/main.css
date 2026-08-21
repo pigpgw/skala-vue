@@ -96,6 +96,34 @@ body {
   background-color: var(--color-background);
 }
 
+.navigation-area,
+.navigation-area nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.navigation-area {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+}
+
+.navigation-area::-webkit-scrollbar {
+  display: none;
+}
+
+.navigation-area > *,
+.navigation-area nav a {
+  flex: 0 0 auto;
+}
+
+.navigation-area nav a {
+  white-space: nowrap;
+}
+
 @media (hover: hover) {
   a:hover {
     color: var(--color-primary-hover);
