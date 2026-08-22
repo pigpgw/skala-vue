@@ -7,4 +7,18 @@
  * @property {number} longitude
  */
 
+/**
+ * @typedef {Object} Province
+ * @property {string} code
+ * @property {string} name
+ */
+
+/**
+ * @typedef {Object} AdministrativeDistrict
+ * @property {string} code
+ * @property {string} name
+ * @property {string} provinceCode
+ * @property {string} provinceName
+ */
+
 export {}

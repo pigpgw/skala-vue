@@ -15,6 +15,7 @@ const navigationItems = [
   { name: 'WeatherHome', label: '날씨 홈', to: '/' },
   { name: 'WeatherAbout', label: '서비스 소개', to: '/about' },
   { name: 'WeatherTips', label: '날씨 생활 팁', to: '/tips' },
+  { name: 'RegionalCode', label: '행정구역 코드', to: '/regions' },
 ]
 
 /** @param {string} routeName */

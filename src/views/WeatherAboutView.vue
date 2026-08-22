@@ -74,6 +74,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
           <Badge variant="outline">OpenWeather Current Weather</Badge>
           <Badge variant="outline">OpenWeather Air Pollution</Badge>
           <Badge variant="outline">OpenWeather Geocoding</Badge>
+          <Badge variant="outline">국토교통부 지역코드</Badge>
         </CardContent>
       </Card>
 
