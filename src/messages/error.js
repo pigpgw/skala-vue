@@ -4,6 +4,9 @@ export const ERROR_MESSAGE = Object.freeze({
   MAIN_CITY_WEATHER: `도시별 날씨 정보를 불러오지 못했습니다. ${RETRY_GUIDANCE}`,
   OPENWEATHER_API_KEY_MISSING: 'OpenWeatherMap API Key가 설정되지 않았습니다.',
   OPENWEATHER_BASE_URL_MISSING: 'OpenWeatherMap Base URL이 설정되지 않았습니다.',
+  REGIONAL_CODE_API_KEY_MISSING: '공공데이터포털 API Key가 설정되지 않았습니다.',
+  REGIONAL_CODE_BASE_URL_MISSING: '국토교통부 지역코드 Base URL이 설정되지 않았습니다.',
+  REGIONAL_CODE_LIST: `공식 행정구역 목록을 불러오지 못했습니다. ${RETRY_GUIDANCE}`,
   REGION_SEARCH: `지역 검색 결과를 불러오지 못했습니다. ${RETRY_GUIDANCE}`,
 })
 

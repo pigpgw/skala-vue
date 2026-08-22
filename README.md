@@ -35,6 +35,7 @@ src/
 ├── App.vue
 ├── apis/
 │   ├── geocoding.js
+│   ├── regionalCode.js
 │   └── weather.js
 ├── assets/
 │   ├── eslint-terminal-result.png
@@ -77,7 +78,8 @@ src/
 │   └── weatherData.js
 ├── dto/
 │   ├── openWeatherGeocodingDto.js
-│   └── openWeatherDto.js
+│   ├── openWeatherDto.js
+│   └── regionalCodeDto.js
 ├── lib/
 │   └── utils.js
 ├── main.js
@@ -99,6 +101,7 @@ src/
 │   ├── insect.js
 │   ├── openWeatherGeocodingClient.js
 │   ├── openWeatherClient.js
+│   ├── regionalCodeClient.js
 │   ├── region.js
 │   ├── regionStorage.js
 │   ├── temperature.js
@@ -130,7 +133,7 @@ npm install
 
 ### 환경변수 설정
 
-`.env.example`을 복사해 `.env`를 만들고 OpenWeatherMap에서 발급받은 API Key를 입력합니다. 같은 Key를 현재 날씨, 대기질과 지역 검색 요청에 공통으로 사용하며 실제 `.env`는 Git에 업로드되지 않습니다.
+`.env.example`을 복사해 `.env`를 만들고 OpenWeatherMap과 공공데이터포털에서 발급받은 API Key를 입력합니다. OpenWeatherMap Key는 현재 날씨, 대기질과 지역 검색 요청에 사용하고 공공데이터포털 Key는 국토교통부 지역코드 요청에 사용하며, 실제 `.env`는 Git에 업로드되지 않습니다.
 
 ```sh
 cp .env.example .env
@@ -461,6 +464,12 @@ Cloudflare Pages에 최신 코드를 배포하고 실제 API 동작까지 확인
 - [x] 키보드 사용자가 반복되는 헤더를 건너뛸 수 있는 `본문으로 바로가기` 링크를 추가하고, Route 변경 후 본문에 포커스가 이동하도록 구성했습니다.
 - [x] 상세 화면의 로딩, 정상 데이터와 찾을 수 없는 지역 상태를 각각 Skeleton, 데이터 Card와 빈 상태 Card로 구분했습니다.
 - [x] 상세·404 화면의 불필요한 내부 여백을 제거하고 공통 본문 너비와 shadcn-vue Card·Button 패턴에 맞췄습니다.
+
+#### 과제 6-3 보완 - 국토교통부 지역코드 API 복구
+
+- [x] 과제 수행 이력뿐 아니라 현재 실행 코드에서도 비 OpenWeather API가 사용되도록 국토교통부 지역코드 Axios 인스턴스, 인터셉터, 조회 함수와 DTO를 현재 구조에 맞게 복구했습니다.
+- [x] 기존 OpenWeather Geocoding 지역 검색은 좌표 기반 날씨 카드 추가 기능으로 유지하고, 국토교통부 API는 공식 행정구역 코드를 확인하는 별도 기능에서 사용하도록 책임을 분리했습니다.
+- [ ] 앱 시작 시 전국 데이터를 반복 호출하지 않고 사용자가 선택한 시·도만 조회하는 화면을 연결합니다.
 
 ### 트러블슈팅 기록
 
